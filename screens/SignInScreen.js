@@ -12,7 +12,7 @@ const SignInScreen = ({ navigation: { navigate } }) => (
       style={styles.button}
       onPress={() => navigate("Tabs", { screen: "Home" })}
     >
-      <Text style={styles.text}>Login</Text>
+      <Text style={styles.text}>얼른 와</Text>
     </TouchableOpacity>
   </View>
 );
