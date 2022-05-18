@@ -1,14 +1,17 @@
 import React from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const SignInScreen = () => (
+const SignInScreen = ({ navigation: { navigate } }) => (
   <View style={styles.block}>
     <Image
       source={require("../assets/logo.png")}
       style={styles.image}
       resizeMode="contain"
     />
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => navigate("Tabs", { screen: "Home" })}
+    >
       <Text style={styles.text}>Login</Text>
     </TouchableOpacity>
   </View>
