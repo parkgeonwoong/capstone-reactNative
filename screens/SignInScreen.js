@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 const SignInScreen = () => (
   <View style={styles.block}>
@@ -8,7 +8,9 @@ const SignInScreen = () => (
       style={styles.image}
       resizeMode="contain"
     />
-    <Text>여기는 버튼 자리</Text>
+    <TouchableOpacity style={styles.button}>
+      <Text style={styles.text}>Login</Text>
+    </TouchableOpacity>
   </View>
 );
 
@@ -20,8 +22,25 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   image: {
-    width: 300,
-    height: 300,
+    width: 350,
+    height: 350,
+  },
+  button: {
+    height: 48,
+    width: "60%",
+    paddingHorizontal: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    // backgroundColor: "#f8f9fa",
+    backgroundColor: "white",
+    elevation: 5,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 14,
+    color: "#495057",
+    letterSpacing: 1,
   },
 });
 
