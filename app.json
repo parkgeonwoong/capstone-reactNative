@@ -3,9 +3,11 @@
     "name": "capstone",
     "slug": "capstone",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain"
+    }
   },
   "name": "capstone"
 }
