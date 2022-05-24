@@ -1,32 +1,34 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import styled from "styled-components";
 import { BAR_COLOR } from "../components/Colors";
 
-const Home = () => (
-  <View style={styles.fullScreen}>
-    <View style={styles.block}>
-      <Text>Home</Text>
-    </View>
-  </View>
-);
+const FullScreen = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${BAR_COLOR};
+`;
 
-const styles = StyleSheet.create({
-  fullScreen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: BAR_COLOR,
-  },
-  block: {
-    width: "90%",
-    height: "90%",
-    marginTop: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 15,
-    backgroundColor: "white",
-    elevation: 2,
-  },
-});
+const Block = styled.View`
+  width: 90%;
+  height: 90%;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background-color: white;
+  elevation: 2;
+`;
+
+const Home = () => {
+  return (
+    <FullScreen>
+      <Block>
+        <Text>Home</Text>
+      </Block>
+    </FullScreen>
+  );
+};
 
 export default Home;

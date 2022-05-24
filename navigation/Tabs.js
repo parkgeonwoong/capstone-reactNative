@@ -8,6 +8,7 @@ import { Image, TouchableOpacity } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
+// 로고
 const LogoTitle = () => (
   <TouchableOpacity>
     <Image
@@ -19,10 +20,15 @@ const LogoTitle = () => (
 );
 
 const Tabs = () => {
+  // 오늘의 날짜
+  const today = new Date();
+  const month = today.getMonth() + 1;
+  const day = today.getDate();
+
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShadowVisible: false,
+        headerShadowVisible: true,
         headerStyle: {
           backgroundColor: BAR_COLOR,
         },
@@ -74,6 +80,7 @@ const Tabs = () => {
             );
           },
           tabBarLabel: "홈",
+          title: `${month}월 ${day}일`,
         }}
       />
       <Tab.Screen
