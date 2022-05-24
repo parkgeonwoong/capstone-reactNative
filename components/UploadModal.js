@@ -1,7 +1,23 @@
 import React, { useState } from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const UploadModal = ({ visible, onClose }) => {
+  const [text, setText] = useState("");
+
+  const onPress = () => {
+    setText("");
+    Keyboard.dismiss();
+  };
+  //   console.log(text);
+
   return (
     <Modal
       visible={visible}
@@ -11,7 +27,14 @@ const UploadModal = ({ visible, onClose }) => {
     >
       <TouchableOpacity style={styles.background} onPress={onClose}>
         <View style={styles.whiteBox}>
-          <Text>Hello</Text>
+          <Text style={styles.title}>Title</Text>
+          <TextInput
+            placeholder="제목을 입력하세요."
+            style={styles.input}
+            value={text}
+            onChangeText={setText}
+            onSubmitEditing={onPress}
+          />
         </View>
       </TouchableOpacity>
     </Modal>
@@ -28,8 +51,18 @@ const styles = StyleSheet.create({
   whiteBox: {
     width: 300,
     backgroundColor: "white",
-    borderRadius: 4,
+    borderRadius: 10,
     elevation: 2,
+  },
+  title: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    fontSize: 16,
+  },
+
+  input: {
+    paddingVertical: 8,
+    paddingHorizontal: 8,
   },
 });
 

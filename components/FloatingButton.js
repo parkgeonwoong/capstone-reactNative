@@ -13,14 +13,13 @@ const Wrapper = styled.TouchableOpacity`
   align-items: center;
   border-radius: 18px;
   background-color: ${BLUE};
-  elevation: 3;
 `;
 
 const Block = styled.View`
   z-index: 5;
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: 12px;
+  right: 12px;
   width: 36px;
   height: 36px;
   /* background-color: tomato; */
@@ -31,7 +30,7 @@ const FloatingButton = () => {
 
   return (
     <Block>
-      <Wrapper onPress={() => setModalVisible(true)}>
+      <Wrapper onPress={() => setModalVisible(true)} style={styles.shadow}>
         <Ionicons name="add" size={24} color="white" />
       </Wrapper>
       <UploadModal
@@ -41,5 +40,11 @@ const FloatingButton = () => {
     </Block>
   );
 };
+
+const styles = StyleSheet.create({
+  shadow: {
+    elevation: 3,
+  },
+});
 
 export default FloatingButton;
