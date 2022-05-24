@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import styled from "styled-components";
 import { BAR_COLOR } from "../components/Colors";
+import FloatingButton from "../components/FloatingButton";
 
 const FullScreen = styled.View`
   flex: 1;
@@ -25,6 +26,7 @@ const Home = () => {
   return (
     <FullScreen>
       <Block>
+        <FloatingButton />
         <Text>Home</Text>
       </Block>
     </FullScreen>
