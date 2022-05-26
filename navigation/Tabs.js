@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Analysis from "../screens/Analysis";
 import Home from "../screens/Home";
-import { BAR_ACTIVE, BAR_COLOR, BAR_INACTIVE } from "../components/Colors";
+import { BAR_ACTIVE, BG_COLOR, BAR_INACTIVE } from "../components/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Image, TouchableOpacity } from "react-native";
 
@@ -30,12 +30,12 @@ const Tabs = () => {
       screenOptions={{
         headerShadowVisible: true,
         headerStyle: {
-          backgroundColor: BAR_COLOR,
+          backgroundColor: BG_COLOR,
         },
         headerTitleAlign: "center",
         headerLeft: () => <LogoTitle />,
         tabBarStyle: {
-          backgroundColor: BAR_COLOR,
+          backgroundColor: BG_COLOR,
         },
         tabBarLabelStyle: {
           marginTop: -5,
@@ -53,9 +53,7 @@ const Tabs = () => {
         component={Analysis}
         options={{
           tabBarIcon: ({ color, size }) => {
-            return (
-              <Ionicons name="bar-chart-outline" color={color} size={size} />
-            );
+            return <Ionicons name="bar-chart" color={color} size={size} />;
           },
           tabBarLabel: "분석",
         }}
@@ -65,7 +63,7 @@ const Tabs = () => {
         component={Analysis}
         options={{
           tabBarIcon: ({ color, size }) => {
-            return <Ionicons name="trophy-outline" size={size} color={color} />;
+            return <Ionicons name="trophy" size={size} color={color} />;
           },
           tabBarLabel: "랭킹",
         }}
@@ -75,12 +73,13 @@ const Tabs = () => {
         component={Home}
         options={{
           tabBarIcon: ({ color, size }) => {
-            return (
-              <Ionicons name="ios-home-outline" size={size} color={color} />
-            );
+            return <Ionicons name="ios-home" size={size} color={color} />;
           },
           tabBarLabel: "홈",
           title: `${month}월 ${day}일`,
+          headerTitleStyle: {
+            fontWeight: "700",
+          },
         }}
       />
       <Tab.Screen
@@ -88,7 +87,7 @@ const Tabs = () => {
         component={Analysis}
         options={{
           tabBarIcon: ({ color, size }) => {
-            return <Ionicons name="person-outline" size={size} color={color} />;
+            return <Ionicons name="person" size={size} color={color} />;
           },
           tabBarLabel: "정보",
         }}
@@ -98,9 +97,7 @@ const Tabs = () => {
         component={Analysis}
         options={{
           tabBarIcon: ({ color, size }) => {
-            return (
-              <Ionicons name="md-settings-outline" size={size} color={color} />
-            );
+            return <Ionicons name="md-settings" size={size} color={color} />;
           },
           tabBarLabel: "설정",
         }}

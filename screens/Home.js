@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import styled from "styled-components";
-import { BAR_COLOR } from "../components/Colors";
+import { BG_COLOR } from "../components/Colors";
 import Empty from "../components/Empty";
 import FloatingButton from "../components/FloatingButton";
+import WorkList from "../components/WorkList";
 
 const FullScreen = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${BAR_COLOR};
+  background-color: ${BG_COLOR};
 `;
 
 const Block = styled.View`
@@ -20,19 +21,29 @@ const Block = styled.View`
   align-items: center;
   border-radius: 15px;
   background-color: white;
-  elevation: 2;
 `;
 
 const Home = () => {
+  const [works, setWorks] = useState([
+    { id: 1, text: "ReactNative Test", done: false },
+    { id: 2, text: "ReactNative Test2", done: false },
+  ]);
+
   return (
     <FullScreen>
-      <Block>
+      <Block style={styles.shadow}>
         <FloatingButton />
-        <Empty />
-        {/* <Text>Home</Text> */}
+        {works.length === 0 ? <Empty /> : <WorkList works={works} />}
+        {/* <Empty /> */}
       </Block>
     </FullScreen>
   );
 };
+
+const styles = StyleSheet.create({
+  shadow: {
+    elevation: 2,
+  },
+});
 
 export default Home;

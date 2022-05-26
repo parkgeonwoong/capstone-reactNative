@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { PINK } from "../components/Colors";
 
 const SignInScreen = ({ navigation: { navigate } }) => {
   return (
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    backgroundColor: "#ff006e",
+    backgroundColor: PINK,
     // backgroundColor: "white",
     elevation: 5,
   },

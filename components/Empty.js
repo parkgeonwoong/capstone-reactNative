@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
+import { PINK } from "./Colors";
 
 const Wrapper = styled.View`
   flex: 1;
@@ -12,7 +13,7 @@ const Wrapper = styled.View`
 const Description = styled.Text`
   font-size: 18px;
   font-weight: 700;
-  color: #ff006e;
+  color: ${PINK};
 `;
 
 const Empty = () => {

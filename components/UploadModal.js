@@ -16,7 +16,7 @@ const UploadModal = ({ visible, onClose }) => {
     setText("");
     Keyboard.dismiss();
   };
-  //   console.log(text);
+  // console.log(text);
 
   return (
     <Modal
