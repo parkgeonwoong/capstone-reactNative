@@ -13,7 +13,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
         style={styles.button}
         onPress={() => navigate("Tabs", { screen: "Home" })}
       >
-        <Text style={styles.text}>얼른 와</Text>
+        <Text style={styles.text}>LogIn</Text>
       </TouchableOpacity>
     </View>
   );
@@ -37,14 +37,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    // backgroundColor: "#f8f9fa",
-    backgroundColor: "white",
+    backgroundColor: "#ff006e",
+    // backgroundColor: "white",
     elevation: 5,
   },
   text: {
     fontWeight: "bold",
     fontSize: 14,
-    color: "#495057",
+    // color: "#495057",
+    color: "white",
     letterSpacing: 1,
   },
 });
