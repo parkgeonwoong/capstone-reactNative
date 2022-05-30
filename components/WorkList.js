@@ -1,3 +1,8 @@
+/* 
+@컴포넌트 이름: 일감 리스트
+@관련된 컴포넌트: Home, WorkItem
+*/
+
 import React from "react";
 import { FlatList, Text, View } from "react-native";
 import styled from "styled-components/native";

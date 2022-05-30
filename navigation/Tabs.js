@@ -1,3 +1,8 @@
+/* 
+@컴포넌트 이름: 하단 탭 내비게이션
+@관련된 컴포넌트: Roots, Analysis, Rank, Home, Profile, Setting
+*/
+
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Analysis from "../screens/Analysis";
@@ -8,7 +13,7 @@ import { Image, TouchableOpacity } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
-// 로고
+// 왼쪽 상단 로고
 const LogoTitle = () => (
   <TouchableOpacity>
     <Image
@@ -19,6 +24,7 @@ const LogoTitle = () => (
   </TouchableOpacity>
 );
 
+// Bottom-Tab 내비게이션
 const Tabs = () => {
   // 오늘의 날짜
   const today = new Date();
@@ -27,6 +33,7 @@ const Tabs = () => {
 
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={{
         headerShadowVisible: true,
         headerStyle: {
@@ -48,6 +55,7 @@ const Tabs = () => {
         tabBarInactiveTintColor: BAR_INACTIVE,
       }}
     >
+      {/* 분석 페이지 */}
       <Tab.Screen
         name="Analysis"
         component={Analysis}
@@ -58,6 +66,7 @@ const Tabs = () => {
           tabBarLabel: "분석",
         }}
       />
+      {/* 랭크 페이지 */}
       <Tab.Screen
         name="Rank"
         component={Analysis}
@@ -68,6 +77,7 @@ const Tabs = () => {
           tabBarLabel: "랭킹",
         }}
       />
+      {/* 메인 홈 페이지 */}
       <Tab.Screen
         name="Home"
         component={Home}
@@ -82,6 +92,7 @@ const Tabs = () => {
           },
         }}
       />
+      {/* 프로필 페이지 */}
       <Tab.Screen
         name="Profile"
         component={Analysis}
@@ -92,6 +103,7 @@ const Tabs = () => {
           tabBarLabel: "정보",
         }}
       />
+      {/* 설정 페이지 */}
       <Tab.Screen
         name="Setting"
         component={Analysis}

@@ -1,3 +1,8 @@
+/* 
+@컴포넌트 이름: 메인 페이지
+@관련된 컴포넌트: Tabs, 다른 Navigation
+*/
+
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import styled from "styled-components";

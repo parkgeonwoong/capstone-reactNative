@@ -1,3 +1,7 @@
+/* 
+@컴포넌트 이름: 색깔 모아놓은 곳
+*/
+
 // export const BAR_COLOR = "#f8f9fa";
 export const BG_COLOR = "#fdfdff";
 // export const BAR_ACTIVE = "#343a40";

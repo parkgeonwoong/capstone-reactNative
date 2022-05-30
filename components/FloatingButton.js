@@ -1,3 +1,8 @@
+/* 
+@컴포넌트 이름: 홈 페이지에서 일감 추가 버튼
+@관련된 컴포넌트: Home, UploadModal
+*/
+
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";

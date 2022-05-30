@@ -1,3 +1,8 @@
+/* 
+@컴포넌트 이름: 일감 없는 경우 비어있는 페이지
+@관련된 컴포넌트: Home
+*/
+
 import React from "react";
 import { Text, View } from "react-native";
 import styled from "styled-components/native";

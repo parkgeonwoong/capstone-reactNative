@@ -1,3 +1,8 @@
+/* 
+@컴포넌트 이름: 모달창
+@관련된 컴포넌트: Home, FloatingButton
+*/
+
 import React, { useState } from "react";
 import {
   Keyboard,
