@@ -21,6 +21,7 @@ const Wrapper = styled.TouchableOpacity`
 `;
 
 const Block = styled.View`
+  flex: 1;
   z-index: 5;
   position: absolute;
   bottom: 12px;

@@ -6,9 +6,11 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
 import styled from "styled-components/native";
+import WorkItem from "./WorkItem";
 
 const ListWork = styled.FlatList`
   flex: 1;
+  width: 100%;
 `;
 
 const WorkList = ({ works }) => {
@@ -16,9 +18,7 @@ const WorkList = ({ works }) => {
     <ListWork
       data={works}
       renderItem={({ item }) => (
-        <View>
-          <Text>{item.text}</Text>
-        </View>
+        <WorkItem id={item.id} text={item.text} done={item.done} />
       )}
       keyExtractor={(item) => item.id.toString()}
     />
