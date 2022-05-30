@@ -7,6 +7,8 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignInScreen from "../screens/SignInScreen";
 import Tabs from "./Tabs";
+import CameraFocus from "../screens/CameraFocus";
+import WorkItem from "../components/WorkItem";
 
 const Nav = createNativeStackNavigator();
 
@@ -26,6 +28,8 @@ const Root = () => (
         headerShown: false,
       }}
     />
+    {/* 카메라 페이지 */}
+    <Nav.Screen name="Cameras" component={CameraFocus} />
   </Nav.Navigator>
 );
 

@@ -6,19 +6,18 @@
 import React from "react";
 import { View, Text } from "react-native";
 import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const WrapperItem = styled.View`
   flex-direction: row;
   padding: 16px;
   align-items: center;
-  background-color: tomato;
 `;
 
-const TimerBtn = styled.View`
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  border-width: 1px;
+const TimerBtn = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
   margin-right: 16px;
 `;
 
@@ -28,9 +27,12 @@ const ItemText = styled.Text`
 `;
 
 const WorkItem = ({ id, text, done }) => {
+  const navigation = useNavigation(); // Hook: Screen으로 사용되지 않는 컴포넌트에 navigation 객체 사용
   return (
     <WrapperItem>
-      <TimerBtn />
+      <TimerBtn onPress={() => navigation.navigate("Cameras")}>
+        <Ionicons name="videocam" size={24} color="black" />
+      </TimerBtn>
       <ItemText>{text}</ItemText>
     </WrapperItem>
   );

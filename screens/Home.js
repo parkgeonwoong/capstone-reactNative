@@ -39,7 +39,6 @@ const Home = () => {
       <Block style={styles.shadow}>
         {works.length === 0 ? <Empty /> : <WorkList works={works} />}
         <FloatingButton />
-        {/* <Empty /> */}
       </Block>
     </FullScreen>
   );
