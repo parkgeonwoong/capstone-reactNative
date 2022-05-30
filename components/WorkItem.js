@@ -28,9 +28,10 @@ const ItemText = styled.Text`
 
 const WorkItem = ({ id, text, done }) => {
   const navigation = useNavigation(); // Hook: Screen으로 사용되지 않는 컴포넌트에 navigation 객체 사용
+
   return (
     <WrapperItem>
-      <TimerBtn onPress={() => navigation.navigate("Cameras")}>
+      <TimerBtn onPress={() => navigation.navigate("Cameras", { id: id })}>
         <Ionicons name="videocam" size={24} color="black" />
       </TimerBtn>
       <ItemText>{text}</ItemText>

@@ -13,7 +13,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
 
   // 통신 API
   const getApi = async () => {
-    const response = await fetch("http://diligentp.com:8080/test");
+    const response = await fetch("http://172.26.21.107:8080/test");
     const json = await response.json();
     useData(json);
     console.log(json.name);
@@ -35,9 +35,10 @@ const SignInScreen = ({ navigation: { navigate } }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          data.name === "박건웅"
-            ? navigate("Tabs", { screen: "Home" })
-            : console.log("Error name");
+          // data.name === "박건웅"
+          //   ? navigate("Tabs", { screen: "Home" })
+          //   : console.log("Error name");
+          navigate("Tabs", { screen: "Home" });
         }}
       >
         <Text style={styles.text}>LogIn</Text>

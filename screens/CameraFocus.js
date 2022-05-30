@@ -6,10 +6,10 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const CameraFocus = () => {
+const CameraFocus = ({ route }) => {
   return (
     <View>
-      <Text>Camera Page : </Text>
+      <Text>Camera Page : {route.params.id} </Text>
     </View>
   );
 };
