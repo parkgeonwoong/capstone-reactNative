@@ -31,7 +31,7 @@ const Block = styled.View`
   /* background-color: tomato; */
 `;
 
-const FloatingButton = () => {
+const FloatingButton = ({ onInsert }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -42,6 +42,7 @@ const FloatingButton = () => {
       <UploadModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
+        onInsert={onInsert}
       />
     </Block>
   );

@@ -1,6 +1,6 @@
 /* 
 @컴포넌트 이름: 메인 페이지
-@관련된 컴포넌트: Tabs, 다른 Navigation
+@관련된 컴포넌트: Tabs, 다른 Navigation, FloatingButton
 */
 
 import React, { useState } from "react";
@@ -29,16 +29,29 @@ const Block = styled.View`
 `;
 
 const Home = () => {
+  // 작업 상태
   const [works, setWorks] = useState([
     { id: 1, text: "ReactNative Test", done: true },
     { id: 2, text: "ReactNative Test2", done: false },
   ]);
 
+  // 항목 등록
+  const onInsert = (text) => {
+    const nextId =
+      works.length > 0 ? Math.max(...works.map((work) => work.id)) + 1 : 1;
+    const work = {
+      id: nextId,
+      text,
+      done: false,
+    };
+    setWorks(works.concat(work));
+  };
+
   return (
     <FullScreen>
       <Block style={styles.shadow}>
         {works.length === 0 ? <Empty /> : <WorkList works={works} />}
-        <FloatingButton />
+        <FloatingButton onInsert={onInsert} />
       </Block>
     </FullScreen>
   );

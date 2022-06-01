@@ -14,10 +14,11 @@ import {
   View,
 } from "react-native";
 
-const UploadModal = ({ visible, onClose }) => {
+const UploadModal = ({ visible, onClose, onInsert }) => {
   const [text, setText] = useState("");
 
   const onPress = () => {
+    onInsert(text);
     setText("");
     Keyboard.dismiss();
   };
