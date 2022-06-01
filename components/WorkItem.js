@@ -4,7 +4,7 @@
 */
 
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -20,6 +20,7 @@ const TimerBtn = styled.TouchableOpacity`
   align-items: center;
   margin-right: 16px;
 `;
+const TextBtn = styled.TouchableOpacity``;
 
 const ItemText = styled.Text`
   flex: 1;
@@ -32,11 +33,25 @@ const WorkItem = ({ id, text, done }) => {
   return (
     <WrapperItem>
       <TimerBtn onPress={() => navigation.navigate("Cameras", { id: id })}>
-        <Ionicons name="videocam" size={24} color="black" />
+        <Ionicons
+          name="videocam"
+          size={24}
+          color="black"
+          style={done ? { color: "#9e9e9e" } : null}
+        />
       </TimerBtn>
-      <ItemText>{text}</ItemText>
+      <TextBtn>
+        <ItemText style={done ? styles.lineThrough : null}>{text}</ItemText>
+      </TextBtn>
     </WrapperItem>
   );
 };
+
+const styles = StyleSheet.create({
+  lineThrough: {
+    color: "#9e9e9e",
+    textDecorationLine: "line-through",
+  },
+});
 
 export default WorkItem;

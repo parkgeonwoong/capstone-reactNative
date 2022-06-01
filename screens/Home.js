@@ -30,7 +30,7 @@ const Block = styled.View`
 
 const Home = () => {
   const [works, setWorks] = useState([
-    { id: 1, text: "ReactNative Test", done: false },
+    { id: 1, text: "ReactNative Test", done: true },
     { id: 2, text: "ReactNative Test2", done: false },
   ]);
 
