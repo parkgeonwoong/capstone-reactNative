@@ -27,12 +27,16 @@ const ItemText = styled.Text`
   font-size: 16px;
 `;
 
-const WorkItem = ({ id, text, done }) => {
+const WorkItem = ({ id, text, done, onToggle }) => {
   const navigation = useNavigation(); // Hook: Screen으로 사용되지 않는 컴포넌트에 navigation 객체 사용
 
   return (
     <WrapperItem>
-      <TimerBtn onPress={() => navigation.navigate("Cameras", { id: id })}>
+      <TimerBtn
+        onPress={() => {
+          done ? null : navigation.navigate("Cameras", { id: id });
+        }}
+      >
         <Ionicons
           name="videocam"
           size={24}
@@ -40,7 +44,7 @@ const WorkItem = ({ id, text, done }) => {
           style={done ? { color: "#9e9e9e" } : null}
         />
       </TimerBtn>
-      <TextBtn>
+      <TextBtn onPress={() => onToggle(id)}>
         <ItemText style={done ? styles.lineThrough : null}>{text}</ItemText>
       </TextBtn>
     </WrapperItem>

@@ -35,7 +35,7 @@ const Home = () => {
     { id: 2, text: "ReactNative Test2", done: false },
   ]);
 
-  // 항목 등록
+  // 새 작업 등록
   const onInsert = (text) => {
     const nextId =
       works.length > 0 ? Math.max(...works.map((work) => work.id)) + 1 : 1;
@@ -47,10 +47,22 @@ const Home = () => {
     setWorks(works.concat(work));
   };
 
+  // 작업 완료 토글
+  const onToggle = (id) => {
+    const nextWorks = works.map((work) =>
+      work.id === id ? { ...work, done: !work.done } : work
+    );
+    setWorks(nextWorks);
+  };
+
   return (
     <FullScreen>
       <Block style={styles.shadow}>
-        {works.length === 0 ? <Empty /> : <WorkList works={works} />}
+        {works.length === 0 ? (
+          <Empty />
+        ) : (
+          <WorkList works={works} onToggle={onToggle} />
+        )}
         <FloatingButton onInsert={onInsert} />
       </Block>
     </FullScreen>
@@ -59,7 +71,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   shadow: {
-    elevation: 2,
+    elevation: 0.5,
   },
 });
 

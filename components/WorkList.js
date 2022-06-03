@@ -4,7 +4,7 @@
 */
 
 import React from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, View, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import WorkItem from "./WorkItem";
 
@@ -13,16 +13,29 @@ const ListWork = styled.FlatList`
   width: 100%;
 `;
 
-const WorkList = ({ works }) => {
+const WorkList = ({ works, onToggle }) => {
   return (
-    <ListWork
+    <FlatList
+      style={styles.list}
       data={works}
       renderItem={({ item }) => (
-        <WorkItem id={item.id} text={item.text} done={item.done} />
+        <WorkItem
+          id={item.id}
+          text={item.text}
+          done={item.done}
+          onToggle={onToggle}
+        />
       )}
       keyExtractor={(item) => item.id.toString()}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  list: {
+    flex: 1,
+    width: "100%",
+  },
+});
 
 export default WorkList;
