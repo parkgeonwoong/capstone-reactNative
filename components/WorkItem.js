@@ -8,6 +8,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { BLACK, RED } from "./Colors";
 
 const WrapperItem = styled.View`
   flex-direction: row;
@@ -20,14 +21,22 @@ const TimerBtn = styled.TouchableOpacity`
   align-items: center;
   margin-right: 16px;
 `;
-const TextBtn = styled.TouchableOpacity``;
+const TextBtn = styled.TouchableOpacity`
+  flex: 1;
+  flex-direction: row;
+`;
 
 const ItemText = styled.Text`
   flex: 1;
   font-size: 16px;
 `;
 
-const WorkItem = ({ id, text, done, onToggle }) => {
+const RemovePlace = styled.View`
+  width: 28px;
+  height: 28px; /* background-color: chocolate; */
+`;
+
+const WorkItem = ({ id, text, done, onToggle, onRemove }) => {
   const navigation = useNavigation(); // Hook: Screen으로 사용되지 않는 컴포넌트에 navigation 객체 사용
 
   return (
@@ -39,13 +48,20 @@ const WorkItem = ({ id, text, done, onToggle }) => {
       >
         <Ionicons
           name="videocam"
-          size={24}
-          color="black"
+          size={28}
+          color={BLACK}
           style={done ? { color: "#9e9e9e" } : null}
         />
       </TimerBtn>
       <TextBtn onPress={() => onToggle(id)}>
         <ItemText style={done ? styles.lineThrough : null}>{text}</ItemText>
+        {done ? (
+          <TouchableOpacity onPress={() => onRemove(id)}>
+            <Ionicons name="trash-bin" size={28} color={BLACK} />
+          </TouchableOpacity>
+        ) : (
+          <RemovePlace />
+        )}
       </TextBtn>
     </WrapperItem>
   );

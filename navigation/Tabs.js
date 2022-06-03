@@ -40,7 +40,7 @@ const Tabs = () => {
           backgroundColor: BG_COLOR,
         },
         headerTitleAlign: "center",
-        headerLeft: () => <LogoTitle />,
+
         tabBarStyle: {
           backgroundColor: BG_COLOR,
         },
@@ -82,6 +82,7 @@ const Tabs = () => {
         name="Home"
         component={Home}
         options={{
+          headerLeft: () => <LogoTitle />,
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="ios-home" size={size} color={color} />;
           },

@@ -13,7 +13,7 @@ const ListWork = styled.FlatList`
   width: 100%;
 `;
 
-const WorkList = ({ works, onToggle }) => {
+const WorkList = ({ works, onToggle, onRemove }) => {
   return (
     <FlatList
       style={styles.list}
@@ -24,6 +24,7 @@ const WorkList = ({ works, onToggle }) => {
           text={item.text}
           done={item.done}
           onToggle={onToggle}
+          onRemove={onRemove}
         />
       )}
       keyExtractor={(item) => item.id.toString()}

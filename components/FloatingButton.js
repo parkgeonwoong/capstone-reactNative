@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
-import { BLUE } from "./Colors";
+import { BLUE, RED } from "./Colors";
 import UploadModal from "./UploadModal";
 
 const Wrapper = styled.TouchableOpacity`
@@ -17,7 +17,7 @@ const Wrapper = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-radius: 18px;
-  background-color: ${BLUE};
+  background-color: ${RED};
 `;
 
 const Block = styled.View`

@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { PINK } from "../components/Colors";
+import { PINK, RED } from "../components/Colors";
 
 const SignInScreen = ({ navigation: { navigate } }) => {
   // 서버와 통신 상태 값
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    backgroundColor: PINK,
+    backgroundColor: RED,
     // backgroundColor: "white",
     elevation: 5,
   },
