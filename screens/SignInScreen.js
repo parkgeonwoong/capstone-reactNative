@@ -35,7 +35,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          // data.name === "박건웅"
+          // data.name === "박정현"
           //   ? navigate("Tabs", { screen: "Home" })
           //   : console.log("Error name");
           navigate("Tabs", { screen: "Home" });

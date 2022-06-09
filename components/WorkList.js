@@ -4,14 +4,9 @@
 */
 
 import React from "react";
-import { FlatList, Text, View, StyleSheet } from "react-native";
+import { FlatList, Text, View, StyleSheet, SafeAreaView } from "react-native";
 import styled from "styled-components/native";
 import WorkItem from "./WorkItem";
-
-const ListWork = styled.FlatList`
-  flex: 1;
-  width: 100%;
-`;
 
 const WorkList = ({ works, onToggle, onRemove }) => {
   return (
