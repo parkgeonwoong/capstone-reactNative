@@ -3,13 +3,14 @@
 @관련된 컴포넌트: Tabs, 다른 Navigation, FloatingButton
 */
 
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import styled from "styled-components";
 import { BG_COLOR } from "../components/Colors";
 import Empty from "../components/Empty";
 import FloatingButton from "../components/FloatingButton";
 import WorkList from "../components/WorkList";
+import LogContext from "../contexts/LogContext";
 
 const FullScreen = styled.View`
   flex: 1;
@@ -29,6 +30,8 @@ const Block = styled.View`
 `;
 
 const Home = () => {
+  // 전역 작업 상태 useContext 테스팅
+  const { text, setText } = useContext(LogContext);
   // 작업 상태
   const [works, setWorks] = useState([
     { id: 1, text: "ReactNative Test", done: true },
@@ -70,6 +73,12 @@ const Home = () => {
           <WorkList works={works} onToggle={onToggle} onRemove={onRemove} />
         )}
         <FloatingButton onInsert={onInsert} />
+        <TextInput
+          value={text}
+          onChangeText={setText}
+          placeholder="Texts input here"
+          style={{ padding: 16 }}
+        />
       </Block>
     </FullScreen>
   );
