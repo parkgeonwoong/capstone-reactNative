@@ -7,6 +7,7 @@ import AppLoading from "expo-app-loading";
 
 import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
+import LogContext from "./contexts/LogContext";
 
 export default function App() {
   const [assets] = useAssets([require("./assets/logo.png")]);
@@ -19,7 +20,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Root />
+      <LogContext.Provider value="Hello">
+        <Root />
+      </LogContext.Provider>
     </NavigationContainer>
   );
 }
