@@ -30,13 +30,13 @@ const Block = styled.View`
 `;
 
 const Home = () => {
-  // 전역 작업 상태 useContext 테스팅
-  const { text, setText } = useContext(LogContext);
+  // 전역 작업 상태 useContext
+  const { works, setWorks } = useContext(LogContext);
   // 작업 상태
-  const [works, setWorks] = useState([
-    { id: 1, text: "ReactNative Test", done: true },
-    { id: 2, text: "ReactNative Test2", done: false },
-  ]);
+  // const [works, setWorks] = useState([
+  //   { id: 1, text: "ReactNative Test", done: true },
+  //   { id: 2, text: "ReactNative Test2", done: false },
+  // ]);
 
   // 새 작업 등록
   const onInsert = (text) => {
@@ -73,12 +73,6 @@ const Home = () => {
           <WorkList works={works} onToggle={onToggle} onRemove={onRemove} />
         )}
         <FloatingButton onInsert={onInsert} />
-        <TextInput
-          value={text}
-          onChangeText={setText}
-          placeholder="Texts input here"
-          style={{ padding: 16 }}
-        />
       </Block>
     </FullScreen>
   );
