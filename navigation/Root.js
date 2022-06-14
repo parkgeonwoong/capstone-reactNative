@@ -29,7 +29,11 @@ const Root = () => (
       }}
     />
     {/* 카메라 페이지 */}
-    <Nav.Screen name="Cameras" component={CameraFocus} />
+    <Nav.Screen
+      name="Cameras"
+      component={CameraFocus}
+      options={{ title: "" }}
+    />
   </Nav.Navigator>
 );
 

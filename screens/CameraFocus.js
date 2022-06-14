@@ -1,4 +1,4 @@
-/* 
+/*
 @컴포넌트 이름: 카메라 페이지
 @관련된 컴포넌트: Home, WorkItem, WorkList
 */
@@ -102,30 +102,33 @@ const CameraFocus = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.timerBox}>
         <Text>Camera Page : {route.params.id} </Text>
       </View>
-      <TensorCamera
-        style={styles.camera}
-        type={CameraType.front}
-        cameraTextureHeight={textureDims.height}
-        cameraTextureWidth={textureDims.width}
-        resizeHeight={height}
-        resizeWidth={width}
-        resizeDepth={channel}
-        onReady={handleCameraStream}
-        autorender={true}
-        useCustomShadersToResize={false}
-        onFacesDetected={handleFacesDetected}
-        faceDetectorSettings={{
-          mode: FaceDetector.FaceDetectorMode.accurate,
-          detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
-          runClassifications: FaceDetector.FaceDetectorClassifications.all,
-          minDetectionInterval: 5000,
-          tracking: true,
-        }}
-      />
-      {getData()}
+      <View style={styles.cameraBox}>
+        <TensorCamera
+          style={styles.camera}
+          type={CameraType.front}
+          cameraTextureHeight={textureDims.height}
+          cameraTextureWidth={textureDims.width}
+          resizeHeight={height}
+          resizeWidth={width}
+          resizeDepth={channel}
+          onReady={handleCameraStream}
+          autorender={true}
+          useCustomShadersToResize={false}
+          onFacesDetected={handleFacesDetected}
+          faceDetectorSettings={{
+            mode: FaceDetector.FaceDetectorMode.accurate,
+            detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
+            runClassifications: FaceDetector.FaceDetectorClassifications.all,
+            minDetectionInterval: 5000,
+            tracking: true,
+          }}
+        />
+        {getData()}
+      </View>
+      <View style={{ flex: 0.5 }}></View>
     </View>
   );
 };
@@ -137,10 +140,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  camera: {
+  cameraBox: {
+    flex: 6,
     width: "90%",
-    height: "80%",
+    height: "90%",
     marginTop: 20,
+    borderRadius: 20,
+    overflow: "hidden",
+  },
+  camera: {
+    width: "100%",
+    height: "100%",
+  },
+  timerBox: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: "tomato",
   },
 });
 
