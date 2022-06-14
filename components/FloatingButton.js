@@ -12,11 +12,11 @@ import UploadModal from "./UploadModal";
 
 const Wrapper = styled.TouchableOpacity`
   position: absolute;
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   justify-content: center;
   align-items: center;
-  border-radius: 18px;
+  border-radius: 24px;
   background-color: ${RED};
 `;
 
@@ -25,9 +25,9 @@ const Block = styled.View`
   z-index: 5;
   position: absolute;
   bottom: 12px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
+  right: 10px;
+  width: 48px;
+  height: 48px;
   /* background-color: tomato; */
 `;
 

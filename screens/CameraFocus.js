@@ -41,19 +41,20 @@ const CameraFocus = ({ route }) => {
     })();
   }, []);
 
-  const getApi = async (asdf) => {
+  // 딥러닝 서버 비동기 연결 처리
+  const getApi = async (tensorJson) => {
     // 딥러닝 서버
     const response = await fetch("http://172.26.21.108:8000/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: asdf,
+      body: tensorJson,
     });
 
+    // console.log("보내는 body 값: ", body);
     const json = await response.json();
-
-    console.log(json); // 딥러닝 json 확인
+    console.log("🚨딥러닝 json 확인: ", json); // 딥러닝 json 확인
   };
 
   // faceData와 imageData의 일괄 처리를 위한 함수
@@ -80,6 +81,7 @@ const CameraFocus = ({ route }) => {
     });
     // const b = JSON.parse(jtensor)
 
+    // console.log("tensorJson: ", tensorJson);
     return tensorJson;
   }
 
@@ -132,10 +134,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
   },
   camera: {
-    width: "100%",
-    height: "100%",
+    width: "90%",
+    height: "80%",
+    marginTop: 20,
   },
 });
 
