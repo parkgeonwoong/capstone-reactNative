@@ -1,3 +1,8 @@
+/* 
+@컴포넌트 이름: 내비게이션을 위한 전역 상태 관리 
+@관련된 컴포넌트: App
+*/
+
 import React from "react";
 import { createContext, useState } from "react";
 

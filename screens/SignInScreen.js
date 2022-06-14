@@ -13,30 +13,29 @@ const SignInScreen = ({ navigation: { navigate } }) => {
 
   // 통신 API
   const getApi = async () => {
-    // const response = await fetch("http://172.26.21.107:8080/test"); // 디비 서버
+    const response = await fetch("http://172.26.21.107:8080/test"); // 디비 서버
     // 딥러닝 서버
-    const response = await fetch("http://172.26.21.108:8000/test", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: "Test",
-        id: 1,
-        body: "🤪Chae Jongwook is ugly!!",
-      }),
-    });
+    // const response = await fetch("http://172.26.21.108:8000/test", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     title: "Test",
+    //     id: 1,
+    //     body: "🤪Chae Jongwook is ugly!!",
+    //   }),
+    // });
 
     const json = await response.json();
 
-    console.log(json); // 딥러닝 json 확인
-    console.log(json.hi);
+    // console.log(json); // 딥러닝 json 확인
 
     // 디비 서버
-    // useData(json);
+    useData(json);
     // console.log(json.name);
     // console.log(typeof json);
-    // console.log(`data: ${JSON.stringify(json)}`);
+    console.log(`data: ${JSON.stringify(json)}`);
   };
 
   useEffect(() => {
