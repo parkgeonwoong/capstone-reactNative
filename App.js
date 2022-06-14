@@ -14,7 +14,7 @@ export default function App() {
   const [loaded] = Font.useFonts(Ionicons.font);
 
   if (!assets || !loaded) {
-    return null;
+    return <AppLoading />;
     // <AppLoading />;
   }
 
