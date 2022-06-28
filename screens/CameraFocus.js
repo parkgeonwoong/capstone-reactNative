@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { LogBox, Platform, StyleSheet, View, Text } from "react-native";
 import * as FaceDetector from "expo-face-detector";
 import * as tf from "@tensorflow/tfjs";
+import SetTimer from "../components/Timer";
 
 const TensorCamera = cameraWithTensors(Camera);
 
@@ -103,6 +104,7 @@ const CameraFocus = ({ route }) => {
     <View style={styles.container}>
       <View style={styles.timerBox}>
         <Text>Camera Page : {route.params.id} </Text>
+        <SetTimer />
       </View>
       <View style={styles.cameraBox}>
         <TensorCamera
