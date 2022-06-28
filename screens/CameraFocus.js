@@ -52,7 +52,6 @@ const CameraFocus = ({ route }) => {
       body: tensorJson,
     });
 
-    // console.log("보내는 body 값: ", body);
     const json = await response.json();
     console.log("🚨딥러닝 json 확인: ", json); // 딥러닝 json 확인
   };

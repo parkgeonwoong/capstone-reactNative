@@ -35,7 +35,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     useData(json);
     // console.log(json.name);
     // console.log(typeof json);
-    // console.log(`data: ${JSON.stringify(json)}`);
+    console.log(`🌊백엔드 통신: ${JSON.stringify(json)}`);
   };
 
   useEffect(() => {
