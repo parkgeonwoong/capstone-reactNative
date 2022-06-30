@@ -13,7 +13,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
 
   // 통신 API
   const getApi = async () => {
-    const response = await fetch("http://172.26.21.107:8080/test"); // 디비 서버
+    const response = await fetch("http://diligentp.com/test"); // 디비 서버
     // 딥러닝 서버
     // const response = await fetch("http://172.26.21.108:8000/test", {
     //   method: "POST",
