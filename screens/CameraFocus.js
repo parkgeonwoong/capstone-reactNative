@@ -1,10 +1,7 @@
 /*
-@컴포넌트 이름: 카메라 페이지
-@관련된 컴포넌트: Home, WorkItem, WorkList
+  @컴포넌트 이름: 카메라 페이지
+  @관련된 컴포넌트: Home, WorkItem, WorkList, Timer
 */
-
-// import React from "react";
-// import { View, Text } from "react-native";
 
 import { cameraWithTensors } from "@tensorflow/tfjs-react-native";
 import { Camera, CameraType } from "expo-camera";
@@ -27,6 +24,12 @@ LogBox.ignoreAllLogs(true);
 const CameraFocus = ({ route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [faceData, setFaceData] = React.useState([]);
+  const [getCount, setGetCount] = useState(0); // Timer.js에서 시간 state
+
+  const getTimer = (getCount) => {
+    setGetCount(getCount);
+    console.log("부모 시간 측정: ", getCount);
+  };
 
   let textureDims =
     Platform.OS == "ios"
@@ -65,7 +68,9 @@ const CameraFocus = ({ route }) => {
       const tensor = nextImageTensor;
       const tensorJson = convertTenorToJson(tensor, faceData); // 카메라 스트림 및 얼굴 정보 json화
       // console.log(typeof height)
-      getApi(tensorJson);
+
+      // 🚨 네트워크 호출
+      // getApi(tensorJson);
     }
   }
 
@@ -103,8 +108,8 @@ const CameraFocus = ({ route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.timerBox}>
-        <Text>Camera Page : {route.params.id} </Text>
-        <SetTimer />
+        {/* <Text>Camera Page : {route.params.id} </Text> */}
+        <SetTimer getTimer={getTimer} />
       </View>
       <View style={styles.cameraBox}>
         <TensorCamera
@@ -157,6 +162,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 10,
     // backgroundColor: "tomato",
   },
 });
