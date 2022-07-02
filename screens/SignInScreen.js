@@ -36,7 +36,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     Keyboard.dismiss();
     console.log("form: ", form);
 
-    setData(BackApi(`login?id=${form.id}&pass=${form.pass}`));
+    // setData(BackApi(`login?id=${form.id}&pass=${form.pass}`));
 
     console.log("data: ", data);
     console.log(typeof data);
@@ -55,23 +55,23 @@ const SignInScreen = ({ navigation: { navigate } }) => {
   // }, [form]);
 
   // 통신 API
-  // const getApi = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://diligentp.com/login?id=${form.id}&pass=${form.pass}`
-  //     );
-  //     const json = await response.json();
-  //     await setData(json);
-  //     console.log(`🌊백엔드 통신: ${JSON.stringify(json)}`);
-  //     setLoading(true);
-  //   } catch (err) {
-  //     console.log("값을 입력받는중... : ", err);
-  //   }
-  // };
+  const getApi = async () => {
+    try {
+      const response = await fetch(
+        `http://diligentp.com/login?id=${form.id}&pass=${form.pass}`
+      );
+      const json = await response.json();
+      await setData(json);
+      console.log(`🌊백엔드 통신: ${JSON.stringify(json)}`);
+      setLoading(true);
+    } catch (err) {
+      console.log("값을 입력받는중... : ", err);
+    }
+  };
 
-  // useEffect(() => {
-  //   getApi();
-  // }, [formData]);
+  useEffect(() => {
+    getApi();
+  }, [formData]);
 
   // 딥러닝 서버
   // const response = await fetch("http://172.26.21.108:8000/test", {
