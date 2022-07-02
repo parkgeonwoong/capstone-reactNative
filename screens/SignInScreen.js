@@ -4,43 +4,93 @@
 */
 
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Keyboard,
+  Alert,
+} from "react-native";
+import BackApi from "../components/BackApi";
 import { PINK, RED } from "../components/Colors";
 
 const SignInScreen = ({ navigation: { navigate } }) => {
   // 서버와 통신 상태 값
-  const [data, useData] = useState({});
+  const [data, useData] = useState("");
+  const [form, setForm] = useState({
+    id: "",
+    pass: "",
+  });
+  const [loading, setLoading] = useState(false);
 
-  // 통신 API
-  const getApi = async () => {
-    const response = await fetch("http://diligentp.com/test"); // 디비 서버
-    // 딥러닝 서버
-    // const response = await fetch("http://172.26.21.108:8000/test", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     title: "Test",
-    //     id: 1,
-    //     body: "🤪Chae Jongwook is ugly!!",
-    //   }),
-    // });
+  // console.log(data);
+  // console.log(data === null);
+  // console.log(form);
 
-    const json = await response.json();
-
-    // console.log(json); // 딥러닝 json 확인
-
-    // 디비 서버
-    useData(json);
-    // console.log(json.name);
-    // console.log(typeof json);
-    console.log(`🌊백엔드 통신: ${JSON.stringify(json)}`);
+  const createChangeTextHandle = (name) => (value) => {
+    setForm({ ...form, [name]: value });
   };
 
-  useEffect(() => {
-    getApi();
-  }, []);
+  const onSubmit = () => {
+    Keyboard.dismiss();
+    console.log("form: ", form);
+
+    // useData("");
+    useData(BackApi(`login?id=${form.id}&pass=${form.pass}`));
+
+    console.log("data: ", data);
+    // console.log(typeof form.id);
+
+    // useEffect(() => {
+    //   getApi();
+    // }, []);
+
+    // form.id !== data.userid && form.pass !== data.userpass
+
+    if (form.id !== data.userid && form.pass !== data.userpass) {
+      console.log("불일치");
+      Alert.alert("불일치");
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  };
+
+  // // 통신 API
+  // const getApi = async () => {
+  //   // 디비 서버
+  //   const response = await fetch(
+  //     `http://diligentp.com/login?id=${form.id}&pass=${form.pass}`
+  //   );
+  //   // 딥러닝 서버
+  //   // const response = await fetch("http://172.26.21.108:8000/test", {
+  //   //   method: "POST",
+  //   //   headers: {
+  //   //     "Content-Type": "application/json",
+  //   //   },
+  //   //   body: JSON.stringify({
+  //   //     title: "Test",
+  //   //     id: 1,
+  //   //     body: "🤪Chae Jongwook is ugly!!",
+  //   //   }),
+  //   // });
+
+  //   const json = await response.json();
+
+  //   // console.log(json); // 딥러닝 json 확인
+
+  //   // 디비 서버
+  //   useData(json);
+
+  //   console.log(`🌊백엔드 통신: ${JSON.stringify(json)}`);
+  // };
+
+  // useEffect(() => {
+  //   getApi();
+  // }, [form]);
 
   return (
     <View style={styles.block}>
@@ -49,13 +99,25 @@ const SignInScreen = ({ navigation: { navigate } }) => {
         style={styles.image}
         resizeMode="contain"
       />
+      <TextInput
+        value={form.id}
+        onChangeText={createChangeTextHandle("id")}
+        placeholder="아이디"
+      />
+      <TextInput
+        value={form.password}
+        onChangeText={createChangeTextHandle("pass")}
+        placeholder="비밀번호"
+        secureTextEntry
+      />
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
           // data.name === "박정현"
           //   ? navigate("Tabs", { screen: "Home" })
           //   : console.log("Error name");
-          navigate("Tabs", { screen: "Home" });
+          onSubmit(),
+            loading === true ? navigate("Tabs", { screen: "Home" }) : null;
         }}
       >
         <Text style={styles.text}>LogIn</Text>

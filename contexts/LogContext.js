@@ -15,7 +15,7 @@ export const LogContextProvider = ({ children }) => {
     { id: 2, text: "ReactNative Test2", done: false },
   ]);
 
-  console.log("🧩전역 works 상태: ", works);
+  // console.log("🧩전역 works 상태: ", works);
 
   return (
     <LogContext.Provider value={{ works, setWorks }}>
