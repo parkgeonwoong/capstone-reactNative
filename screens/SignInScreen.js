@@ -15,20 +15,18 @@ import {
   Alert,
 } from "react-native";
 import BackApi from "../components/BackApi";
-import { PINK, RED } from "../components/Colors";
+import { BLACK, PINK, RED } from "../components/Colors";
 
 const SignInScreen = ({ navigation: { navigate } }) => {
   // 서버와 통신 상태 값
-  const [data, useData] = useState("");
+  const [data, setData] = useState("");
   const [form, setForm] = useState({
     id: "",
     pass: "",
   });
   const [loading, setLoading] = useState(false);
 
-  // console.log(data);
-  // console.log(data === null);
-  // console.log(form);
+  let formData = form;
 
   const createChangeTextHandle = (name) => (value) => {
     setForm({ ...form, [name]: value });
@@ -38,90 +36,87 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     Keyboard.dismiss();
     console.log("form: ", form);
 
-    // useData("");
-    useData(BackApi(`login?id=${form.id}&pass=${form.pass}`));
+    setData(BackApi(`login?id=${form.id}&pass=${form.pass}`));
 
     console.log("data: ", data);
-    // console.log(typeof form.id);
-
-    // useEffect(() => {
-    //   getApi();
-    // }, []);
+    console.log(typeof data);
 
     // form.id !== data.userid && form.pass !== data.userpass
-
-    if (form.id !== data.userid && form.pass !== data.userpass) {
-      console.log("불일치");
-      Alert.alert("불일치");
-      setLoading(false);
-    } else {
+    if (typeof data == "object") {
       setLoading(true);
+    } else {
+      Alert.alert("아이디 또는 비밀번호가 틀렸습니다.");
+      setLoading(false);
     }
   };
 
-  // // 통신 API
+  // useEffect(() => {
+  //   BackApi();
+  // }, [form]);
+
+  // 통신 API
   // const getApi = async () => {
-  //   // 디비 서버
-  //   const response = await fetch(
-  //     `http://diligentp.com/login?id=${form.id}&pass=${form.pass}`
-  //   );
-  //   // 딥러닝 서버
-  //   // const response = await fetch("http://172.26.21.108:8000/test", {
-  //   //   method: "POST",
-  //   //   headers: {
-  //   //     "Content-Type": "application/json",
-  //   //   },
-  //   //   body: JSON.stringify({
-  //   //     title: "Test",
-  //   //     id: 1,
-  //   //     body: "🤪Chae Jongwook is ugly!!",
-  //   //   }),
-  //   // });
-
-  //   const json = await response.json();
-
-  //   // console.log(json); // 딥러닝 json 확인
-
-  //   // 디비 서버
-  //   useData(json);
-
-  //   console.log(`🌊백엔드 통신: ${JSON.stringify(json)}`);
+  //   try {
+  //     const response = await fetch(
+  //       `http://diligentp.com/login?id=${form.id}&pass=${form.pass}`
+  //     );
+  //     const json = await response.json();
+  //     await setData(json);
+  //     console.log(`🌊백엔드 통신: ${JSON.stringify(json)}`);
+  //     setLoading(true);
+  //   } catch (err) {
+  //     console.log("값을 입력받는중... : ", err);
+  //   }
   // };
 
   // useEffect(() => {
   //   getApi();
-  // }, [form]);
+  // }, [formData]);
+
+  // 딥러닝 서버
+  // const response = await fetch("http://172.26.21.108:8000/test", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     title: "Test",
+  //     id: 1,
+  //     body: "🤪Chae Jongwook is ugly!!",
+  //   }),
+  // });
 
   return (
     <View style={styles.block}>
       <Image
         source={require("../assets/logo.png")}
-        style={styles.image}
+        style={styles.boxImage}
         resizeMode="contain"
       />
-      <TextInput
-        value={form.id}
-        onChangeText={createChangeTextHandle("id")}
-        placeholder="아이디"
-      />
-      <TextInput
-        value={form.password}
-        onChangeText={createChangeTextHandle("pass")}
-        placeholder="비밀번호"
-        secureTextEntry
-      />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          // data.name === "박정현"
-          //   ? navigate("Tabs", { screen: "Home" })
-          //   : console.log("Error name");
-          onSubmit(),
-            loading === true ? navigate("Tabs", { screen: "Home" }) : null;
-        }}
-      >
-        <Text style={styles.text}>LogIn</Text>
-      </TouchableOpacity>
+      <View style={styles.boxForm}>
+        <TextInput
+          style={styles.formInput}
+          value={form.id}
+          onChangeText={createChangeTextHandle("id")}
+          placeholder="아이디"
+        />
+        <TextInput
+          style={styles.formInput}
+          value={form.password}
+          onChangeText={createChangeTextHandle("pass")}
+          placeholder="비밀번호"
+          secureTextEntry
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            onSubmit(),
+              loading === true ? navigate("Tabs", { screen: "Home" }) : null;
+          }}
+        >
+          <Text style={styles.text}>LogIn</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -130,12 +125,29 @@ const styles = StyleSheet.create({
   block: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
     backgroundColor: "white",
   },
-  image: {
-    width: 350,
-    height: 350,
+  boxImage: {
+    flex: 2,
+    width: 300,
+    height: 300,
+  },
+  boxForm: {
+    flex: 3,
+    width: "100%",
+    alignItems: "center",
+    marginTop: 32,
+    // backgroundColor: "tomato",
+  },
+  formInput: {
+    width: "60%",
+    borderColor: BLACK,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    height: 48,
+    marginBottom: 16,
   },
   button: {
     height: 48,
