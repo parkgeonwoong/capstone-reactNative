@@ -28,7 +28,7 @@ const CameraFocus = ({ route }) => {
 
   const getTimer = (getCount) => {
     setGetCount(getCount);
-    console.log("부모 시간 측정: ", getCount);
+    // console.log("부모 시간 측정: ", getCount);
   };
 
   let textureDims =
@@ -48,7 +48,7 @@ const CameraFocus = ({ route }) => {
   // 딥러닝 서버 비동기 연결 처리
   const getApi = async (tensorJson) => {
     // 딥러닝 서버
-    const response = await fetch("http://172.26.21.108:8000/test", {
+    const response = await fetch("http://172.16.5.163:5000/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ const CameraFocus = ({ route }) => {
       // console.log(typeof height)
 
       // 🚨 네트워크 호출
-      // getApi(tensorJson);
+      getApi(tensorJson);
     }
   }
 

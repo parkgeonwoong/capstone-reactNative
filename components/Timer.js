@@ -49,7 +49,8 @@ const SetTimer = ({ getTimer }) => {
 
   // 타이머 기능
   const timer = () => {
-    console.log("자식 시간 측정: ", count);
+    // console.log("자식 시간 측정: ", count);
+    console.log(count);
     getTimer(count);
     const checkMinutes = Math.floor(count / 60);
     const hours = Math.floor(count / 3600);
