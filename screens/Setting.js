@@ -14,7 +14,7 @@ const Setting = () => {
   const logout = async () => {
     await AsyncStorage.removeItem("id");
     console.log("로그아웃 됬음!!");
-    navigation.navigate("SignIn");
+    navigation.navigate("SignIn", { loaded: false });
   };
 
   return (

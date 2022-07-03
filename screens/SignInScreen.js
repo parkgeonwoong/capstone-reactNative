@@ -18,7 +18,7 @@ import {
 import BackApi from "../components/BackApi";
 import { BLACK, PINK, RED } from "../components/Colors";
 
-const SignInScreen = ({ navigation: { navigate } }) => {
+const SignInScreen = ({ navigation: { navigate }, route }) => {
   // 서버와 통신 상태 값
   const [data, setData] = useState("");
   const [form, setForm] = useState({
@@ -26,16 +26,18 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     pass: "",
   });
   const [loading, setLoading] = useState(false);
-  const [ready, setReady] = useState(false);
   const inputRef = useRef();
-
-  let formData = form;
+  const temp = route.params; // 로그아웃시 받아오는 변수
+  // console.log("temp: ", temp);
 
   const createChangeTextHandle = (name) => (value) => {
     setForm({ ...form, [name]: value });
   };
 
-  const onSubmit = () => {
+  console.log("✅loading: ", loading);
+
+  // 로그인 버튼 기능
+  const loginBtn = () => {
     Keyboard.dismiss();
     console.log("form: ", form);
 
@@ -44,23 +46,16 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     console.log("data: ", data);
     console.log(typeof data);
 
-    // form.id !== data.userid && form.pass !== data.userpass
-    if (typeof data == "object") {
-      setLoading(true);
-    } else {
+    if (!loading) {
       Alert.alert("아이디 또는 비밀번호가 틀렸습니다.");
-      setLoading(false);
     }
   };
-
-  // useEffect(() => {
-  //   BackApi();
-  // }, [form]);
 
   // 통신 API
   const getApi = async () => {
     try {
       // await AsyncStorage.removeItem("id");
+      setLoading(temp.loaded);
       const response = await fetch(
         `http://diligentp.com/login?id=${form.id}&pass=${form.pass}`
       );
@@ -75,7 +70,9 @@ const SignInScreen = ({ navigation: { navigate } }) => {
       const loadAsy = await AsyncStorage.getItem("id");
       console.log("[SignInScreen]🔹유저 아이디 저장 값: ", loadAsy);
 
-      setLoading(true);
+      if (loadAsy != null) {
+        setLoading(true);
+      }
     } catch (err) {
       console.log("값을 입력받는중... : ", err);
     }
@@ -126,14 +123,23 @@ const SignInScreen = ({ navigation: { navigate } }) => {
           secureTextEntry
           ref={inputRef}
         />
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            onSubmit(),
-              loading === true ? navigate("Tabs", { screen: "Home" }) : null;
+            loginBtn();
+            loading === true ? navigate("Tabs", { screen: "Home" }) : null;
           }}
         >
-          <Text style={styles.text}>LogIn</Text>
+          <Text style={styles.text}>로그인</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigate("SignIn");
+          }}
+        >
+          <Text style={styles.text}>회원가입</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
     height: 300,
   },
   boxForm: {
-    flex: 1,
+    flex: 1.3,
     width: "100%",
     alignItems: "center",
     marginTop: 32,
@@ -171,6 +177,7 @@ const styles = StyleSheet.create({
   button: {
     height: 48,
     width: "60%",
+    marginTop: 8,
     paddingHorizontal: 16,
     justifyContent: "center",
     alignItems: "center",
