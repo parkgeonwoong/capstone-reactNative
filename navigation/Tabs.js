@@ -10,6 +10,7 @@ import Home from "../screens/Home";
 import { BAR_ACTIVE, BG_COLOR, BAR_INACTIVE } from "../components/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Image, TouchableOpacity } from "react-native";
+import Setting from "../screens/Setting";
 
 const Tab = createBottomTabNavigator();
 
@@ -107,7 +108,7 @@ const Tabs = () => {
       {/* 설정 페이지 */}
       <Tab.Screen
         name="Setting"
-        component={Analysis}
+        component={Setting}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="md-settings" size={size} color={color} />;

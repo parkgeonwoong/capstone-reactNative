@@ -3,7 +3,7 @@
 @관련된 컴포넌트: Root, Tabs
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Text,
   View,
@@ -25,6 +25,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     pass: "",
   });
   const [loading, setLoading] = useState(false);
+  const inputRef = useRef();
 
   let formData = form;
 
@@ -99,6 +100,9 @@ const SignInScreen = ({ navigation: { navigate } }) => {
           value={form.id}
           onChangeText={createChangeTextHandle("id")}
           placeholder="아이디"
+          onSubmitEditing={() => {
+            inputRef.current.focus();
+          }}
         />
         <TextInput
           style={styles.formInput}
@@ -106,6 +110,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
           onChangeText={createChangeTextHandle("pass")}
           placeholder="비밀번호"
           secureTextEntry
+          ref={inputRef}
         />
         <TouchableOpacity
           style={styles.button}
@@ -129,12 +134,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   boxImage: {
-    flex: 2,
+    flex: 1,
     width: 300,
     height: 300,
   },
   boxForm: {
-    flex: 3,
+    flex: 1,
     width: "100%",
     alignItems: "center",
     marginTop: 32,
