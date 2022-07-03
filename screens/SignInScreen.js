@@ -26,6 +26,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     pass: "",
   });
   const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false);
   const inputRef = useRef();
 
   let formData = form;
@@ -65,12 +66,14 @@ const SignInScreen = ({ navigation: { navigate } }) => {
       );
       const json = await response.json();
       await setData(json);
-      console.log(`🔸백엔드에서 가져온 값: ${JSON.stringify(json)}`);
+      console.log(
+        `[SignInScreen]🔸백엔드에서 가져온 값: ${JSON.stringify(json)}`
+      );
       console.log();
 
-      await AsyncStorage.setItem("id", JSON.stringify(data));
+      await AsyncStorage.setItem("id", JSON.stringify(json));
       const loadAsy = await AsyncStorage.getItem("id");
-      console.log("🔹유저 아이디 저장 값: ", loadAsy);
+      console.log("[SignInScreen]🔹유저 아이디 저장 값: ", loadAsy);
 
       setLoading(true);
     } catch (err) {
@@ -79,8 +82,11 @@ const SignInScreen = ({ navigation: { navigate } }) => {
   };
 
   useEffect(() => {
-    getApi();
-  }, [formData]);
+    getApi(),
+      AsyncStorage.getItem("id").then((value) =>
+        navigate(value === null ? "SignIn" : "Tabs", { screen: "Home" })
+      );
+  }, [form]);
 
   // 딥러닝 서버
   // const response = await fetch("http://172.26.21.108:8000/test", {
