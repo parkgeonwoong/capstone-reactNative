@@ -64,7 +64,7 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
       console.log(
         `[SignInScreen]🔸백엔드에서 가져온 값: ${JSON.stringify(json)}`
       );
-      console.log();
+      // console.log("JSON 통신 상태는? ", response.status);
 
       await AsyncStorage.setItem("id", JSON.stringify(json));
       const loadAsy = await AsyncStorage.getItem("id");
