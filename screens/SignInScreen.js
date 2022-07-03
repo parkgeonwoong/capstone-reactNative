@@ -3,6 +3,7 @@
 @관련된 컴포넌트: Root, Tabs
 */
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Text,
@@ -58,12 +59,19 @@ const SignInScreen = ({ navigation: { navigate } }) => {
   // 통신 API
   const getApi = async () => {
     try {
+      // await AsyncStorage.removeItem("id");
       const response = await fetch(
         `http://diligentp.com/login?id=${form.id}&pass=${form.pass}`
       );
       const json = await response.json();
       await setData(json);
-      console.log(`🌊백엔드 통신: ${JSON.stringify(json)}`);
+      console.log(`🔸백엔드에서 가져온 값: ${JSON.stringify(json)}`);
+      console.log();
+
+      await AsyncStorage.setItem("id", JSON.stringify(data));
+      const loadAsy = await AsyncStorage.getItem("id");
+      console.log("🔹유저 아이디 저장 값: ", loadAsy);
+
       setLoading(true);
     } catch (err) {
       console.log("값을 입력받는중... : ", err);
