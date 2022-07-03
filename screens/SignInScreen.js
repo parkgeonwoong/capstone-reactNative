@@ -136,7 +136,7 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigate("SignIn");
+            navigate("SignUp");
           }}
         >
           <Text style={styles.text}>회원가입</Text>

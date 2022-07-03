@@ -10,6 +10,7 @@ import Tabs from "./Tabs";
 import CameraFocus from "../screens/CameraFocus";
 import WorkItem from "../components/WorkItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SignUpScreen from "../screens/SignUpScreen";
 
 const Nav = createNativeStackNavigator();
 
@@ -20,6 +21,12 @@ const Root = () => {
       <Nav.Screen
         name="SignIn"
         component={SignInScreen}
+        options={{ headerShown: false }}
+      />
+      {/* 회원가입 페이지 */}
+      <Nav.Screen
+        name="SignUp"
+        component={SignUpScreen}
         options={{ headerShown: false }}
       />
       {/* 메인 페이지 Tabs  */}
