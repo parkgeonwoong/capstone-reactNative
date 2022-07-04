@@ -23,9 +23,10 @@ const SignUpScreen = ({ navigation }) => {
   const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const inputRef = useRef();
+  const refName = useRef();
+  const refPass = useRef();
 
-  console.log("id 텍스트값: ", id);
+  //   console.log("텍스트 값 확인 : ", id, name, pass);
 
   return (
     <View style={styles.block}>
@@ -39,34 +40,38 @@ const SignUpScreen = ({ navigation }) => {
           style={styles.formInput}
           onChangeText={(textId) => setId(textId)}
           placeholder="아이디"
+          returnKeyType="next"
           onSubmitEditing={() => {
-            inputRef.current.focus();
+            refName.current.focus();
           }}
         />
         <TextInput
           style={styles.formInput}
-          onChangeText={null}
+          onChangeText={(textName) => setName(textName)}
           placeholder="이름"
-          ref={inputRef}
+          returnKeyType="next"
+          ref={refName}
+          onSubmitEditing={() => {
+            refPass.current.focus();
+          }}
         />
         <TextInput
           style={styles.formInput}
-          onChangeText={null}
+          onChangeText={(textPass) => setPass(textPass)}
           placeholder="비밀번호"
+          returnKeyType="next"
           secureTextEntry
-          ref={inputRef}
+          ref={refPass}
         />
 
         <TouchableOpacity style={styles.button} onPress={null}>
           <Text style={styles.text}>회원가입</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={null}>
-          <Text
-            style={styles.text}
-            onPress={() => navigation.navigate("SignIn")}
-          >
-            로그인
-          </Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("SignIn")}
+        >
+          <Text style={styles.text}>로그인</Text>
         </TouchableOpacity>
       </View>
     </View>

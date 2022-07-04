@@ -1,6 +1,6 @@
 /* 
 @컴포넌트 이름: 로그인 페이지
-@관련된 컴포넌트: Root, Tabs
+@관련된 컴포넌트: Root, Tabs,SignUpScreen
 */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
