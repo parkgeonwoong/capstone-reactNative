@@ -3,7 +3,7 @@
 @관련된 컴포넌트: Root, Tabs, SignInScreen
 */
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Text,
@@ -26,6 +26,10 @@ const SignUpScreen = ({ navigation }) => {
   const refName = useRef();
   const refPass = useRef();
 
+  //   useEffect(() => {
+  //     handleSubmitBtn();
+  //   }, [loading]);
+
   const handleSubmitBtn = () => {
     if (!id) {
       alert("아이디를 입력하세요.");
@@ -39,6 +43,58 @@ const SignUpScreen = ({ navigation }) => {
       alert("비밀번홀를 입력하세요.");
       return;
     }
+
+    setLoading(true);
+
+    // Body: x-www-form-urlencoded 형식
+    var dataToSend = {
+      userid: id,
+      username: name,
+      userpass: pass,
+    };
+    var formBody = [];
+    for (var key in dataToSend) {
+      var encodedKey = encodeURIComponent(key);
+      var encodedValue = encodeURIComponent(dataToSend[key]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    // console.log("formbody:", formBody);
+
+    fetch(`http://diligentp.com/reg`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: formBody,
+    })
+      .then((response) => {
+        console.log(response.status);
+        response.json();
+      })
+      .then((responseJson) => {
+        console.log("responseJson", responseJson);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // Body: JSON 형식
+    // fetch(`http://diligentp.com/reg`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     userid: id,
+    //     username: name,
+    //     userpass: pass,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((responseJson) => console.log("responseJson", responseJson))
+    //   .catch((err) => console.log(err));
   };
 
   return (

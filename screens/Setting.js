@@ -7,7 +7,7 @@ const Setting = () => {
   const navigation = useNavigation();
   const Test = async () => {
     const loadAsy = await AsyncStorage.getItem("id");
-    console.log("[Setting.js] 유저가 존재한다: ", loadAsy);
+    console.log("[Setting] 유저가 존재한다: ", loadAsy);
   };
   Test();
 

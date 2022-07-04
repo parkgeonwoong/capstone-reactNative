@@ -15,8 +15,8 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
+import { BLACK, RED } from "../components/Colors";
 import BackApi from "../components/BackApi";
-import { BLACK, PINK, RED } from "../components/Colors";
 
 const SignInScreen = ({ navigation: { navigate }, route }) => {
   // 서버와 통신 상태 값
@@ -28,13 +28,13 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
   const temp = route.params; // 로그아웃시 받아오는 변수
-  // console.log("temp: ", temp);
+  // console.log("[SignIn] route Param: ", temp);
 
   const createChangeTextHandle = (name) => (value) => {
     setForm({ ...form, [name]: value });
   };
 
-  console.log("✅loading: ", loading);
+  // console.log("[SignIn] loading: ", loading);
 
   // 로그인 버튼 기능
   const loginBtn = () => {
@@ -64,7 +64,7 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
       console.log(
         `[SignInScreen]🔸백엔드에서 가져온 값: ${JSON.stringify(json)}`
       );
-      // console.log("JSON 통신 상태는? ", response.status);
+      // console.log("[SignIn] JSON 상태: ", response.status);
 
       await AsyncStorage.setItem("id", JSON.stringify(json));
       const loadAsy = await AsyncStorage.getItem("id");
@@ -84,19 +84,6 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
         navigate(value === null ? "SignIn" : "Tabs", { screen: "Home" })
       );
   }, [form]);
-
-  // 딥러닝 서버
-  // const response = await fetch("http://172.26.21.108:8000/test", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     title: "Test",
-  //     id: 1,
-  //     body: "🤪Chae Jongwook is ugly!!",
-  //   }),
-  // });
 
   return (
     <View style={styles.block}>
@@ -163,7 +150,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     marginTop: 32,
-    // backgroundColor: "tomato",
   },
   formInput: {
     width: "60%",
@@ -183,13 +169,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     backgroundColor: RED,
-    // backgroundColor: "white",
     elevation: 5,
   },
   text: {
     fontWeight: "bold",
     fontSize: 14,
-    // color: "#495057",
     color: "white",
     letterSpacing: 1,
   },
