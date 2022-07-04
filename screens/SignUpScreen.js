@@ -26,7 +26,20 @@ const SignUpScreen = ({ navigation }) => {
   const refName = useRef();
   const refPass = useRef();
 
-  //   console.log("텍스트 값 확인 : ", id, name, pass);
+  const handleSubmitBtn = () => {
+    if (!id) {
+      alert("아이디를 입력하세요.");
+      return;
+    }
+    if (!name) {
+      alert("이름을 입력하세요.");
+      return;
+    }
+    if (!pass) {
+      alert("비밀번홀를 입력하세요.");
+      return;
+    }
+  };
 
   return (
     <View style={styles.block}>
@@ -44,6 +57,7 @@ const SignUpScreen = ({ navigation }) => {
           onSubmitEditing={() => {
             refName.current.focus();
           }}
+          blurOnSubmit={false}
         />
         <TextInput
           style={styles.formInput}
@@ -54,6 +68,7 @@ const SignUpScreen = ({ navigation }) => {
           onSubmitEditing={() => {
             refPass.current.focus();
           }}
+          blurOnSubmit={false}
         />
         <TextInput
           style={styles.formInput}
@@ -62,9 +77,10 @@ const SignUpScreen = ({ navigation }) => {
           returnKeyType="next"
           secureTextEntry
           ref={refPass}
+          blurOnSubmit={false}
         />
 
-        <TouchableOpacity style={styles.button} onPress={null}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmitBtn}>
           <Text style={styles.text}>회원가입</Text>
         </TouchableOpacity>
         <TouchableOpacity
