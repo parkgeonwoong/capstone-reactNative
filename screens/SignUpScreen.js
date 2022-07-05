@@ -70,11 +70,11 @@ const SignUpScreen = ({ navigation }) => {
       body: formBody,
     })
       .then((response) => {
-        console.log(response.status);
-        response.json();
+        // console.log(JSON.stringify(response.status));
+        return response.json();
       })
-      .then((responseJson) => {
-        console.log("responseJson", responseJson);
+      .then((data) => {
+        console.log(data);
       })
       .catch((err) => {
         console.log(err);
