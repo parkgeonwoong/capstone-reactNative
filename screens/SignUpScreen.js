@@ -36,7 +36,7 @@ const SignUpScreen = ({ navigation }) => {
       return;
     }
     if (!pass) {
-      alert("비밀번홀를 입력하세요.");
+      alert("비밀번호를 입력하세요.");
       return;
     }
 
@@ -191,10 +191,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    fontWeight: "bold",
-    fontSize: 14,
+    // fontWeight: "bold",
+    fontSize: 18,
     color: "white",
     letterSpacing: 1,
+    fontFamily: "BMHANNAPro",
   },
 });
 

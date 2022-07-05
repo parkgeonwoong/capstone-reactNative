@@ -16,56 +16,76 @@ import {
   Alert,
 } from "react-native";
 import { BLACK, RED } from "../components/Colors";
+import BackApi from "../components/BackApi";
 
 const SignInScreen = ({ navigation: { navigate }, route }) => {
-  const [id, setId] = useState("");
-  const [pass, setPass] = useState("");
+  // 서버와 통신 상태 값
+  const [data, setData] = useState("");
+  const [form, setForm] = useState({
+    id: "",
+    pass: "",
+  });
+  const [loading, setLoading] = useState(false);
 
   const refPass = useRef();
 
   const temp = route.params; // 로그아웃시 받아오는 변수
+  // console.log("[SignIn] route Param: ", temp);
 
-  // 로그인 버튼 기능
-  const handleSubmitBtn = () => {
-    Keyboard.dismiss();
-    if (!id) {
-      alert("아이디를 입력하세요.");
-      return;
-    }
-    if (!pass) {
-      alert("비밀번호를 입력하세요");
-      return;
-    }
-
-    fetch(`http://diligentp.com/login?id=${id}&pass=${pass}`)
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json();
-        } else {
-          alert("없는 계정입니다.");
-          return null;
-        }
-      })
-      .then((data) => {
-        console.log("data 값:", data);
-        if (data === null) {
-          return;
-        } else {
-          AsyncStorage.setItem("id", JSON.stringify(data));
-          navigate("Tabs", { screen: "Home" });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const createChangeTextHandle = (name) => (value) => {
+    setForm({ ...form, [name]: value });
   };
 
-  // 스토리지에 로그인 정보 있을 경우 -> 자동 로그인
+  // console.log("[SignIn] loading: ", loading);
+
+  // 로그인 버튼 기능
+  const loginBtn = () => {
+    Keyboard.dismiss();
+    // console.log("form: ", form);
+
+    // setData(BackApi(`login?id=${form.id}&pass=${form.pass}`));
+
+    console.log("data: ", data);
+    // console.log(typeof data);
+
+    if (!loading) {
+      Alert.alert("아이디 또는 비밀번호가 틀렸습니다.");
+    }
+  };
+
+  // 통신 API
+  const getApi = async () => {
+    try {
+      // await AsyncStorage.removeItem("id");
+      setLoading(temp.loaded);
+      const response = await fetch(
+        `http://diligentp.com/login?id=${form.id}&pass=${form.pass}`
+      );
+      const json = await response.json();
+      await setData(json);
+      console.log(
+        `[SignInScreen]🔸백엔드에서 가져온 값: ${JSON.stringify(json)}`
+      );
+      // console.log("[SignIn] JSON 상태: ", response.status);
+
+      await AsyncStorage.setItem("id", JSON.stringify(json));
+      const loadAsy = await AsyncStorage.getItem("id");
+      console.log("[SignInScreen]🔹유저 아이디 저장 값: ", loadAsy);
+
+      if (loadAsy != null) {
+        setLoading(true);
+      }
+    } catch (err) {
+      console.log("값을 입력받는중... : ", err);
+    }
+  };
+
   useEffect(() => {
-    AsyncStorage.getItem("id").then((value) =>
-      navigate(value === null ? "SignIn" : "Tabs", { screen: "Home" })
-    );
-  }, []);
+    getApi(),
+      AsyncStorage.getItem("id").then((value) =>
+        navigate(value === null ? "SignIn" : "Tabs", { screen: "Home" })
+      );
+  }, [form]);
 
   return (
     <View style={styles.fullScreen}>
@@ -77,7 +97,8 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
       <View style={styles.boxForm}>
         <TextInput
           style={styles.formInput}
-          onChangeText={(textId) => setId(textId)}
+          value={form.id}
+          onChangeText={createChangeTextHandle("id")}
           placeholder="아이디"
           onSubmitEditing={() => {
             refPass.current.focus();
@@ -86,7 +107,8 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
         />
         <TextInput
           style={styles.formInput}
-          onChangeText={(textPass) => setPass(textPass)}
+          value={form.password}
+          onChangeText={createChangeTextHandle("pass")}
           placeholder="비밀번호"
           secureTextEntry
           ref={refPass}
@@ -96,7 +118,8 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            handleSubmitBtn();
+            loginBtn();
+            loading === true ? navigate("Tabs", { screen: "Home" }) : null;
           }}
         >
           <Text style={styles.text}>로그인</Text>
@@ -153,11 +176,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    // fontWeight: "bold",
-    fontSize: 18,
+    fontWeight: "bold",
+    fontSize: 14,
     color: "white",
     letterSpacing: 1,
-    fontFamily: "BMHANNAPro",
   },
 });
 

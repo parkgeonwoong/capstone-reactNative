@@ -30,7 +30,7 @@ const ItemText = styled.Text`
   flex: 1;
   font-size: 16px;
   font-family: "BMHANNAAir";
-  letter-spacing: 0.5;
+  letter-spacing: 0.5px;
 `;
 
 const RemovePlace = styled.View`
