@@ -83,6 +83,7 @@ const CameraFocus = ({ route }) => {
       height,
       channel,
       faceData,
+      getCount,
     });
     // const b = JSON.parse(jtensor)
 

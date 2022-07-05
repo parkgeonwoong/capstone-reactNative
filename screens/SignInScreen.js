@@ -39,12 +39,12 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
   // 로그인 버튼 기능
   const loginBtn = () => {
     Keyboard.dismiss();
-    console.log("form: ", form);
+    // console.log("form: ", form);
 
     // setData(BackApi(`login?id=${form.id}&pass=${form.pass}`));
 
     console.log("data: ", data);
-    console.log(typeof data);
+    // console.log(typeof data);
 
     if (!loading) {
       Alert.alert("아이디 또는 비밀번호가 틀렸습니다.");

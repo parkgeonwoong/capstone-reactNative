@@ -26,10 +26,6 @@ const SignUpScreen = ({ navigation }) => {
   const refName = useRef();
   const refPass = useRef();
 
-  //   useEffect(() => {
-  //     handleSubmitBtn();
-  //   }, [loading]);
-
   const handleSubmitBtn = () => {
     if (!id) {
       alert("아이디를 입력하세요.");
@@ -74,7 +70,13 @@ const SignUpScreen = ({ navigation }) => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        console.log("[SignUp]:", data);
+        if (data.status === "success") {
+          alert("✨ 회원가입에 성공하였습니다.");
+          navigation.replace("SignIn");
+        } else if (data.status === "duplicate") {
+          alert("이미 존재하는 아이디입니다.");
+        }
       })
       .catch((err) => {
         console.log(err);
