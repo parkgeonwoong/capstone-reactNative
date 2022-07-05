@@ -1,3 +1,5 @@
+# CapStone 프로젝트
+
 ### 작업 환경
 
 |    name    |                       value                        |
@@ -10,6 +12,19 @@
 |  PlatForm  | Create-React-Native-App (CRNA = Expo&React Native) |
 | FrameWork  |                    React Native                    |
 |  License   |                    MIT License                     |
+
+<br>
+
+### Git Commit message
+
+| emoji | commit message |    when to use it    |
+| :---: | :------------: | :------------------: |
+|  ✨   |      Feat      |   새로운 기능 추가   |
+|  🐛   |      Fix       | 버그 수정, 에러 수정 |
+|  💄   |     Style      |   UI, 스타일 수정    |
+|  📝   |      Docs      |      문서 수정       |
+|  ♻️   |    Refactor    |    코드 리팩터링     |
+|  ✅   |     Check      |  체크포인트, 테스트  |
 
 <br>
 
