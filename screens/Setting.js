@@ -1,7 +1,9 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { BG_COLOR } from "../components/Colors";
+import { Ionicons } from "@expo/vector-icons";
 
 const Setting = () => {
   const navigation = useNavigation();
@@ -18,11 +20,42 @@ const Setting = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>설정 페이지</Text>
-      <Button title="로그아웃" onPress={logout} />
+    <View style={styles.fullScreen}>
+      <View style={styles.block}>
+        <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
+          <Text style={styles.text}>로그아웃</Text>
+          <Ionicons name="arrow-forward" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  fullScreen: {
+    flex: 1,
+    backgroundColor: BG_COLOR,
+  },
+  block: {
+    flex: 1,
+    marginTop: 10,
+    // backgroundColor: "tomato",
+  },
+  logoutBtn: {
+    margin: 10,
+    padding: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    elevation: 0.5,
+    borderRadius: 10,
+  },
+  text: {
+    fontSize: 15,
+    fontWeight: "600",
+    letterSpacing: 1,
+    fontFamily: "BMHANNAAir",
+  },
+});
 
 export default Setting;

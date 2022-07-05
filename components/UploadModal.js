@@ -33,7 +33,7 @@ const UploadModal = ({ visible, onClose, onInsert }) => {
     >
       <TouchableOpacity style={styles.background} onPress={onClose}>
         <View style={styles.whiteBox}>
-          <Text style={styles.title}>Title</Text>
+          <Text style={styles.title}>카테고리</Text>
           <TextInput
             placeholder="제목을 입력하세요."
             style={styles.input}
@@ -61,9 +61,10 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   title: {
-    paddingVertical: 4,
+    paddingVertical: 8,
     paddingHorizontal: 8,
     fontSize: 16,
+    fontFamily: "BMHANNAPro",
   },
 
   input: {

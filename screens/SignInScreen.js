@@ -86,7 +86,7 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
   }, [form]);
 
   return (
-    <View style={styles.block}>
+    <View style={styles.fullScreen}>
       <Image
         source={require("../assets/logo.png")}
         style={styles.boxImage}
@@ -134,7 +134,7 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
 };
 
 const styles = StyleSheet.create({
-  block: {
+  fullScreen: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

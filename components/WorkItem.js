@@ -29,6 +29,8 @@ const TextBtn = styled.TouchableOpacity`
 const ItemText = styled.Text`
   flex: 1;
   font-size: 16px;
+  font-family: "BMHANNAAir";
+  letter-spacing: 0.5;
 `;
 
 const RemovePlace = styled.View`

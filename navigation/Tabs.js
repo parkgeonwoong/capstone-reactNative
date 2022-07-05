@@ -9,7 +9,7 @@ import Analysis from "../screens/Analysis";
 import Home from "../screens/Home";
 import { BAR_ACTIVE, BG_COLOR, BAR_INACTIVE } from "../components/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Image, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity } from "react-native";
 import Setting from "../screens/Setting";
 
 const Tab = createBottomTabNavigator();
@@ -40,7 +40,9 @@ const Tabs = () => {
         headerStyle: {
           backgroundColor: BG_COLOR,
         },
-        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontFamily: "BMHANNAPro",
+        },
 
         tabBarStyle: {
           backgroundColor: BG_COLOR,
@@ -65,6 +67,7 @@ const Tabs = () => {
             return <Ionicons name="bar-chart" color={color} size={size} />;
           },
           tabBarLabel: "분석",
+          title: "분석",
         }}
       />
       {/* 랭크 페이지 */}
@@ -76,6 +79,7 @@ const Tabs = () => {
             return <Ionicons name="trophy" size={size} color={color} />;
           },
           tabBarLabel: "랭킹",
+          title: "랭킹",
         }}
       />
       {/* 메인 홈 페이지 */}
@@ -89,9 +93,8 @@ const Tabs = () => {
           },
           tabBarLabel: "홈",
           title: `${month}월 ${day}일`,
-          headerTitleStyle: {
-            fontWeight: "700",
-          },
+
+          headerTitleAlign: "center",
         }}
       />
       {/* 프로필 페이지 */}
@@ -103,6 +106,7 @@ const Tabs = () => {
             return <Ionicons name="person" size={size} color={color} />;
           },
           tabBarLabel: "정보",
+          title: "내 정보",
         }}
       />
       {/* 설정 페이지 */}
@@ -114,6 +118,7 @@ const Tabs = () => {
             return <Ionicons name="md-settings" size={size} color={color} />;
           },
           tabBarLabel: "설정",
+          title: "설정",
         }}
       />
     </Tab.Navigator>

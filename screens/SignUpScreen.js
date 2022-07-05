@@ -100,7 +100,7 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.block}>
+    <View style={styles.fullScreen}>
       <Image
         source={require("../assets/logo.png")}
         style={styles.boxImage}
@@ -153,7 +153,7 @@ const SignUpScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  block: {
+  fullScreen: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
