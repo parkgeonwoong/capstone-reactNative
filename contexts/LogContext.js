@@ -11,8 +11,8 @@ const LogContext = createContext();
 export const LogContextProvider = ({ children }) => {
   //   const [text, setText] = useState("");
   const [works, setWorks] = useState([
-    { id: 1, text: "ReactNative Test", count: 10, done: true },
-    { id: 2, text: "ReactNative Test2", count: 200, done: false },
+    { id: 1, text: "영어 공부", count: 10, done: true },
+    { id: 2, text: "코딩 공부", count: 200, done: false },
   ]);
 
   // console.log("🧩전역 works 상태: ", works);
