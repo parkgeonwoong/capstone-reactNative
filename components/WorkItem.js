@@ -38,7 +38,7 @@ const RemovePlace = styled.View`
   height: 28px; /* background-color: chocolate; */
 `;
 
-const WorkItem = ({ id, text, done, onToggle, onRemove }) => {
+const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
   const navigation = useNavigation(); // Hook: Screen으로 사용되지 않는 컴포넌트에 navigation 객체 사용
   const remove = () => {
     Alert.alert(
@@ -64,7 +64,9 @@ const WorkItem = ({ id, text, done, onToggle, onRemove }) => {
     <WrapperItem>
       <TimerBtn
         onPress={() => {
-          done ? null : navigation.navigate("Cameras", { id: id });
+          done
+            ? null
+            : navigation.navigate("Cameras", { id: id, count: count });
         }}
       >
         <Ionicons

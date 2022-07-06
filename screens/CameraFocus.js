@@ -22,14 +22,15 @@ var nextImageTensor;
 LogBox.ignoreAllLogs(true);
 
 const CameraFocus = ({ route }) => {
+  // console.log(route.params);
   const [hasPermission, setHasPermission] = useState(null);
   const [faceData, setFaceData] = React.useState([]);
   const [getCount, setGetCount] = useState(0); // Timer.js에서 시간 state
 
-  const getTimer = (getCount) => {
-    setGetCount(getCount);
-    // console.log("부모 시간 측정: ", getCount);
+  const getTimer = (countData) => {
+    setGetCount(countData);
   };
+  // console.log("타이머에서 가져온 시간: ", getCount);
 
   let textureDims =
     Platform.OS == "ios"
@@ -110,7 +111,7 @@ const CameraFocus = ({ route }) => {
     <View style={styles.container}>
       <View style={styles.timerBox}>
         {/* <Text>Camera Page : {route.params.id} </Text> */}
-        <SetTimer getTimer={getTimer} />
+        <SetTimer getTimer={getTimer} data={route.params} />
       </View>
       <View style={styles.cameraBox}>
         <TensorCamera

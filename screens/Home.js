@@ -46,6 +46,7 @@ const Home = () => {
       id: nextId,
       text,
       done: false,
+      count: 0,
     };
     setWorks(works.concat(work));
   };

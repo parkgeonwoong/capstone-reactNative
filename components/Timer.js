@@ -3,9 +3,16 @@
   @관련된 컴포넌트: CameraFocus
 */
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BLUE } from "./Colors";
+import LogContext from "../contexts/LogContext";
 
 // 사용자 정의 hook
 const useCounter = (initialValue, ms) => {
@@ -40,18 +47,20 @@ const useCounter = (initialValue, ms) => {
   return { count, starting, start, stop, reset };
 };
 
-const SetTimer = ({ getTimer }) => {
+const SetTimer = ({ getTimer, data }) => {
+  // console.log("카메라에서 가져온값", data.count);
   // 시, 분, 초를 state로 저장
   const [currentHours, setCurrentHours] = useState(0);
   const [currentMinutes, setCurrentMinutes] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(0);
-  const { count, starting, start, stop, reset } = useCounter(0, 1000);
+  const { count, starting, start, stop, reset } = useCounter(data.count, 1000);
 
   // 타이머 기능
   const timer = () => {
     // console.log("자식 시간 측정: ", count);
+    data.count = count;
     console.log(count);
-    getTimer(count);
+    getTimer(data.count);
     const checkMinutes = Math.floor(count / 60);
     const hours = Math.floor(count / 3600);
     const minutes = checkMinutes % 60;

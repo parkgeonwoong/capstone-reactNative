@@ -17,6 +17,7 @@ const WorkList = ({ works, onToggle, onRemove }) => {
         <WorkItem
           id={item.id}
           text={item.text}
+          count={item.count}
           done={item.done}
           onToggle={onToggle}
           onRemove={onRemove}
