@@ -58,7 +58,7 @@ const SignUpScreen = ({ navigation }) => {
 
     // console.log("formbody:", formBody);
 
-    fetch(`http://diligentp.com/reg`, {
+    fetch(`http://diligentp.com/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
@@ -66,16 +66,20 @@ const SignUpScreen = ({ navigation }) => {
       body: formBody,
     })
       .then((response) => {
-        // console.log(JSON.stringify(response.status));
-        return response.json();
+        console.log(JSON.stringify(response));
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          return null;
+        }
       })
       .then((data) => {
         console.log("[SignUp]:", data);
-        if (data.status === "success") {
+        if (data === null) {
+          alert("이미 존재하는 아이디입니다.");
+        } else {
           alert("✨ 회원가입에 성공하였습니다.");
           navigation.replace("SignIn");
-        } else if (data.status === "duplicate") {
-          alert("이미 존재하는 아이디입니다.");
         }
       })
       .catch((err) => {

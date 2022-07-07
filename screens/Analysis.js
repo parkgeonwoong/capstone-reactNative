@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { BG_COLOR } from "../components/Colors";
 import LogContext from "../contexts/LogContext";
 import {
@@ -47,22 +47,32 @@ const Analysis = () => {
       Object.keys(items).forEach((key) => {
         newItems[key] = items[key];
       });
-      setItems({
-        items: newItems,
-      });
+      // setItems({
+      //   items: newItems,
+      // });
+      setItems(newItems);
     }, 1000);
+  };
+
+  const renderItem = (item) => {
+    return (
+      <TouchableOpacity>
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
   };
 
   return (
     <View style={styles.fullScreen}>
-      <View>
+      {/* <View>
         <Text>Hook: {works[0].id}</Text>
-      </View>
+      </View> */}
       <View style={styles.calendar}>
         <Agenda
           items={items}
           loadItemsForMonth={loadItems}
           selected={"2022-07-06"}
+          renderItem={renderItem}
         />
       </View>
     </View>
@@ -72,8 +82,6 @@ const Analysis = () => {
 const styles = StyleSheet.create({
   fullScreen: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
     backgroundColor: BG_COLOR,
   },
   calendar: {
