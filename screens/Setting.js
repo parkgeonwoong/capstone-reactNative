@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   text: {
+    alignItems: "center",
     fontSize: 15,
     fontWeight: "600",
     letterSpacing: 1,

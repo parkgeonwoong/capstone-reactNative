@@ -73,7 +73,7 @@ const Tabs = () => {
       {/* 랭크 페이지 */}
       <Tab.Screen
         name="Rank"
-        component={Analysis}
+        component={Setting}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="trophy" size={size} color={color} />;
@@ -100,7 +100,7 @@ const Tabs = () => {
       {/* 프로필 페이지 */}
       <Tab.Screen
         name="Profile"
-        component={Analysis}
+        component={Setting}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="person" size={size} color={color} />;

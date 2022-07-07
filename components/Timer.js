@@ -36,6 +36,17 @@ const useCounter = (initialValue, ms) => {
       return;
     }
     setStarting(false);
+    fetch("http://172.30.1.33:5000/test", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Ready: 0,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(JSON.stringify(data)));
     clearInterval(intervalRef.current);
     intervalRef.current = null;
   }, []);
@@ -47,8 +58,7 @@ const useCounter = (initialValue, ms) => {
   return { count, starting, start, stop, reset };
 };
 
-const SetTimer = ({ getTimer, data }) => {
-  // console.log("카메라에서 가져온값", data.count);
+const SetTimer = ({ getTimer, data, getReady }) => {
   // 시, 분, 초를 state로 저장
   const [currentHours, setCurrentHours] = useState(0);
   const [currentMinutes, setCurrentMinutes] = useState(0);
@@ -59,8 +69,10 @@ const SetTimer = ({ getTimer, data }) => {
   const timer = () => {
     // console.log("자식 시간 측정: ", count);
     data.count = count;
-    console.log(count);
+    console.log("시간:", count);
     getTimer(data.count);
+    // console.log(starting);
+    getReady(starting);
     const checkMinutes = Math.floor(count / 60);
     const hours = Math.floor(count / 3600);
     const minutes = checkMinutes % 60;
@@ -72,7 +84,7 @@ const SetTimer = ({ getTimer, data }) => {
     // console.log(checkMinutes);
   };
 
-  useEffect(timer, [count]);
+  useEffect(timer, [count, starting]);
 
   return (
     <View style={styles.container}>

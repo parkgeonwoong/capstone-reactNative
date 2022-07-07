@@ -10,6 +10,7 @@ import { LogBox, Platform, StyleSheet, View, Text } from "react-native";
 import * as FaceDetector from "expo-face-detector";
 import * as tf from "@tensorflow/tfjs";
 import SetTimer from "../components/Timer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TensorCamera = cameraWithTensors(Camera);
 
@@ -26,16 +27,38 @@ const CameraFocus = ({ route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [faceData, setFaceData] = React.useState([]);
   const [getCount, setGetCount] = useState(0); // Timer.js에서 시간 state
+  const [getuserNo, setGetuserNo] = useState(0);
+  const [Ready, setReady] = useState(false);
 
   const getTimer = (countData) => {
     setGetCount(countData);
   };
+
+  const getReady = (ready) => {
+    setReady(ready);
+  };
   // console.log("타이머에서 가져온 시간: ", getCount);
+  // console.log("Ready 상태:", Ready);
 
   let textureDims =
     Platform.OS == "ios"
       ? { height: 1920, width: 1080 }
       : { height: 1200, width: 1600 };
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const getId = await AsyncStorage.getItem("id");
+        const userNo = JSON.parse(getId).userno;
+        // console.log(userNo);
+        setGetuserNo(userNo);
+      } catch (e) {
+        console.log("못불러옴");
+      }
+    }
+    loadData();
+  }, []);
+  // console.log("가져온값:", getuserNo);
 
   useEffect(() => {
     (async () => {
@@ -49,7 +72,7 @@ const CameraFocus = ({ route }) => {
   // 딥러닝 서버 비동기 연결 처리
   const getApi = async (tensorJson) => {
     // 딥러닝 서버
-    const response = await fetch("http://172.16.5.163:5000/test", {
+    const response = await fetch("http://172.30.1.33:5000/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +94,9 @@ const CameraFocus = ({ route }) => {
       // console.log(typeof height)
 
       // 🚨 네트워크 호출
-      getApi(tensorJson);
+      if (Ready === true) {
+        getApi(tensorJson);
+      }
     }
   }
 
@@ -85,6 +110,8 @@ const CameraFocus = ({ route }) => {
       channel,
       faceData,
       getCount,
+      getuserNo,
+      Ready,
     });
     // const b = JSON.parse(jtensor)
 
@@ -111,7 +138,7 @@ const CameraFocus = ({ route }) => {
     <View style={styles.container}>
       <View style={styles.timerBox}>
         {/* <Text>Camera Page : {route.params.id} </Text> */}
-        <SetTimer getTimer={getTimer} data={route.params} />
+        <SetTimer getTimer={getTimer} data={route.params} getReady={getReady} />
       </View>
       <View style={styles.cameraBox}>
         <TensorCamera
@@ -130,7 +157,7 @@ const CameraFocus = ({ route }) => {
             mode: FaceDetector.FaceDetectorMode.accurate,
             detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
             runClassifications: FaceDetector.FaceDetectorClassifications.all,
-            minDetectionInterval: 5000,
+            minDetectionInterval: 10000,
             tracking: true,
           }}
         />
