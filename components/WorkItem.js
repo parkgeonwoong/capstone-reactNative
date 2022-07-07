@@ -24,6 +24,7 @@ const TimerBtn = styled.TouchableOpacity`
 const TextBtn = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
+  align-items: center;
 `;
 
 const ItemText = styled.Text`

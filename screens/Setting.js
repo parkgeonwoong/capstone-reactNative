@@ -46,12 +46,12 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: "white",
     elevation: 0.5,
     borderRadius: 10,
   },
   text: {
-    alignItems: "center",
     fontSize: 15,
     fontWeight: "600",
     letterSpacing: 1,

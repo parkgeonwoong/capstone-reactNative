@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Font from "expo-font";
 import { useAssets } from "expo-asset";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -12,6 +12,10 @@ import { LogContextProvider } from "./contexts/LogContext";
 export default function App() {
   const [assets] = useAssets([require("./assets/logo.png")]);
   const [loaded] = Font.useFonts(Ionicons.font);
+  const [fontLoading, setFontLoading] = useState(false);
+
+  // console.log(loaded);
+
   useEffect(() => {
     const getFonts = async () => {
       await Font.loadAsync({
@@ -20,11 +24,11 @@ export default function App() {
       });
     };
     getFonts();
-  });
+    setFontLoading(true);
+  }, []);
 
-  if (!assets || !loaded) {
-    return <AppLoading />;
-    // <AppLoading />;
+  if (!assets || !loaded || !fontLoading) {
+    return null;
   }
 
   return (

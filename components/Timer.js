@@ -13,11 +13,13 @@ import React, {
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BLUE } from "./Colors";
 import LogContext from "../contexts/LogContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // 사용자 정의 hook
 const useCounter = (initialValue, ms) => {
   const [count, setCount] = useState(initialValue);
   const [starting, setStarting] = useState(false);
+  const [userNo, setUserNo] = useState(0);
   const intervalRef = useRef(null);
 
   //   console.log(intervalRef);
@@ -36,6 +38,9 @@ const useCounter = (initialValue, ms) => {
       return;
     }
     setStarting(false);
+    AsyncStorage.getItem("id").then((value) =>
+      setUserNo(JSON.parse(value).userno)
+    );
     fetch("http://172.30.1.33:5000/test", {
       method: "POST",
       headers: {
@@ -43,10 +48,11 @@ const useCounter = (initialValue, ms) => {
       },
       body: JSON.stringify({
         Ready: 0,
+        getuserNo: userNo,
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(JSON.stringify(data)));
+      .then((data) => console.log("STOP 시 응답값", JSON.stringify(data)));
     clearInterval(intervalRef.current);
     intervalRef.current = null;
   }, []);
