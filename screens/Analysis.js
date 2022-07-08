@@ -10,6 +10,7 @@ import {
   AgendaEntry,
   AgendaSchedule,
 } from "react-native-calendars";
+import { Card, Paragraph } from "react-native-paper";
 
 const timeToString = (time) => {
   const date = new Date(time);
@@ -19,61 +20,33 @@ const timeToString = (time) => {
 const Analysis = () => {
   const { works } = useContext(LogContext);
 
-  const [items, setItems] = useState({});
+  // 오늘 날짜
+  const date = new Date();
+  const today = date.toISOString().split("T")[0];
 
-  const loadItems = (day) => {
-    // const items = this.state.items || {};
-
-    setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = timeToString(time);
-
-        if (!items[strTime]) {
-          items[strTime] = [];
-
-          const numItems = Math.floor(Math.random() * 3 + 1);
-          for (let j = 0; j < numItems; j++) {
-            items[strTime].push({
-              name: "Item for " + strTime + " #" + j,
-              height: Math.max(50, Math.floor(Math.random() * 150)),
-              day: strTime,
-            });
-          }
-        }
-      }
-
-      const newItems = {};
-      Object.keys(items).forEach((key) => {
-        newItems[key] = items[key];
-      });
-      // setItems({
-      //   items: newItems,
-      // });
-      setItems(newItems);
-    }, 1000);
-  };
+  const [items, setItems] = useState({
+    "2022-07-07": [{ name: "카테고리1", count: "총 시간" }],
+    "2022-07-08": [
+      { name: "카테고리1", count: 10 },
+      { name: "카테고리2", count: 5 },
+    ],
+  });
 
   const renderItem = (item) => {
     return (
-      <TouchableOpacity>
-        <Text>{item.name}</Text>
+      <TouchableOpacity style={styles.selectBtn}>
+        <View style={styles.selectItem}>
+          <Text>{item.name}</Text>
+          <Text>{item.count}</Text>
+        </View>
       </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.fullScreen}>
-      {/* <View>
-        <Text>Hook: {works[0].id}</Text>
-      </View> */}
       <View style={styles.calendar}>
-        <Agenda
-          items={items}
-          loadItemsForMonth={loadItems}
-          selected={"2022-07-06"}
-          renderItem={renderItem}
-        />
+        <Agenda items={items} renderItem={renderItem} selected={today} />
       </View>
     </View>
   );
@@ -86,6 +59,18 @@ const styles = StyleSheet.create({
   },
   calendar: {
     flex: 1,
+  },
+  selectBtn: {
+    backgroundColor: "white",
+    margin: 5,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+  selectItem: {
+    alignItems: "center",
+    // backgroundColor: "tomato",
   },
 });
 
