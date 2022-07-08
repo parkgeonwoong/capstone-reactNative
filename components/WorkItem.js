@@ -23,35 +23,24 @@ const WrapperItem = styled.View`
   align-items: center;
 `;
 
-const TimerBtnTest = styled.Pressable`
+const TimerBtn = styled.Pressable`
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-right: 16px;
-  padding: 50px;
-  /* background-color: tomato; */
 `;
 
-const TimerBtn = styled.TouchableOpacity`
-  justify-content: center;
-  align-items: center;
-  margin-right: 16px;
+const ItemText = styled.Text`
+  flex: 3;
+  font-size: 16px;
+  font-family: "BMHANNAAir";
+  letter-spacing: 0.5px;
 `;
 const TextBtn = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
   align-items: center;
-`;
-
-const ItemText = styled.Text`
-  flex: 1;
-  font-size: 16px;
-  font-family: "BMHANNAAir";
-  letter-spacing: 0.5px;
-`;
-
-const RemovePlace = styled.View`
-  width: 28px;
-  height: 28px; /* background-color: chocolate; */
+  justify-content: flex-end;
 `;
 
 const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
@@ -78,32 +67,7 @@ const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
 
   return (
     <WrapperItem>
-      {/* <TimerBtn
-        onPress={() => {
-          done
-            ? null
-            : navigation.navigate("Cameras", { id: id, count: count });
-        }}
-      >
-        <Ionicons
-          name="videocam"
-          size={28}
-          color={BLACK}
-          style={done ? { color: "#9e9e9e" } : null}
-        />
-      </TimerBtn>
-      <TextBtn onPress={() => onToggle(id)}>
-        <ItemText style={done ? styles.lineThrough : null}>{text}</ItemText>
-        {done ? (
-          <TouchableOpacity onPress={remove}>
-            <Ionicons name="trash-bin" size={28} color={BLACK} />
-          </TouchableOpacity>
-        ) : (
-          <RemovePlace />
-        )}
-      </TextBtn> */}
-      {/*  */}
-      <TimerBtnTest
+      <TimerBtn
         onPress={() => {
           done
             ? null
@@ -115,12 +79,17 @@ const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
           name="videocam"
           size={28}
           color={BLACK}
-          style={done ? { color: "#9e9e9e" } : null}
+          style={[{ flex: 0.8 }, done ? { color: "#9e9e9e" } : null]}
         />
+        <ItemText style={done ? styles.lineThrough : null}>{text}</ItemText>
         <TextBtn onPress={() => onToggle(id)}>
-          <ItemText style={done ? styles.lineThrough : null}>{text}</ItemText>
+          {done ? (
+            <Ionicons name="checkbox-outline" size={28} color={BLACK} />
+          ) : (
+            <Ionicons name="square-outline" size={28} color={BLACK} />
+          )}
         </TextBtn>
-      </TimerBtnTest>
+      </TimerBtn>
     </WrapperItem>
   );
 };
