@@ -16,16 +16,17 @@ const Wrapper = styled.View`
 `;
 
 const Description = styled.Text`
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 25px;
+  /* font-weight: 700; */
   color: ${PINK};
+  font-family: "BMHANNAPro";
 `;
 
 const Empty = () => {
   return (
     <Wrapper>
       <Ionicons name="create-outline" size={48} color="black" />
-      <Description>Create new Work.</Description>
+      <Description>텅 비었어요</Description>
     </Wrapper>
   );
 };

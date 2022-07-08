@@ -22,8 +22,6 @@ const useCounter = (initialValue, ms) => {
   const [userNo, setUserNo] = useState(0);
   const intervalRef = useRef(null);
 
-  //   console.log(intervalRef);
-
   const start = useCallback(() => {
     if (intervalRef.current !== null) {
       return;
@@ -38,9 +36,11 @@ const useCounter = (initialValue, ms) => {
       return;
     }
     setStarting(false);
-    AsyncStorage.getItem("id").then((value) =>
-      setUserNo(JSON.parse(value).userno)
-    );
+    AsyncStorage.getItem("id").then((value) => {
+      const userInfo = JSON.parse(value);
+      // console.log(userInfo);
+      setUserNo(userInfo.userno);
+    });
     fetch("http://172.30.1.33:5000/test", {
       method: "POST",
       headers: {
@@ -70,14 +70,24 @@ const SetTimer = ({ getTimer, data, getReady }) => {
   const [currentMinutes, setCurrentMinutes] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(0);
   const { count, starting, start, stop, reset } = useCounter(data.count, 1000);
+  const { works, setWorks } = useContext(LogContext);
+
+  // console.log(data.id);
+
+  const timeSave = (id) => {
+    const nextTime = works.map((work) =>
+      work.id === id ? { ...work, count: count } : work
+    );
+    setWorks(nextTime);
+  };
 
   // 타이머 기능
   const timer = () => {
     // console.log("자식 시간 측정: ", count);
+    timeSave(data.id);
     data.count = count;
     console.log("시간:", count);
     getTimer(data.count);
-    // console.log(starting);
     getReady(starting);
     const checkMinutes = Math.floor(count / 60);
     const hours = Math.floor(count / 3600);

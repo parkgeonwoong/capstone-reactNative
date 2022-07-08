@@ -4,7 +4,14 @@
 */
 
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  Pressable,
+} from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -14,6 +21,14 @@ const WrapperItem = styled.View`
   flex-direction: row;
   padding: 16px;
   align-items: center;
+`;
+
+const TimerBtnTest = styled.Pressable`
+  justify-content: center;
+  align-items: center;
+  margin-right: 16px;
+  padding: 50px;
+  /* background-color: tomato; */
 `;
 
 const TimerBtn = styled.TouchableOpacity`
@@ -63,7 +78,7 @@ const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
 
   return (
     <WrapperItem>
-      <TimerBtn
+      {/* <TimerBtn
         onPress={() => {
           done
             ? null
@@ -86,7 +101,26 @@ const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
         ) : (
           <RemovePlace />
         )}
-      </TextBtn>
+      </TextBtn> */}
+      {/*  */}
+      <TimerBtnTest
+        onPress={() => {
+          done
+            ? null
+            : navigation.navigate("Cameras", { id: id, count: count });
+        }}
+        onLongPress={remove}
+      >
+        <Ionicons
+          name="videocam"
+          size={28}
+          color={BLACK}
+          style={done ? { color: "#9e9e9e" } : null}
+        />
+        <TextBtn onPress={() => onToggle(id)}>
+          <ItemText style={done ? styles.lineThrough : null}>{text}</ItemText>
+        </TextBtn>
+      </TimerBtnTest>
     </WrapperItem>
   );
 };

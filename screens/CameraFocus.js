@@ -5,12 +5,13 @@
 
 import { cameraWithTensors } from "@tensorflow/tfjs-react-native";
 import { Camera, CameraType } from "expo-camera";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LogBox, Platform, StyleSheet, View, Text } from "react-native";
 import * as FaceDetector from "expo-face-detector";
 import * as tf from "@tensorflow/tfjs";
 import SetTimer from "../components/Timer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LogContext from "../contexts/LogContext";
 
 const TensorCamera = cameraWithTensors(Camera);
 
@@ -134,10 +135,12 @@ const CameraFocus = ({ route }) => {
     loop();
   }
 
+  // console.log(route.params);
+
   return (
     <View style={styles.container}>
       <View style={styles.timerBox}>
-        {/* <Text>Camera Page : {route.params.id} </Text> */}
+        {/* <Text>Camera Page : {route.params} </Text> */}
         <SetTimer getTimer={getTimer} data={route.params} getReady={getReady} />
       </View>
       <View style={styles.cameraBox}>
