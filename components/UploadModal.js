@@ -39,7 +39,10 @@ const UploadModal = ({ visible, onClose, onInsert }) => {
             style={styles.input}
             value={text}
             onChangeText={setText}
-            onSubmitEditing={onPress}
+            onSubmitEditing={() => {
+              onPress();
+            }}
+            returnKeyType="done"
           />
         </View>
       </TouchableOpacity>

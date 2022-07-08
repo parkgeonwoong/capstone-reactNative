@@ -5,11 +5,11 @@
 
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Analysis from "../screens/Analysis";
+import Stats from "../screens/Stats";
 import Home from "../screens/Home";
 import { BAR_ACTIVE, BG_COLOR, BAR_INACTIVE } from "../components/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Image, Text, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import Setting from "../screens/Setting";
 
 const Tab = createBottomTabNavigator();
@@ -23,6 +23,12 @@ const LogoTitle = () => (
       resizeMode="contain"
     />
   </TouchableOpacity>
+);
+
+const MainTitle = () => (
+  <View style={{ marginLeft: 15 }}>
+    <Text style={{ fontFamily: "BMHANNAPro", fontSize: 20 }}>홈</Text>
+  </View>
 );
 
 // Bottom-Tab 내비게이션
@@ -60,14 +66,14 @@ const Tabs = () => {
     >
       {/* 분석 페이지 */}
       <Tab.Screen
-        name="Analysis"
-        component={Analysis}
+        name="Stats"
+        component={Stats}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="bar-chart" color={color} size={size} />;
           },
-          tabBarLabel: "분석",
-          title: "분석",
+          tabBarLabel: "통계",
+          title: "통계",
         }}
       />
       {/* 랭크 페이지 */}
@@ -87,7 +93,7 @@ const Tabs = () => {
         name="Home"
         component={Home}
         options={{
-          headerLeft: () => <LogoTitle />,
+          headerLeft: () => <MainTitle />,
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="ios-home" size={size} color={color} />;
           },

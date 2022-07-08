@@ -24,7 +24,7 @@ import { addDays, format } from "date-fns";
 //   return date.toISOString().split("T")[0];
 // };
 
-const Analysis = () => {
+const Stats = () => {
   const { works } = useContext(LogContext);
 
   // 오늘 날짜
@@ -34,13 +34,14 @@ const Analysis = () => {
   // 각 날짜별 상태값
   const [items, setItems] = useState({
     "2022-07-07": [{ name: "카테고리1", count: "총 시간" }],
-    "2022-07-08": [
-      { name: "카테고리1", count: 10 },
-      { name: "카테고리2", count: 5 },
-    ],
+    "2022-07-08": [{ name: "카테고리1", count: 10 }],
   });
 
+  // "2022-07-07": { name: "카테고리1", count: "총 시간" },
+  // console.log(items["2022-07-07"].count);
+
   useEffect(() => {
+    // 직접 mapping 테스트
     const getData = async () => {
       const response = await fetch(
         "https://jsonplaceholder.typicode.com/posts"
@@ -52,21 +53,22 @@ const Analysis = () => {
 
         return {
           ...post,
-          // date: format(dateFns, "yyyy-MM-dd"),
-          id: [{ date: format(dateFns, "yyyy-MM-dd") }],
+          date: format(dateFns, "yyyy-MM-dd"),
+          // id: [{ date: format(dateFns, "yyyy-MM-dd") }],
         };
       });
 
-      // const mappedData = data.map((post) => {
-      //   return {
-      //     ...post,
-      //     date: today,
-      //   };
-      // });
+      const reduced = mappedData.reduce((acc, currentItem) => {
+        const { date, ...restItem } = currentItem;
 
-      console.log(mappedData[0]);
+        acc[date] = [restItem];
+        return acc;
+      }, {});
 
-      // setItems(data.slice(0,5))
+      // console.log(mappedData[0]);
+      // console.log(reduced);
+
+      setItems(reduced);
     };
     getData();
   }, []);
@@ -114,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Analysis;
+export default Stats;
