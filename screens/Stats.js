@@ -25,7 +25,7 @@ import Empty from "../components/Empty";
 //   return date.toISOString().split("T")[0];
 // };
 
-const Stats = () => {
+const Stats = ({ navigation }) => {
   const { works } = useContext(LogContext);
 
   // 오늘 날짜
@@ -34,8 +34,8 @@ const Stats = () => {
 
   // 각 날짜별 상태값
   const [items, setItems] = useState({
-    "2022-07-07": [{ name: "카테고리1", count: "총 시간" }],
-    "2022-07-08": [{ name: "카테고리1", count: 10 }],
+    "2022-07-07": [{ name: "1", count: "총 시간" }],
+    "2022-07-08": [{ name: "2", count: 10 }],
   });
 
   // "2022-07-07": { name: "카테고리1", count: "총 시간" },
@@ -76,8 +76,12 @@ const Stats = () => {
 
   // 로그 O 랜더링
   const renderItem = (item) => {
+    console.log("아이템:", item);
     return (
-      <TouchableOpacity style={styles.selectBtn}>
+      <TouchableOpacity
+        style={styles.selectBtn}
+        onPress={() => navigation.push("Chart", { id: item.name })}
+      >
         <View style={styles.selectItem}>
           <Text>총시간: {item.name}</Text>
           <Text>집중시간: {item.count}</Text>

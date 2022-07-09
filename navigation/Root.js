@@ -11,6 +11,7 @@ import CameraFocus from "../screens/CameraFocus";
 import WorkItem from "../components/WorkItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignUpScreen from "../screens/SignUpScreen";
+import Chart from "../screens/Chart";
 
 const Nav = createNativeStackNavigator();
 
@@ -42,6 +43,15 @@ const Root = () => {
         name="Cameras"
         component={CameraFocus}
         options={{ title: "" }}
+      />
+      {/* 차트 페이지 */}
+      <Nav.Screen
+        name="Chart"
+        component={Chart}
+        options={{
+          title: "차트",
+          headerTitleStyle: { fontFamily: "BMHANNAPro" },
+        }}
       />
     </Nav.Navigator>
   );
