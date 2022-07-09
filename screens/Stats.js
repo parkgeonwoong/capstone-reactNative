@@ -6,19 +6,13 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { BG_COLOR } from "../components/Colors";
-import LogContext from "../contexts/LogContext";
-import {
-  Calendar,
-  CalendarList,
-  Agenda,
-  DateData,
-  AgendaEntry,
-  AgendaSchedule,
-} from "react-native-calendars";
+import { Agenda } from "react-native-calendars";
 import { Card, Paragraph } from "react-native-paper";
 import { addDays, format } from "date-fns";
+import { BG_COLOR, RED } from "../components/Colors";
+import LogContext from "../contexts/LogContext";
 import Empty from "../components/Empty";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const timeToString = (time) => {
 //   const date = new Date(time);
@@ -27,64 +21,107 @@ import Empty from "../components/Empty";
 
 const Stats = ({ navigation }) => {
   const { works } = useContext(LogContext);
+  const [userNo, setUserNo] = useState(0);
 
   // 오늘 날짜
   const date = new Date();
   const today = date.toISOString().split("T")[0];
 
   // 각 날짜별 상태값
-  const [items, setItems] = useState({
-    "2022-07-07": [{ name: "1", count: "총 시간" }],
-    "2022-07-08": [{ name: "2", count: 10 }],
-  });
+  const [items, setItems] = useState({});
 
+  // Storage에서 유저 정보 가져오기
+  useEffect(() => {
+    const load = async () => {
+      try {
+        await AsyncStorage.getItem("id", (err, result) => {
+          const userInfo = JSON.parse(result);
+          // console.log(typeof userInfo.userno);
+          setUserNo(userInfo.userno);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    load();
+  }, []);
+
+  // 서버 API 가져오기
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(`http://diligentp.com/analysis?userno=1`);
+        const data = await response.json();
+        console.log("[Stats] 외부 API:", data);
+        setItems(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getData();
+  }, [userNo]);
+
+  // console.log("가져온 API 저장: ", items);
+
+  // "2022-07-07": [{ name: "1", count: "총 시간" }],
+  // "2022-07-08": [{ name: "2", count: 10 }],
   // "2022-07-07": { name: "카테고리1", count: "총 시간" },
   // console.log(items["2022-07-07"].count);
 
-  useEffect(() => {
-    // 직접 mapping 테스트
-    const getData = async () => {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-      const data = await response.json();
+  // 직접 mapping 테스트
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const response = await fetch(
+  //       "https://jsonplaceholder.typicode.com/posts"
+  //     );
+  //     const data = await response.json();
 
-      const mappedData = data.map((post, index) => {
-        const dateFns = addDays(new Date(), index);
+  //     const mappedData = data.map((post, index) => {
+  //       const dateFns = addDays(new Date(), index);
 
-        return {
-          ...post,
-          date: format(dateFns, "yyyy-MM-dd"),
-          // id: [{ date: format(dateFns, "yyyy-MM-dd") }],
-        };
-      });
+  //       return {
+  //         ...post,
+  //         date: format(dateFns, "yyyy-MM-dd"),
+  //         // id: [{ date: format(dateFns, "yyyy-MM-dd") }],
+  //       };
+  //     });
 
-      const reduced = mappedData.reduce((acc, currentItem) => {
-        const { date, ...restItem } = currentItem;
+  //     const reduced = mappedData.reduce((acc, currentItem) => {
+  //       const { date, ...restItem } = currentItem;
 
-        acc[date] = [restItem];
-        return acc;
-      }, {});
+  //       acc[date] = [restItem];
+  //       return acc;
+  //     }, {});
 
-      // console.log(mappedData[0]);
-      // console.log(reduced);
+  //     // console.log(mappedData[0]);
+  //     // console.log(reduced);
 
-      // setItems(reduced);
-    };
-    getData();
-  }, []);
+  //     setItems(reduced);
+  //   };
+  //   getData();
+  // }, []);
 
   // 로그 O 랜더링
   const renderItem = (item) => {
-    console.log("아이템:", item);
+    console.log("[Stats] 렌더링 item:", item);
     return (
       <TouchableOpacity
         style={styles.selectBtn}
-        onPress={() => navigation.push("Chart", { id: item.name })}
+        onPress={() => navigation.push("Chart", { userno: item.userno })}
       >
         <View style={styles.selectItem}>
-          <Text>총시간: {item.name}</Text>
-          <Text>집중시간: {item.count}</Text>
+          <View style={styles.apiBox}>
+            <Text style={styles.textTitle}>🔸집중도:</Text>
+            <Text style={styles.textContext}>{item.con_per}%</Text>
+          </View>
+          <View style={styles.apiBox}>
+            <Text style={styles.textTitle}>🔸집중 시간:</Text>
+            <Text style={styles.textContext}>{item.focustime}초</Text>
+          </View>
+          <View style={styles.apiBox}>
+            <Text style={styles.textTitle}>🔸집중 안한 시간:</Text>
+            <Text style={styles.textContext}>{item.unfocustime}초</Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -124,20 +161,33 @@ const styles = StyleSheet.create({
   selectBtn: {
     flex: 1,
     backgroundColor: "white",
-    margin: 5,
+    margin: 10,
+    padding: 20,
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "flex-start",
-    // backgroundColor: "skyblue",
   },
   selectItem: {
     flex: 1,
-    justifyContent: "center",
     marginLeft: 15,
-    // width: "100%",
-    // flexDirection: "row",
-    // alignItems: "center",
-    // backgroundColor: "tomato",
+    justifyContent: "center",
+  },
+  apiBox: {
+    marginBottom: 5,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textTitle: {
+    fontSize: 15,
+    paddingVertical: 3,
+    marginRight: 10,
+    fontFamily: "BMHANNAPro",
+    opacity: 0.8,
+  },
+  textContext: {
+    fontSize: 15,
+    color: RED,
+    fontFamily: "BMHANNAPro",
   },
 });
 

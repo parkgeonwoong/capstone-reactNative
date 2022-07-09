@@ -2,9 +2,8 @@
 @컴포넌트 이름: 색깔 모아놓은 곳
 */
 
-// export const BAR_COLOR = "#f8f9fa";
-// export const BG_COLOR = "#fdfdff";
-export const BG_COLOR = "#fafafa";
+export const BG_COLOR = "#F2F4F5";
+// export const BG_COLOR = "#fafafa";
 export const BAR_ACTIVE = "#343a40";
 // export const BAR_ACTIVE = "#0466c8";
 export const BAR_INACTIVE = "#ced4da";

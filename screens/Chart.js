@@ -6,7 +6,7 @@ const Chart = ({ route }) => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>차트 페이지</Text>
-      <Text>{route.params.id}</Text>
+      <Text>{route.params.userno}</Text>
     </View>
   );
 };

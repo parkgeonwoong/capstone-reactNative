@@ -43,16 +43,16 @@ const Tabs = () => {
       initialRouteName="Home"
       screenOptions={{
         headerShadowVisible: true,
-        headerStyle: {
-          backgroundColor: BG_COLOR,
-        },
+        // headerStyle: {
+        //   backgroundColor: BG_COLOR,
+        // },
         headerTitleStyle: {
           fontFamily: "BMHANNAPro",
         },
 
-        tabBarStyle: {
-          backgroundColor: BG_COLOR,
-        },
+        // tabBarStyle: {
+        //   backgroundColor: BG_COLOR,
+        // },
         tabBarLabelStyle: {
           marginTop: -5,
           marginBottom: 3,

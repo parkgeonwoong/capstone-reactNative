@@ -23,7 +23,7 @@ const Setting = () => {
     <View style={styles.fullScreen}>
       <View style={styles.block}>
         <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
-          <Text style={styles.text}>로그아웃</Text>
+          <Text style={styles.text}>🔸 로그아웃</Text>
           <Ionicons name="arrow-forward" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -53,9 +53,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    fontWeight: "600",
+    // fontWeight: "600",
     letterSpacing: 1,
-    fontFamily: "BMHANNAAir",
+    fontFamily: "BMHANNAPro",
+    opacity: 0.8,
   },
 });
 

@@ -17,7 +17,7 @@ export const LogContextProvider = ({ children }) => {
       try {
         const rawWorks = await AsyncStorage.getItem("works");
         const savedWorks = JSON.parse(rawWorks);
-        console.log(savedWorks);
+        console.log("[LogContext]:", savedWorks);
         setWorks(savedWorks);
       } catch (e) {
         console.log("저장된 작업 불러오기 실패");
