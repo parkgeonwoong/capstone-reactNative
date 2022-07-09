@@ -14,8 +14,7 @@ export default function App() {
   const [assets] = useAssets([require("./assets/logo.png")]);
   const [loaded] = Font.useFonts(Ionicons.font);
 
-  const [fontLoading, setFontLoading] = useState(false);
-
+  // const [fontLoading, setFontLoading] = useState(false);
   // useEffect(() => {
   //   const getFonts = async () => {
   //     await Font.loadAsync({
@@ -31,27 +30,27 @@ export default function App() {
   //   return <AppLoading />;
   // }
 
-  // const [appIsReady, setAppIsReady] = useState(false);
+  const [appIsReady, setAppIsReady] = useState(false);
 
-  // useEffect(() => {
-  //   async function prepare() {
-  //     try {
-  //       await SplashScreen.preventAutoHideAsync();
-  //       await Font.loadAsync({
-  //         BMHANNAPro: require("./assets/fonts/BMHANNAPro.ttf"),
-  //         BMHANNAAir: require("./assets/fonts/BMHANNAAir_ttf.ttf"),
-  //       });
-  //       await new Promise((resolve) => setTimeout(resolve, 1000));
-  //     } catch (e) {
-  //       console.warn(e);
-  //     } finally {
-  //       // Tell the application to render
-  //       setAppIsReady(true);
-  //       await SplashScreen.hideAsync();
-  //     }
-  //   }
-  //   prepare();
-  // }, []);
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await Font.loadAsync({
+          BMHANNAPro: require("./assets/fonts/BMHANNAPro.ttf"),
+          BMHANNAAir: require("./assets/fonts/BMHANNAAir_ttf.ttf"),
+        });
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+        await SplashScreen.hideAsync();
+      }
+    }
+    prepare();
+  }, []);
 
   if (!appIsReady) {
     return null;
