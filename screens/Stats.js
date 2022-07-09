@@ -18,6 +18,7 @@ import {
 } from "react-native-calendars";
 import { Card, Paragraph } from "react-native-paper";
 import { addDays, format } from "date-fns";
+import Empty from "../components/Empty";
 
 // const timeToString = (time) => {
 //   const date = new Date(time);
@@ -68,26 +69,41 @@ const Stats = () => {
       // console.log(mappedData[0]);
       // console.log(reduced);
 
-      setItems(reduced);
+      // setItems(reduced);
     };
     getData();
   }, []);
 
+  // 로그 O 랜더링
   const renderItem = (item) => {
     return (
       <TouchableOpacity style={styles.selectBtn}>
         <View style={styles.selectItem}>
-          <Text>{item.name}</Text>
-          <Text>{item.count}</Text>
+          <Text>총시간: {item.name}</Text>
+          <Text>집중시간: {item.count}</Text>
         </View>
       </TouchableOpacity>
+    );
+  };
+
+  // 로그 X 랜더링
+  const renderEmpty = () => {
+    return (
+      <View style={styles.fullScreen}>
+        <Empty />
+      </View>
     );
   };
 
   return (
     <View style={styles.fullScreen}>
       <View style={styles.calendar}>
-        <Agenda items={items} renderItem={renderItem} selected={today} />
+        <Agenda
+          items={items}
+          renderItem={renderItem}
+          renderEmptyData={renderEmpty}
+          selected={today}
+        />
       </View>
     </View>
   );
@@ -102,16 +118,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   selectBtn: {
+    flex: 1,
     backgroundColor: "white",
     margin: 5,
     borderRadius: 15,
     justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
+    alignItems: "flex-start",
+    // backgroundColor: "skyblue",
   },
   selectItem: {
-    alignItems: "center",
-    justifyContent: "flex-start",
+    flex: 1,
+    justifyContent: "center",
+    marginLeft: 15,
+    // width: "100%",
+    // flexDirection: "row",
+    // alignItems: "center",
     // backgroundColor: "tomato",
   },
 });
