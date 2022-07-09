@@ -25,16 +25,18 @@ const WrapperItem = styled.View`
 
 const TimerBtn = styled.Pressable`
   flex-direction: row;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   margin-right: 16px;
+  /* background-color: skyblue; */
 `;
 
 const ItemText = styled.Text`
   flex: 3;
   font-size: 16px;
-  font-family: "BMHANNAAir";
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  font-family: "BMHANNAPro";
+  padding-bottom: 10px;
 `;
 const TextBtn = styled.TouchableOpacity`
   flex: 1;

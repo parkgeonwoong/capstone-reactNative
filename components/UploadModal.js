@@ -21,6 +21,7 @@ const UploadModal = ({ visible, onClose, onInsert }) => {
     onInsert(text);
     setText("");
     Keyboard.dismiss();
+    // onClose();
   };
   // console.log(text);
 

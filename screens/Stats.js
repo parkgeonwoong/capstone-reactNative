@@ -46,13 +46,14 @@ const Stats = ({ navigation }) => {
     load();
   }, []);
 
-  // 서버 API 가져오기
+  // 오늘 날짜만 가져오기
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`http://diligentp.com/analysis?userno=1`);
+        const response = await fetch(
+          `http://diligentp.com/stats?userno=${userNo}&date=${today}`
+        );
         const data = await response.json();
-        console.log("[Stats] 외부 API:", data);
         setItems(data);
       } catch (err) {
         console.log(err);
@@ -61,8 +62,24 @@ const Stats = ({ navigation }) => {
     getData();
   }, [userNo]);
 
-  // console.log("가져온 API 저장: ", items);
+  // 클릭 시 API 가져오기
+  const handleDayPress = (day) => {
+    const getData = async () => {
+      try {
+        const response = await fetch(
+          `http://diligentp.com/stats?userno=${userNo}&date=${day}`
+        );
+        const data = await response.json();
+        // console.log("[Stats]🔸외부 API:", data);
+        setItems(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getData();
+  };
 
+  // console.log("가져온 API 저장: ", items);
   // "2022-07-07": [{ name: "1", count: "총 시간" }],
   // "2022-07-08": [{ name: "2", count: 10 }],
   // "2022-07-07": { name: "카테고리1", count: "총 시간" },
@@ -103,7 +120,7 @@ const Stats = ({ navigation }) => {
 
   // 로그 O 랜더링
   const renderItem = (item) => {
-    console.log("[Stats] 렌더링 item:", item);
+    // console.log("[Stats]🔸렌더링 item:", item);
     return (
       <TouchableOpacity
         style={styles.selectBtn}
@@ -144,6 +161,14 @@ const Stats = ({ navigation }) => {
           renderItem={renderItem}
           renderEmptyData={renderEmpty}
           selected={today}
+          onDayPress={(day) => {
+            // console.log("DayPress:", day.dateString);
+            handleDayPress(day.dateString);
+          }}
+          minDate={"2022-01-01"}
+          maxDate={"2023-08-01"}
+          pastScrollRange={12}
+          futureScrollRange={12}
         />
       </View>
     </View>
