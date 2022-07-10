@@ -31,7 +31,7 @@ const Stats = ({ navigation }) => {
 
   // 월별 통계를 위한 문자열 자르기
   // setMonthDate(today.substring(0, 7));
-  console.log(monthDate);
+  // console.log(monthDate);
 
   // 각 날짜별 상태값
   const [items, setItems] = useState({});
@@ -132,7 +132,13 @@ const Stats = ({ navigation }) => {
     return (
       <TouchableOpacity
         style={styles.selectBtn}
-        onPress={() => navigation.push("Chart", { userno: item.userno })}
+        onPress={() =>
+          navigation.push("ChartDay", {
+            focusdate: item.focusdate,
+            focustime: item.focustime,
+            unfocustime: item.unfocustime,
+          })
+        }
       >
         <View style={styles.box}>
           <View style={styles.selectItem}>
