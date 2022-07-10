@@ -13,6 +13,7 @@ import { BG_COLOR, RED } from "../components/Colors";
 import LogContext from "../contexts/LogContext";
 import Empty from "../components/Empty";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from "@expo/vector-icons";
 
 // const timeToString = (time) => {
 //   const date = new Date(time);
@@ -22,10 +23,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stats = ({ navigation }) => {
   const { works } = useContext(LogContext);
   const [userNo, setUserNo] = useState(0);
+  const [monthDate, setMonthDate] = useState("");
 
   // 오늘 날짜
   const date = new Date();
   const today = date.toISOString().split("T")[0];
+
+  // 월별 통계를 위한 문자열 자르기
+  // setMonthDate(today.substring(0, 7));
+  console.log(monthDate);
 
   // 각 날짜별 상태값
   const [items, setItems] = useState({});
@@ -60,6 +66,7 @@ const Stats = ({ navigation }) => {
       }
     };
     getData();
+    setMonthDate(today.substring(0, 7));
   }, [userNo]);
 
   // 클릭 시 API 가져오기
@@ -77,6 +84,7 @@ const Stats = ({ navigation }) => {
       }
     };
     getData();
+    setMonthDate(day.substring(0, 7));
   };
 
   // console.log("가져온 API 저장: ", items);
@@ -126,18 +134,23 @@ const Stats = ({ navigation }) => {
         style={styles.selectBtn}
         onPress={() => navigation.push("Chart", { userno: item.userno })}
       >
-        <View style={styles.selectItem}>
-          <View style={styles.apiBox}>
-            <Text style={styles.textTitle}>🔸집중도:</Text>
-            <Text style={styles.textContext}>{item.con_per}%</Text>
+        <View style={styles.box}>
+          <View style={styles.selectItem}>
+            <View style={styles.apiBox}>
+              <Text style={styles.textTitle}>🔸집중도:</Text>
+              <Text style={styles.textContext}>{item.con_per}%</Text>
+            </View>
+            <View style={styles.apiBox}>
+              <Text style={styles.textTitle}>🔸집중 시간:</Text>
+              <Text style={styles.textContext}>{item.focustime}초</Text>
+            </View>
+            <View style={styles.apiBox}>
+              <Text style={styles.textTitle}>🔸집중 안한 시간:</Text>
+              <Text style={styles.textContext}>{item.unfocustime}초</Text>
+            </View>
           </View>
-          <View style={styles.apiBox}>
-            <Text style={styles.textTitle}>🔸집중 시간:</Text>
-            <Text style={styles.textContext}>{item.focustime}초</Text>
-          </View>
-          <View style={styles.apiBox}>
-            <Text style={styles.textTitle}>🔸집중 안한 시간:</Text>
-            <Text style={styles.textContext}>{item.unfocustime}초</Text>
+          <View>
+            <Ionicons name="arrow-forward" size={24} color="black" />
           </View>
         </View>
       </TouchableOpacity>
@@ -171,6 +184,22 @@ const Stats = ({ navigation }) => {
           futureScrollRange={12}
         />
       </View>
+      <View style={styles.monthBox}>
+        <View style={styles.leftMonth}>
+          <Text style={styles.leftText}>{monthDate.substring(5, 7)}월</Text>
+        </View>
+        <View style={styles.rightMonth}>
+          <View style={styles.box}>
+            <View style={styles.leftWrapper}>
+              <Text style={styles.textTitle}>🔸집중도:</Text>
+              <Text style={styles.textContext}>초</Text>
+            </View>
+            <View>
+              <Ionicons name="arrow-forward" size={24} color="black" />
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -181,7 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: BG_COLOR,
   },
   calendar: {
-    flex: 1,
+    flex: 1.8,
   },
   selectBtn: {
     flex: 1,
@@ -191,6 +220,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "flex-start",
+  },
+  box: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   selectItem: {
     flex: 1,
@@ -213,6 +248,37 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: RED,
     fontFamily: "BMHANNAPro",
+  },
+  monthBox: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  leftMonth: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  leftText: {
+    fontSize: 20,
+    fontFamily: "BMHANNAPro",
+    color: "#00BBF2",
+    letterSpacing: 1,
+  },
+  rightMonth: {
+    flex: 4,
+    marginRight: 10,
+    marginBottom: 50,
+    padding: 20,
+    borderRadius: 15,
+    backgroundColor: "white",
+  },
+  leftWrapper: {
+    flex: 1,
+    marginLeft: 15,
+    marginBottom: 5,
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 
