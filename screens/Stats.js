@@ -13,13 +13,7 @@ import Empty from "../components/Empty";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 
-// const timeToString = (time) => {
-//   const date = new Date(time);
-//   return date.toISOString().split("T")[0];
-// };
-
 const Stats = ({ navigation }) => {
-  const { works } = useContext(LogContext);
   const [userNo, setUserNo] = useState(0);
   const [monthDate, setMonthDate] = useState("");
   // 매핑한 상태값 저장
@@ -104,7 +98,6 @@ const Stats = ({ navigation }) => {
 
   // 클릭 시 API 가져오기
   const handleDayPress = (day) => {
-    console.log(day);
     const untilMonth = day.substring(0, 7);
     setMonthDate(untilMonth);
     getTodayData(day);
@@ -218,7 +211,10 @@ const Stats = ({ navigation }) => {
         <View style={styles.leftMonth}>
           <Text style={styles.leftText}>{monthDate.substring(5, 7)}월</Text>
         </View>
-        <View style={styles.rightMonth}>
+        <TouchableOpacity
+          style={styles.rightMonth}
+          onPress={() => navigation.push("ChartMonth")}
+        >
           <View style={styles.box}>
             <View style={styles.leftWrapper}>
               <View style={styles.apiBox}>
@@ -238,7 +234,7 @@ const Stats = ({ navigation }) => {
               <Ionicons name="arrow-forward" size={24} color="black" />
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

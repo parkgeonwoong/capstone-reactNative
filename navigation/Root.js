@@ -12,6 +12,7 @@ import WorkItem from "../components/WorkItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignUpScreen from "../screens/SignUpScreen";
 import ChartDay from "../screens/ChartDay";
+import ChartMonth from "../screens/ChartMonth";
 
 const Nav = createNativeStackNavigator();
 
@@ -49,7 +50,15 @@ const Root = () => {
         name="ChartDay"
         component={ChartDay}
         options={{
-          title: "차트",
+          title: "일별 차트",
+          headerTitleStyle: { fontFamily: "BMHANNAPro" },
+        }}
+      />
+      <Nav.Screen
+        name="ChartMonth"
+        component={ChartMonth}
+        options={{
+          title: "월별 차트",
           headerTitleStyle: { fontFamily: "BMHANNAPro" },
         }}
       />
