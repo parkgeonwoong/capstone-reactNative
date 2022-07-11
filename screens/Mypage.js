@@ -1,3 +1,9 @@
+/* 
+@컴포넌트 이름: 내 정보 페이지
+@관련된 컴포넌트: Tabs, 회원정보 추가할 예정
+@구현: 회원 정보 확인, 회원 정보 삭제
+*/
+
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";

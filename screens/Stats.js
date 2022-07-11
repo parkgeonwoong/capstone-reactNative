@@ -1,7 +1,7 @@
 /* 
 @컴포넌트 이름: 통계 페이지
-@관련된 컴포넌트: Tabs
-@구현: 캘린더, 일자별 로그, 월별 로그, 차트
+@관련된 컴포넌트: Tabs, ChartDay, ChartMonth
+@구현: 캘린더, 일자별 로그, 월별 로그
 */
 
 import React, { useContext, useEffect, useState } from "react";

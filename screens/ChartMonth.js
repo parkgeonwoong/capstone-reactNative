@@ -1,3 +1,9 @@
+/* 
+@컴포넌트 이름: 월별 차트 페이지
+@관련된 컴포넌트: Stats
+@구현: 라인 차트 
+*/
+
 import React from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";

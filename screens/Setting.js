@@ -1,3 +1,9 @@
+/* 
+@컴포넌트 이름: 설정 페이지
+@관련된 컴포넌트: Tabs
+@구현: 로그아웃
+*/
+
 import React from "react";
 import {
   Button,
@@ -56,7 +62,6 @@ const styles = StyleSheet.create({
   block: {
     flex: 1,
     marginTop: 10,
-    // backgroundColor: "tomato",
   },
   logoutBtn: {
     margin: 10,
@@ -70,7 +75,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    // fontWeight: "600",
     letterSpacing: 1,
     fontFamily: "BMHANNAPro",
     opacity: 0.8,
