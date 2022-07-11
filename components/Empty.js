@@ -7,7 +7,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-import { PINK } from "./Colors";
+import { PINK, RED } from "./Colors";
 
 const Wrapper = styled.View`
   flex: 1;
@@ -18,7 +18,7 @@ const Wrapper = styled.View`
 const Description = styled.Text`
   font-size: 25px;
   /* font-weight: 700; */
-  color: ${PINK};
+  color: ${RED};
   font-family: "BMHANNAPro";
 `;
 
@@ -26,7 +26,7 @@ const Empty = () => {
   return (
     <Wrapper>
       <Ionicons name="create-outline" size={48} color="black" />
-      <Description>텅 비었어요</Description>
+      <Description>Empty</Description>
     </Wrapper>
   );
 };

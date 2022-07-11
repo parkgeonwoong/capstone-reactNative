@@ -5,7 +5,13 @@
 */
 
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { Agenda } from "react-native-calendars";
 import { BG_COLOR, RED } from "../components/Colors";
 import LogContext from "../contexts/LogContext";
@@ -14,17 +20,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 
 const Stats = ({ navigation }) => {
+  // 오늘 날짜
+  const date = new Date();
+  const today = date.toISOString().split("T")[0];
+
   const [userNo, setUserNo] = useState("");
-  const [monthDate, setMonthDate] = useState("");
+  const [monthDate, setMonthDate] = useState(today.substring(0, 7));
   // 매핑한 상태값 저장
   const [mapConper, setMapConper] = useState([]);
   const [mapFocus, setMapFocus] = useState([]);
   const [mapUnFocus, setMapUnFocus] = useState([]);
   const [mapFocusdate, setMapFocusdate] = useState([]);
-
-  // 오늘 날짜
-  const date = new Date();
-  const today = date.toISOString().split("T")[0];
 
   // 월별 통계를 위한 문자열 자르기
   // setMonthDate(today.substring(0, 7));
@@ -39,7 +45,7 @@ const Stats = ({ navigation }) => {
       try {
         await AsyncStorage.getItem("id", (err, result) => {
           const userInfo = JSON.parse(result);
-          // console.log(typeof userInfo.userno);
+          // console.log(userInfo.userno);
           setUserNo(userInfo.userno);
         });
       } catch (err) {
@@ -58,7 +64,8 @@ const Stats = ({ navigation }) => {
       const data = await response.json();
       setItems(data);
     } catch (err) {
-      console.log(err);
+      console.log("특정날짜", err);
+      alert("데이터가 없습니다.");
     }
   };
 
@@ -85,17 +92,24 @@ const Stats = ({ navigation }) => {
       setMapUnFocus(mappedUnFocus);
       setMapFocusdate(mappedFocusdate);
     } catch (err) {
-      console.log(err);
+      console.log("월별날짜", err);
     }
   };
 
   // console.log("매핑된 상태값: ", mapConper);
   // console.log(monthDate);
 
+  // API 로딩 다 되고 나서 시작할 함수
+  // const getData = async () => {
+  //   setMonthDate(today.substring(0, 7));
+  //   await Promise.all([getTodayData(today), getMonthData(monthDate)]);
+  //   setLoading(false);
+  // };
+
   // 렌더링 전에 가져올 API
   useEffect(() => {
-    getTodayData(today);
     setMonthDate(today.substring(0, 7));
+    getTodayData(today);
     getMonthData(monthDate);
   }, [userNo]);
 
@@ -198,7 +212,7 @@ const Stats = ({ navigation }) => {
         <Agenda
           items={items}
           renderItem={renderItem}
-          renderEmptyData={renderEmpty}
+          // renderEmptyData={null}
           selected={today}
           onDayPress={(day) => {
             // console.log("DayPress:", day.dateString);
