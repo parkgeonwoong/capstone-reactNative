@@ -1,26 +1,19 @@
 import React from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
+import { BLACK, RED } from "../components/Colors";
 
 const ChartMonth = ({ route }) => {
+  // console.log(route.params);
+  // console.log(route.params.con_per);
+  // console.log(route.params.focusdate);
+  const conData = route.params.con_per;
+
   const lineCharData = {
-    labels: [
-      "2022-07-08",
-      "2022-07-08",
-      "March",
-      "April",
-      "May",
-      "June",
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-    ],
+    labels: route.params.focusdate,
     datasets: [
       {
-        data: [1, 35, 12, 40, 20, 6, 1, 50, 12, 4, 100, 6],
+        data: route.params.con_per,
       },
     ],
   };
@@ -29,7 +22,12 @@ const ChartMonth = ({ route }) => {
     <View style={styles.fullScreen}>
       <View style={styles.chartBox}>
         <View style={styles.title}>
-          <Text style={styles.text}>월별 차트</Text>
+          <Text style={styles.text}>
+            "{route.params.focusdate[0].substring(6, 7)}월 어땠나요?"
+          </Text>
+          <Text style={[styles.text, { fontSize: 20, color: BLACK }]}>
+            이번달 가장 높은 집중도: {Math.max(...conData)}%
+          </Text>
         </View>
         <View style={{ height: Dimensions.get("window").height / 2 }}>
           <ScrollView
@@ -48,6 +46,7 @@ const ChartMonth = ({ route }) => {
               yAxisLabel="" // y좌표 접두어
               yAxisSuffix="%" // y좌표 접미어
               yAxisInterval={1} // optional, defaults to 1, 간격??
+              fromZero={true}
               chartConfig={{
                 backgroundColor: "#e26a00",
                 backgroundGradientFrom: "#fb8c00",

@@ -1,9 +1,11 @@
 import React from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
+import { BLACK } from "../components/Colors";
 
 const ChartDay = ({ route }) => {
   // console.log(route.params);
+  // console.log(route.params.focustime + route.params.unfocustime);
 
   const chartConfig = {
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -30,8 +32,13 @@ const ChartDay = ({ route }) => {
   return (
     <View style={styles.fullScreen}>
       <View style={styles.chartBox}>
-        <Text style={styles.text}>하루 어땟나요?</Text>
-        <Text style={styles.text}>{route.params.focusdate}</Text>
+        <Text style={styles.text}>"하루 어땠나요?"</Text>
+        <Text style={[styles.text, { fontSize: 20, color: BLACK }]}>
+          {route.params.focusdate}
+        </Text>
+        <Text style={[styles.text, { fontSize: 20, color: BLACK }]}>
+          {route.params.focustime + route.params.unfocustime}초 중..
+        </Text>
         <PieChart
           data={data}
           width={Dimensions.get("window").width - 15}

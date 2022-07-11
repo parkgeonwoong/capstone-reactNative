@@ -14,12 +14,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 
 const Stats = ({ navigation }) => {
-  const [userNo, setUserNo] = useState(0);
+  const [userNo, setUserNo] = useState("");
   const [monthDate, setMonthDate] = useState("");
   // 매핑한 상태값 저장
   const [mapConper, setMapConper] = useState([]);
   const [mapFocus, setMapFocus] = useState([]);
   const [mapUnFocus, setMapUnFocus] = useState([]);
+  const [mapFocusdate, setMapFocusdate] = useState([]);
 
   // 오늘 날짜
   const date = new Date();
@@ -63,7 +64,7 @@ const Stats = ({ navigation }) => {
 
   // 평균
   const average = (arr) => {
-    return arr.reduce((p, c) => p + c, 0) / arr.length;
+    return (arr.reduce((p, c) => p + c, 0) / arr.length).toFixed(1);
   };
 
   // 월별 날짜 가져오기
@@ -78,9 +79,11 @@ const Stats = ({ navigation }) => {
       const mappedConper = data.map((item) => item.con_per);
       const mappedFocus = data.map((item) => item.focustime);
       const mappedUnFocus = data.map((item) => item.unfocustime);
+      const mappedFocusdate = data.map((item) => item.focusdate);
       setMapConper(mappedConper);
       setMapFocus(mappedFocus);
       setMapUnFocus(mappedUnFocus);
+      setMapFocusdate(mappedFocusdate);
     } catch (err) {
       console.log(err);
     }
@@ -161,7 +164,7 @@ const Stats = ({ navigation }) => {
           <View style={styles.selectItem}>
             <View style={styles.apiBox}>
               <Text style={styles.textTitle}>🔸집중도:</Text>
-              <Text style={styles.textContext}>{item.con_per}%</Text>
+              <Text style={styles.textContext}>{item.con_per.toFixed(1)}%</Text>
             </View>
             <View style={styles.apiBox}>
               <Text style={styles.textTitle}>🔸집중 시간:</Text>
@@ -213,7 +216,12 @@ const Stats = ({ navigation }) => {
         </View>
         <TouchableOpacity
           style={styles.rightMonth}
-          onPress={() => navigation.push("ChartMonth")}
+          onPress={() =>
+            navigation.push("ChartMonth", {
+              con_per: mapConper,
+              focusdate: mapFocusdate,
+            })
+          }
         >
           <View style={styles.box}>
             <View style={styles.leftWrapper}>
