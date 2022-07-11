@@ -11,6 +11,7 @@ import { BAR_ACTIVE, BG_COLOR, BAR_INACTIVE } from "../components/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import Setting from "../screens/Setting";
+import Mypage from "../screens/Mypage";
 
 const Tab = createBottomTabNavigator();
 
@@ -64,7 +65,7 @@ const Tabs = () => {
         tabBarInactiveTintColor: BAR_INACTIVE,
       }}
     >
-      {/* 분석 페이지 */}
+      {/* 통계 페이지 */}
       <Tab.Screen
         name="Stats"
         component={Stats}
@@ -76,7 +77,7 @@ const Tabs = () => {
           title: "통계",
         }}
       />
-      {/* 랭크 페이지 */}
+      {/* 랭킹 페이지 */}
       <Tab.Screen
         name="Rank"
         component={Setting}
@@ -103,10 +104,10 @@ const Tabs = () => {
           headerTitleAlign: "center",
         }}
       />
-      {/* 프로필 페이지 */}
+      {/* 내 정보 페이지 */}
       <Tab.Screen
-        name="Profile"
-        component={Setting}
+        name="Mypage"
+        component={Mypage}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="person" size={size} color={color} />;
