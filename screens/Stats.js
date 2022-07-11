@@ -1,14 +1,12 @@
 /* 
-@컴포넌트 이름: 분석 페이지
+@컴포넌트 이름: 통계 페이지
 @관련된 컴포넌트: Tabs
-@구현: 캘린더, 날짜별 로그, 차트
+@구현: 캘린더, 일자별 로그, 월별 로그, 차트
 */
 
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Agenda } from "react-native-calendars";
-import { Card, Paragraph } from "react-native-paper";
-import { addDays, format } from "date-fns";
 import { BG_COLOR, RED } from "../components/Colors";
 import LogContext from "../contexts/LogContext";
 import Empty from "../components/Empty";
@@ -24,6 +22,10 @@ const Stats = ({ navigation }) => {
   const { works } = useContext(LogContext);
   const [userNo, setUserNo] = useState(0);
   const [monthDate, setMonthDate] = useState("");
+  // 매핑한 상태값 저장
+  const [mapConper, setMapConper] = useState([]);
+  const [mapFocus, setMapFocus] = useState([]);
+  const [mapUnFocus, setMapUnFocus] = useState([]);
 
   // 오늘 날짜
   const date = new Date();
@@ -52,39 +54,61 @@ const Stats = ({ navigation }) => {
     load();
   }, []);
 
-  // 오늘 날짜만 가져오기
+  // 특정 날짜만 가져오기
+  const getTodayData = async (date) => {
+    try {
+      const response = await fetch(
+        `http://diligentp.com/stats/day?userno=${userNo}&date=${date}`
+      );
+      const data = await response.json();
+      setItems(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 평균
+  const average = (arr) => {
+    return arr.reduce((p, c) => p + c, 0) / arr.length;
+  };
+
+  // 월별 날짜 가져오기
+  const getMonthData = async (date) => {
+    try {
+      const response = await fetch(
+        `http://diligentp.com/stats/month?userno=${userNo}&date=${date}`
+      );
+      const data = await response.json();
+
+      // api mapping
+      const mappedConper = data.map((item) => item.con_per);
+      const mappedFocus = data.map((item) => item.focustime);
+      const mappedUnFocus = data.map((item) => item.unfocustime);
+      setMapConper(mappedConper);
+      setMapFocus(mappedFocus);
+      setMapUnFocus(mappedUnFocus);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // console.log("매핑된 상태값: ", mapConper);
+  // console.log(monthDate);
+
+  // 렌더링 전에 가져올 API
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await fetch(
-          `http://diligentp.com/stats?userno=${userNo}&date=${today}`
-        );
-        const data = await response.json();
-        setItems(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getData();
+    getTodayData(today);
     setMonthDate(today.substring(0, 7));
+    getMonthData(monthDate);
   }, [userNo]);
 
   // 클릭 시 API 가져오기
   const handleDayPress = (day) => {
-    const getData = async () => {
-      try {
-        const response = await fetch(
-          `http://diligentp.com/stats?userno=${userNo}&date=${day}`
-        );
-        const data = await response.json();
-        // console.log("[Stats]🔸외부 API:", data);
-        setItems(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getData();
-    setMonthDate(day.substring(0, 7));
+    console.log(day);
+    const untilMonth = day.substring(0, 7);
+    setMonthDate(untilMonth);
+    getTodayData(day);
+    getMonthData(untilMonth);
   };
 
   // console.log("가져온 API 저장: ", items);
@@ -197,8 +221,18 @@ const Stats = ({ navigation }) => {
         <View style={styles.rightMonth}>
           <View style={styles.box}>
             <View style={styles.leftWrapper}>
-              <Text style={styles.textTitle}>🔸집중도:</Text>
-              <Text style={styles.textContext}>초</Text>
+              <View style={styles.apiBox}>
+                <Text style={styles.textTitle}>🔸평균 집중도:</Text>
+                <Text style={styles.textContext}>{average(mapConper)}초</Text>
+              </View>
+              <View style={styles.apiBox}>
+                <Text style={styles.textTitle}>🔸평균 집중 시간:</Text>
+                <Text style={styles.textContext}>{average(mapFocus)}초</Text>
+              </View>
+              <View style={styles.apiBox}>
+                <Text style={styles.textTitle}>🔸평균 집중 안한 시간:</Text>
+                <Text style={styles.textContext}>{average(mapUnFocus)}초</Text>
+              </View>
             </View>
             <View>
               <Ionicons name="arrow-forward" size={24} color="black" />
@@ -274,7 +308,7 @@ const styles = StyleSheet.create({
   rightMonth: {
     flex: 4,
     marginRight: 10,
-    marginBottom: 50,
+    marginBottom: 40,
     padding: 20,
     borderRadius: 15,
     backgroundColor: "white",
@@ -283,8 +317,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 15,
     marginBottom: 5,
-    flexDirection: "row",
-    alignItems: "center",
   },
 });
 

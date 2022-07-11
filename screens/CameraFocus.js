@@ -73,7 +73,7 @@ const CameraFocus = ({ route }) => {
   // 딥러닝 서버 비동기 연결 처리
   const getApi = async (tensorJson) => {
     // 딥러닝 서버
-    const response = await fetch("http://172.30.1.33:5000/test", {
+    const response = await fetch("http://172.30.1.18:5000/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +109,7 @@ const CameraFocus = ({ route }) => {
       width,
       height,
       channel,
-      faceData,
+      // faceData,
       getCount,
       getuserNo,
       Ready,
@@ -155,14 +155,14 @@ const CameraFocus = ({ route }) => {
           onReady={handleCameraStream}
           autorender={true}
           useCustomShadersToResize={false}
-          onFacesDetected={handleFacesDetected}
-          faceDetectorSettings={{
-            mode: FaceDetector.FaceDetectorMode.accurate,
-            detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
-            runClassifications: FaceDetector.FaceDetectorClassifications.all,
-            minDetectionInterval: 10000,
-            tracking: true,
-          }}
+          // onFacesDetected={handleFacesDetected}
+          // faceDetectorSettings={{
+          //   mode: FaceDetector.FaceDetectorMode.accurate,
+          //   detectLandmarks: FaceDetector.FaceDetectorLandmarks.all,
+          //   runClassifications: FaceDetector.FaceDetectorClassifications.all,
+          //   minDetectionInterval: 10000,
+          //   tracking: true,
+          // }}
         />
         {getData()}
       </View>
