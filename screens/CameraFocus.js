@@ -6,7 +6,14 @@
 import { cameraWithTensors } from "@tensorflow/tfjs-react-native";
 import { Camera, CameraType } from "expo-camera";
 import React, { useContext, useEffect, useState } from "react";
-import { LogBox, Platform, StyleSheet, View, Text } from "react-native";
+import {
+  LogBox,
+  Platform,
+  StyleSheet,
+  View,
+  Text,
+  Vibration,
+} from "react-native";
 import * as FaceDetector from "expo-face-detector";
 import * as tf from "@tensorflow/tfjs";
 import SetTimer from "../components/Timer";
@@ -73,7 +80,7 @@ const CameraFocus = ({ route }) => {
   // 딥러닝 서버 비동기 연결 처리
   const getApi = async (tensorJson) => {
     // 딥러닝 서버
-    const response = await fetch("http://172.30.1.41:5000/test", {
+    const response = await fetch("http://192.168.0.17:5000/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,6 +90,13 @@ const CameraFocus = ({ route }) => {
 
     const json = await response.json();
     console.log("🚨딥러닝 json 확인: ", json); // 딥러닝 json 확인
+    // const mappedCon = json.map((item) => item.con_per);
+    console.log("집중도:", json.con_per);
+    const conper = json.con_per;
+    if (conper <= 40) {
+      alert("🔥 집중력이 낮습니다!!");
+      Vibration.vibrate();
+    }
   };
 
   // faceData와 imageData의 일괄 처리를 위한 함수

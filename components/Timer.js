@@ -15,11 +15,12 @@ import { BLUE } from "./Colors";
 import LogContext from "../contexts/LogContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+let user = 0;
+
 // 사용자 정의 hook
 const useCounter = (initialValue, ms) => {
   const [count, setCount] = useState(initialValue);
   const [starting, setStarting] = useState(false);
-  const [userNo, setUserNo] = useState(0);
   const intervalRef = useRef(null);
 
   const start = useCallback(() => {
@@ -32,23 +33,20 @@ const useCounter = (initialValue, ms) => {
     }, ms);
   }, []);
   const stop = useCallback(() => {
+    // console.log("a:", user);
     if (intervalRef.current === null) {
       return;
     }
     setStarting(false);
-    AsyncStorage.getItem("id").then((value) => {
-      const userInfo = JSON.parse(value);
-      // console.log(userInfo);
-      setUserNo(userInfo.userno);
-    });
-    fetch("http://172.30.1.33:5000/test", {
+
+    fetch("http://192.168.0.17:5000/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         Ready: 0,
-        getuserNo: userNo,
+        getuserNo: user,
       }),
     })
       .then((response) => response.json())
@@ -71,8 +69,20 @@ const SetTimer = ({ getTimer, data, getReady }) => {
   const [currentSeconds, setCurrentSeconds] = useState(0);
   const { count, starting, start, stop, reset } = useCounter(data.count, 1000);
   const { works, setWorks } = useContext(LogContext);
+  const [userNo, setUserNo] = useState("");
 
   // console.log(data.id);
+
+  useEffect(() => {
+    AsyncStorage.getItem("id").then((value) => {
+      const userInfo = JSON.parse(value);
+      // console.log(userInfo);
+      setUserNo(userInfo.userno);
+      user = userInfo.userno;
+    });
+  });
+
+  // console.log("userNo", userNo);
 
   const timeSave = (id) => {
     const nextTime = works.map((work) =>
