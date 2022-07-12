@@ -73,7 +73,7 @@ const CameraFocus = ({ route }) => {
   // 딥러닝 서버 비동기 연결 처리
   const getApi = async (tensorJson) => {
     // 딥러닝 서버
-    const response = await fetch("http://172.30.1.18:5000/test", {
+    const response = await fetch("http://172.30.1.41:5000/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

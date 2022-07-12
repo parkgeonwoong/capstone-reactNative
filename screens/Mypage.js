@@ -1,6 +1,6 @@
 /* 
 @컴포넌트 이름: 내 정보 페이지
-@관련된 컴포넌트: Tabs, 회원정보 추가할 예정
+@관련된 컴포넌트: Tabs, Profile
 @구현: 회원 정보 확인, 회원 정보 삭제
 */
 
@@ -10,13 +10,16 @@ import { useNavigation } from "@react-navigation/native";
 import { BG_COLOR } from "../components/Colors";
 import { Ionicons } from "@expo/vector-icons";
 
-const Mypage = () => {
-  const navigation = useNavigation();
+const Mypage = ({ navigation }) => {
+  // const navigation = useNavigation();
 
   return (
     <View style={styles.fullScreen}>
       <View style={styles.block}>
-        <TouchableOpacity style={styles.logoutBtn} onPress={null}>
+        <TouchableOpacity
+          style={styles.logoutBtn}
+          onPress={() => navigation.push("Profile")}
+        >
           <Text style={styles.text}>🔸 내 정보 확인하기</Text>
           <Ionicons name="arrow-forward" size={24} color="black" />
         </TouchableOpacity>
