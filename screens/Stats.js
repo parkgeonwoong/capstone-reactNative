@@ -241,15 +241,21 @@ const Stats = ({ navigation }) => {
             <View style={styles.leftWrapper}>
               <View style={styles.apiBox}>
                 <Text style={styles.textTitle}>🔸평균 집중도:</Text>
-                <Text style={styles.textContext}>{average(mapConper)}초</Text>
+                <Text style={styles.textContext}>
+                  {isNaN(average(mapConper)) ? 0 : average(mapConper)}%
+                </Text>
               </View>
               <View style={styles.apiBox}>
                 <Text style={styles.textTitle}>🔸평균 집중 시간:</Text>
-                <Text style={styles.textContext}>{average(mapFocus)}초</Text>
+                <Text style={styles.textContext}>
+                  {isNaN(average(mapFocus)) ? 0 : average(mapFocus)}초
+                </Text>
               </View>
               <View style={styles.apiBox}>
                 <Text style={styles.textTitle}>🔸평균 집중 안한 시간:</Text>
-                <Text style={styles.textContext}>{average(mapUnFocus)}초</Text>
+                <Text style={styles.textContext}>
+                  {isNaN(average(mapUnFocus)) ? 0 : average(mapUnFocus)}초
+                </Text>
               </View>
             </View>
             <View>

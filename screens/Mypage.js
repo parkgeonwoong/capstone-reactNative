@@ -40,22 +40,12 @@ const Mypage = ({ navigation }) => {
         if (response.status === 200) {
           alert("정상적으로 탈퇴했습니다.");
           AsyncStorage.removeItem("id");
+          AsyncStorage.removeItem("works");
           navigation.replace("SignIn");
-          // return response.json();
         } else {
           alert("데이터가 없습니다.");
-          // return null;
         }
       })
-      // .then((data) => {
-      //   console.log(data);
-      //   if (data === null) {
-      //     alert("데이터가 없습니다.");
-      //   } else {
-      //     alert("정상적으로 탈퇴했습니다.");
-      //     navigation.replace("SignIn");
-      //   }
-      // })
       .catch((err) => console.log(err));
   };
 

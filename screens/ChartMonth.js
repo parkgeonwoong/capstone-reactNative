@@ -10,7 +10,7 @@ import { LineChart } from "react-native-chart-kit";
 import { BLACK, RED } from "../components/Colors";
 
 const ChartMonth = ({ route }) => {
-  // console.log(route.params);
+  console.log("🚨", route.params.focusdate);
   // console.log(route.params.con_per);
   // console.log(route.params.focusdate);
   const conData = route.params.con_per;
@@ -23,6 +23,14 @@ const ChartMonth = ({ route }) => {
       },
     ],
   };
+
+  if (route.params.focusdate.length == 0) {
+    return (
+      <View style={styles.fullScreen}>
+        <Text style={styles.text}>데이터가 없습니다.</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.fullScreen}>

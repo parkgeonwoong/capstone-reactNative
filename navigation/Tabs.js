@@ -12,6 +12,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import Setting from "../screens/Setting";
 import Mypage from "../screens/Mypage";
+import Rank from "../screens/Rank";
 
 const Tab = createBottomTabNavigator();
 
@@ -80,7 +81,7 @@ const Tabs = () => {
       {/* 랭킹 페이지 */}
       <Tab.Screen
         name="Rank"
-        component={Setting}
+        component={Rank}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="trophy" size={size} color={color} />;
