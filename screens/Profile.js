@@ -1,3 +1,9 @@
+/* 
+@컴포넌트 이름: 내 정보 확인
+@관련된 컴포넌트: Mypage
+@구현: 회원 정보 확인
+*/
+
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { BG_COLOR } from "../components/Colors";
