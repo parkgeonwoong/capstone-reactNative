@@ -68,7 +68,7 @@ const Home = () => {
   return (
     <FullScreen>
       <Block style={styles.shadow}>
-        {works.length === 0 ? (
+        {works === null || works.length === 0 ? (
           <Empty />
         ) : (
           <WorkList works={works} onToggle={onToggle} onRemove={onRemove} />

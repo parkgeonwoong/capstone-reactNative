@@ -1,19 +1,75 @@
-import React from "react";
+/* 
+@컴포넌트 이름: 랭크 페이지
+@관련된 컴포넌트: Tabs
+*/
+
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { BG_COLOR } from "../components/Colors";
 
 const Rank = () => {
+  const [mappedName, setMappedName] = useState([]);
+  const [mappedID, setMappedID] = useState([]);
+  const [mappedTotal, setMappedTotal] = useState([]);
+
+  // 랭크 API
+  const rank = async () => {
+    const response = await fetch("http://diligentp.com/rank");
+    const data = await response.json();
+    const mappingName = data.map((item) => item.username);
+    const mappingID = data.map((item) => item.userid);
+    const mappingTotal = data.map((item) => item.focustime);
+
+    setMappedName(mappingName);
+    setMappedID(mappingID);
+    setMappedTotal(mappingTotal);
+  };
+
+  useEffect(() => {
+    rank();
+  }, []);
+
   return (
     <View style={styles.fullScreen}>
       <View style={styles.block}>
         <View style={styles.logoutBtn}>
-          <Text style={[styles.text]}>🔸 아이디</Text>
+          <View style={styles.context}>
+            <Text style={[styles.text]}>🥇</Text>
+            <Text style={[styles.text, { fontSize: 20 }]}>
+              {mappedName[0]} ({mappedID[0]})
+            </Text>
+          </View>
+          <View style={styles.context}>
+            <Text style={[styles.text, { fontSize: 20 }]}>
+              {mappedTotal[0]}
+            </Text>
+          </View>
         </View>
         <View style={styles.logoutBtn}>
-          <Text style={[styles.text]}>🔸 이름</Text>
+          <View style={styles.context}>
+            <Text style={[styles.text]}>🥈</Text>
+            <Text style={[styles.text, { fontSize: 20 }]}>
+              {mappedName[1]} ({mappedID[1]})
+            </Text>
+          </View>
+          <View style={styles.context}>
+            <Text style={[styles.text, { fontSize: 20 }]}>
+              {mappedTotal[1]}
+            </Text>
+          </View>
         </View>
         <View style={styles.logoutBtn}>
-          <Text style={[styles.text]}>🔸 생성 날짜</Text>
+          <View style={styles.context}>
+            <Text style={[styles.text]}>🥉</Text>
+            <Text style={[styles.text, { fontSize: 20 }]}>
+              {mappedName[2]} ({mappedID[2]})
+            </Text>
+          </View>
+          <View style={styles.context}>
+            <Text style={[styles.text, { fontSize: 20 }]}>
+              {mappedTotal[2]}
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -39,10 +95,14 @@ const styles = StyleSheet.create({
     elevation: 0.5,
     borderRadius: 10,
   },
+  context: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   text: {
     // paddingHorizontal: 20,
     paddingRight: 20,
-    fontSize: 15,
+    fontSize: 30,
     letterSpacing: 1,
     fontFamily: "BMHANNAPro",
     opacity: 0.8,

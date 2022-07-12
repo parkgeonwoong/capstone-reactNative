@@ -27,6 +27,15 @@ const Mypage = ({ navigation }) => {
     }
   };
 
+  // 작업 삭제 기능
+  const workOut = async () => {
+    try {
+      await AsyncStorage.removeItem("works");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     load();
   }, [userNo]);
