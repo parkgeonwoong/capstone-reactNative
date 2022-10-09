@@ -1808,7 +1808,27 @@
     "@types/seedrandom" "2.4.27"
     "seedrandom" "2.4.3"
 
-"@tensorflow/tfjs-backend-webgl@~3.11.0", "@tensorflow/tfjs-backend-webgl@3.18.0":
+"@tensorflow/tfjs-backend-cpu@3.11.0":
+  "integrity" "sha512-ShLkrZ4/rmhZwzGKenMFDfQnaEbyZgWA5F8JRa52Iob/vptlZeuOzjq87CZKmZMUmDswR9A2kjzovT/H1bJdWQ=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-3.11.0.tgz"
+  "version" "3.11.0"
+  dependencies:
+    "@types/seedrandom" "2.4.27"
+    "seedrandom" "2.4.3"
+
+"@tensorflow/tfjs-backend-webgl@~3.11.0":
+  "integrity" "sha512-rNnc/dZ7LIl9O/Pn9W24I1h8kgpJ+XvG8NrdNSfIoWPCW4fvPSlU7B3yMeZXvRneny+z+T3xRs96nWyU2mZBJw=="
+  "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-3.11.0.tgz"
+  "version" "3.11.0"
+  dependencies:
+    "@tensorflow/tfjs-backend-cpu" "3.11.0"
+    "@types/offscreencanvas" "~2019.3.0"
+    "@types/seedrandom" "2.4.27"
+    "@types/webgl-ext" "0.0.30"
+    "@types/webgl2" "0.0.6"
+    "seedrandom" "2.4.3"
+
+"@tensorflow/tfjs-backend-webgl@3.18.0":
   "integrity" "sha512-3NknSzS1oX2BEBOrpjPMZl823S12RgshQthmIbG6QADHb4bCJA8aM4UjWpw+3bNQnRKbRDQdFbuvj10Un79s2A=="
   "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-3.18.0.tgz"
   "version" "3.18.0"
@@ -1825,7 +1845,7 @@
   "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-converter/-/tfjs-converter-3.18.0.tgz"
   "version" "3.18.0"
 
-"@tensorflow/tfjs-core@^3.18.0", "@tensorflow/tfjs-core@~3.11.0", "@tensorflow/tfjs-core@3.18.0":
+"@tensorflow/tfjs-core@^3.18.0", "@tensorflow/tfjs-core@~3.11.0", "@tensorflow/tfjs-core@3.11.0", "@tensorflow/tfjs-core@3.18.0":
   "integrity" "sha512-gMxisZozqsr5sCKlphF/eVBLg91MjlBiN60tjX8hJAu0WlSn6Gi5k65GNIL+Pq6hrxpvImcfdCmTH/2XJVZ0Mg=="
   "resolved" "https://registry.npmjs.org/@tensorflow/tfjs-core/-/tfjs-core-3.18.0.tgz"
   "version" "3.18.0"
@@ -5897,7 +5917,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@*", "prop-types@^15.5.10", "prop-types@^15.6.0", "prop-types@^15.7.2":
+"prop-types@*", "prop-types@^15.5.10", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.7.2":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -6179,13 +6199,22 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.12.0 || ^17.0.0"
 
-"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.12.0", "react@^16.8.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@> 16.7.0", "react@>= 15.2.1", "react@>= 16.8.0", "react@>=16.3.0", "react@>=17.0.1", "react@17.0.2":
+"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.12.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@> 16.7.0", "react@>= 15.2.1", "react@>= 16.8.0", "react@>=16.3.0", "react@>=17.0.1", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
   dependencies:
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.1"
+
+"react@^16.8.0":
+  "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
+  "resolved" "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
+  "version" "16.14.0"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
+    "prop-types" "^15.6.2"
 
 "readable-stream@^3.4.0":
   "integrity" "sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA=="
@@ -6481,6 +6510,11 @@
   dependencies:
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.1"
+
+"seedrandom@~2.4.3":
+  "integrity" "sha512-9A+PDmgm+2du77B5i0Ip2cxOqqHjgNxnBgglxLcX78A2D6c2rTo61z4jnVABpF4cKeDMDG+cmXXvdnqse2VqMA=="
+  "resolved" "https://registry.npmjs.org/seedrandom/-/seedrandom-2.4.4.tgz"
+  "version" "2.4.4"
 
 "seedrandom@2.4.3":
   "integrity" "sha512-2CkZ9Wn2dS4mMUWQaXLsOAfGD+irMlLEeSP3cMxpGbgyOOzJGFa+MWCOMTOCMyZinHRPxyOj/S/C57li/1to6Q=="

@@ -15,6 +15,33 @@
 
 <br>
 
+### Usage
+
+```bash
+npm install --force
+
+// 1. Android
+npm run start
+
+// 2. expo
+expo start
+
+// 2.1 expo cli 설치되어 있지 않다면
+(sudo) expo install --global expo-cli
+
+// 2.2 Mac watchman 필수
+brew install watchman
+
+expo login
+
+expo start
+```
+
+- `--force` 한 이유는 tensorflow 라이브러리 연계 에러로 인해 강제 설치
+- expo 공식문서 https://docs.expo.dev/get-started/installation/
+
+<br>
+
 ### Git Commit message
 
 | emoji | commit message |    when to use it    |
