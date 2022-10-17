@@ -27,7 +27,7 @@ npm run start
 expo start
 
 // 2.1 expo cli 설치되어 있지 않다면
-(sudo) expo install --global expo-cli
+(sudo) npm install --global expo-cli
 
 // 2.2 Mac watchman 필수
 brew install watchman
@@ -67,3 +67,9 @@ expo start
 |    Before    |        after        |
 | :----------: | :-----------------: |
 | Social Login | Login DB connection |
+
+<br>
+
+## Version
+
+1.1 로그인 후 첫 카테고리 에러 수정

@@ -41,7 +41,11 @@ const Home = () => {
   // 새 작업 등록
   const onInsert = (text) => {
     const nextId =
-      works.length > 0 ? Math.max(...works.map((work) => work.id)) + 1 : 1;
+      works == null
+        ? 1
+        : works.length > 0
+        ? Math.max(...works.map((work) => work.id)) + 1
+        : 1;
     const work = {
       id: nextId,
       text,
