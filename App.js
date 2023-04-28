@@ -1,5 +1,6 @@
 /**
  * @desc : App 처음 시작 파일
+ * Root.js로 이동
  *
  * @FIXME:
  * 23.04.28 리팩토링 시작 및 버그삭제
@@ -10,14 +11,12 @@
  *
  * @NOTE:
  * 1. splashScreen을 App.js에서 띄울려고 했으나 실패 → expo 지원 app.json에서 가능하게 설정
+ *
+ * NavigationContainer: 앱 상태를 관리하고 최상위 내비게이터를 앱 환경에 연결하는 역할
  */
 
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import * as Font from "expo-font";
-import { useAssets } from "expo-asset";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import AppLoading from "expo-app-loading";
 import * as SplashScreen from "expo-splash-screen";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -25,27 +24,9 @@ import Root from "./navigation/Root";
 import { LogContextProvider } from "./contexts/LogContext";
 
 export default function App() {
-  const [assets] = useAssets([require("./assets/logo.png")]);
-  const [loaded] = Font.useFonts(Ionicons.font);
-
-  // const [fontLoading, setFontLoading] = useState(false);
-  // useEffect(() => {
-  //   const getFonts = async () => {
-  //     await Font.loadAsync({
-  //       BMHANNAPro: require("./assets/fonts/BMHANNAPro.ttf"),
-  //       BMHANNAAir: require("./assets/fonts/BMHANNAAir_ttf.ttf"),
-  //     });
-  //   };
-  //   getFonts();
-  //   setFontLoading(true);
-  // }, []);
-
-  // if (!assets || !loaded || !fontLoading) {
-  //   return <AppLoading />;
-  // }
-
   const [appIsReady, setAppIsReady] = useState(false);
 
+  // 폰트 로드
   useEffect(() => {
     async function prepare() {
       try {
@@ -58,7 +39,6 @@ export default function App() {
       } catch (e) {
         console.warn(e);
       } finally {
-        // Tell the application to render
         setAppIsReady(true);
         await SplashScreen.hideAsync();
       }
