@@ -7,13 +7,14 @@
  * 2. fetch 가독성 높이기 (try catch)
  * 3. useEffect 코드 가독성 높이기
  * 4. styled-components로 리팩토링
+ * 5. 로그인, 회원가입 렌더링 컴포넌트 중첩 → 재사용 필요성
  */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useRef, useState } from "react";
 import { Keyboard } from "react-native";
 import styled from "styled-components/native";
-import { BLACK, RED } from "../components/Colors";
+import { BASE_URL } from "../api/api";
 
 const SignInScreen = ({ navigation: { navigate } }) => {
   const [id, setId] = useState("");
@@ -25,7 +26,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
    */
   const handleSubmitBtn = async () => {
     Keyboard.dismiss();
-    // navigate("Tabs", { screen: "Home" }); // 서버가 닫혀서 실험
+    navigate("Tabs", { screen: "Home" }); // 서버가 닫혀서 실험
 
     if (!id || !pass) {
       alert("아이디 또는 패스워드를 입력하세요.");
@@ -33,9 +34,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     }
 
     try {
-      const response = await fetch(
-        `http://diligentp.com/login?id=${id}&pass=${pass}`
-      );
+      const response = await fetch(`${BASE_URL}login?id=${id}&pass=${pass}`);
       if (response.status === 200) {
         const data = await response.json();
         AsyncStorage.setItem("id", JSON.stringify(data));
@@ -64,9 +63,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
         <FormInput
           onChangeText={(textId) => setId(textId)}
           placeholder="아이디"
-          onSubmitEditing={() => {
-            refPass.current.focus();
-          }}
+          onSubmitEditing={() => refPass.current.focus()}
           blurOnSubmit={false}
         />
         <FormInput
@@ -110,7 +107,7 @@ const FormBox = styled.View`
 
 const FormInput = styled.TextInput`
   width: 60%;
-  border-color: ${BLACK};
+  border-color: ${(props) => props.theme.BLACK};
   border-width: 1px;
   padding: 0 16px;
   border-radius: 5px;
@@ -126,7 +123,7 @@ const FormButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  background-color: ${RED};
+  background-color: ${(props) => props.theme.RED};
   box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 `;
 

@@ -1,10 +1,14 @@
-/* 
-@컴포넌트 이름: 회원가입 페이지
-@관련된 컴포넌트: Root, Tabs, SignInScreen
-*/
+/**
+ * @컴포넌트 : 회원가입 페이지
+ * @관련된컴포넌트 : Root, Tabs, SignInScreen
+ *
+ * @FIXME:
+ * 1. 안쓰는 코드 제거 && 중첩된 코드 리팩토링
+ *
+ */
 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Text,
   View,
@@ -12,95 +16,58 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  Keyboard,
-  Alert,
 } from "react-native";
 import { BLACK, RED } from "../components/Colors";
+import { BASE_URL } from "../api/api";
 
 const SignUpScreen = ({ navigation }) => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [pass, setPass] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const refName = useRef();
   const refPass = useRef();
 
-  const handleSubmitBtn = () => {
-    if (!id) {
-      alert("아이디를 입력하세요.");
-      return;
-    }
-    if (!name) {
-      alert("이름을 입력하세요.");
-      return;
-    }
-    if (!pass) {
-      alert("비밀번호를 입력하세요.");
-      return;
+  const handleSubmitBtn = async () => {
+    if (!id || !name || !pass) {
+      alert("아이디, 이름, 패스워드를 입력하세요.");
+      return null;
     }
 
-    setLoading(true);
-
-    // Body: x-www-form-urlencoded 형식
-    var dataToSend = {
+    /**
+     * Body: x-www-form-urlencoded 형식
+     * 백엔드 개발자가 정한 형식에 맞춰서 보내야 함
+     */
+    const dataToSend = {
       userid: id,
       username: name,
       userpass: pass,
     };
-    var formBody = [];
-    for (var key in dataToSend) {
-      var encodedKey = encodeURIComponent(key);
-      var encodedValue = encodeURIComponent(dataToSend[key]);
+    let formBody = [];
+    for (let key in dataToSend) {
+      const encodedKey = encodeURIComponent(key);
+      const encodedValue = encodeURIComponent(dataToSend[key]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
 
-    // console.log("formbody:", formBody);
-
-    fetch(`http://diligentp.com/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-      },
-      body: formBody,
-    })
-      .then((response) => {
-        console.log(JSON.stringify(response));
-        if (response.status === 200) {
-          return response.json();
-        } else {
-          return null;
-        }
-      })
-      .then((data) => {
-        console.log("[SignUp]:", data);
-        if (data === null) {
-          alert("이미 존재하는 아이디입니다.");
-        } else {
-          alert("✨ 회원가입에 성공하였습니다.");
-          navigation.replace("SignIn");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      const response = await fetch(`${BASE_URL}register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: formBody,
       });
+      const data = await response.json();
 
-    // Body: JSON 형식
-    // fetch(`http://diligentp.com/reg`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     userid: id,
-    //     username: name,
-    //     userpass: pass,
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((responseJson) => console.log("responseJson", responseJson))
-    //   .catch((err) => console.log(err));
+      if (response.status === 200) {
+        alert("✨ 회원가입에 성공하였습니다.");
+        navigation.replace("SignIn");
+      } else alert("이미 존재하는 아이디입니다.");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -195,7 +162,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    // fontWeight: "bold",
     fontSize: 18,
     color: "white",
     letterSpacing: 1,

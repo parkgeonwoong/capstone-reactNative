@@ -1,8 +1,12 @@
 # CapStone 프로젝트 - 집중해줄래?
 
-기간 : 22.03 ~ 22.08
-팀원 : 4명
-역할 : 프론트엔드 개발자
+- 기간 : 22.03 ~ 22.08
+- 팀원 : 4명
+- 역할 : 프론트엔드 개발자
+
+❌ 현재는 서버 종료로 인해 회원가입이 불가능합니다. 또한 딥러닝 서버 또한 종료되어 있습니다.
+
+✅ 로그인 버튼을 통해 기능을 확인할 수 있습니다.
 
 <br>
 
@@ -71,16 +75,23 @@ expo start
 1. Expo-SDK 버전 업데이트 45 → 46 (Expo go 46버전부터 작동)
 
 2. React, React-Native 버전 업데이트
-   (npx react-native upgrade) or (npx expo install react-native@0.69.9)
+   (`npx react-native upgrade` or `npx expo install react-native@0.69.9`)
    (https://stackoverflow.com/questions/72630357/how-to-upgrade-expo-sdk-to-specific-version)
 
 3. 에러: watchman warning: Recrawled this watch
    (https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl)
+
+4. 에러: React 18 호환에 맞게 수정 필요
+   (`entry.js` 파일참고)
 
 |     이름     |    변경 사항    |
 | :----------: | :-------------: |
 |   Expo SDK   | 45.0.0 → 46.0.0 |
 |    React     | 17.0.2 → 18.0.0 |
 | React-Native | 0.68.2 → 0.69.6 |
+
+5. 전체적인 리팩토링 필요
+
+❓ styled-components가 ReactNative에서는 Nested가 안됨 → 이유는 아직 모르겠다.
 
 <br>

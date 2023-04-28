@@ -8,6 +8,7 @@
  * 1. React, React-Native 버전 업데이트 (npx react-native upgrade) or (npx expo install react-native@0.69.9)
  *  (https://stackoverflow.com/questions/72630357/how-to-upgrade-expo-sdk-to-specific-version)
  * 2. 안쓰는 코드 제거 필요
+ * 3. ThemeProvider로 리팩토링
  *
  * @NOTE:
  * 1. splashScreen을 App.js에서 띄울려고 했으나 실패 → expo 지원 app.json에서 가능하게 설정
@@ -20,8 +21,11 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
 import { NavigationContainer } from "@react-navigation/native";
-import Root from "./navigation/Root";
 import { LogContextProvider } from "./contexts/LogContext";
+import Root from "./navigation/Root";
+
+import { ThemeProvider } from "styled-components/native";
+import { theme } from "./styles/theme";
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -52,9 +56,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <LogContextProvider>
-        <Root />
-      </LogContextProvider>
+      <ThemeProvider theme={theme}>
+        <LogContextProvider>
+          <Root />
+        </LogContextProvider>
+      </ThemeProvider>
     </NavigationContainer>
   );
 }

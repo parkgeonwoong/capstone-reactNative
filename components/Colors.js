@@ -3,9 +3,7 @@
 */
 
 export const BG_COLOR = "#F2F4F5";
-// export const BG_COLOR = "#fafafa";
 export const BAR_ACTIVE = "#343a40";
-// export const BAR_ACTIVE = "#0466c8";
 export const BAR_INACTIVE = "#ced4da";
 export const BLUE = "#3a86ff";
 export const PINK = "#ff006e";
