@@ -3,10 +3,10 @@
  *
  * @FIXME:
  * 23.04.28 리팩토링 시작 및 버그삭제
- * 0. React, React-Native (X)
- *  0-1. Expo-SDK 버전 업데이트 45 → 46 (Expo go 46버전부터 작동)
+ * 0. Expo-SDK 버전 업데이트 45 → 46 (Expo go 46버전부터 작동)
+ * 1. React, React-Native 버전 업데이트 (npx react-native upgrade) or (npx expo install react-native@0.69.9)
  *  (https://stackoverflow.com/questions/72630357/how-to-upgrade-expo-sdk-to-specific-version)
- * 1. 안쓰는 코드 제거 필요
+ * 2. 안쓰는 코드 제거 필요
  *
  * @NOTE:
  * 1. splashScreen을 App.js에서 띄울려고 했으나 실패 → expo 지원 app.json에서 가능하게 설정
