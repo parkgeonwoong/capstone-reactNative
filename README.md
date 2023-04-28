@@ -2,16 +2,18 @@
 
 ### 작업 환경
 
-|    name    |                       value                        |
-| :--------: | :------------------------------------------------: |
-|     OS     |                      Window11                      |
-|  RunTime   |                 Node.js(v16.13.2)                  |
-|   Build    |                   Android Studio                   |
-| AMD Device |                   Pixel 2 API 32                   |
-|    IDE     |                 Visual Studio Code                 |
-|  PlatForm  | Create-React-Native-App (CRNA = Expo&React Native) |
-| FrameWork  |                    React Native                    |
-|  License   |                    MIT License                     |
+|     name     |                       value                        |
+| :----------: | :------------------------------------------------: |
+|      OS      |                      Window11                      |
+|   RunTime    |                 Node.js(v16.13.2)                  |
+|    Build     |                   Android Studio                   |
+|  AMD Device  |                   Pixel 2 API 32                   |
+|     IDE      |                 Visual Studio Code                 |
+|   PlatForm   | Create-React-Native-App (CRNA = Expo&React Native) |
+|  FrameWork   |                    React Native                    |
+|   Expo SDK   |                       45.0.0                       |
+|    React     |                       17.0.2                       |
+| React-Native |                       0.68.2                       |
 
 <br>
 
