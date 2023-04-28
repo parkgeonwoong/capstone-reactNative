@@ -74,6 +74,7 @@ const Tabs = () => {
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="bar-chart" color={color} size={size} />;
           },
+          unmountOnBlur: true,
           tabBarLabel: "통계",
           title: "통계",
         }}
@@ -86,6 +87,7 @@ const Tabs = () => {
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="trophy" size={size} color={color} />;
           },
+          unmountOnBlur: true,
           tabBarLabel: "랭킹",
           title: "랭킹",
         }}

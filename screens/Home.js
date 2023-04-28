@@ -5,7 +5,7 @@
 
 import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { BG_COLOR } from "../components/Colors";
 import Empty from "../components/Empty";
 import FloatingButton from "../components/FloatingButton";

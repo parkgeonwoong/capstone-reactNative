@@ -10,7 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const LogContext = createContext();
 
 export const LogContextProvider = ({ children }) => {
-  const [works, setWorks] = useState([]);
+  const [works, setWorks] = useState([{ id: 1, text: "Testing", done: true }]);
 
   useEffect(() => {
     async function load() {

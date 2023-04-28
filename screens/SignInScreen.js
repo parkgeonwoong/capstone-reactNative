@@ -28,6 +28,9 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
   // 로그인 버튼 기능
   const handleSubmitBtn = () => {
     Keyboard.dismiss();
+    navigate("Tabs", { screen: "Home" });
+
+    /* 수정중 1.09
     if (!id) {
       alert("아이디를 입력하세요.");
       return;
@@ -57,7 +60,7 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      }); */
   };
 
   // 스토리지에 로그인 정보 있을 경우 -> 자동 로그인

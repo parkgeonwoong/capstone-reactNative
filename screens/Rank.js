@@ -14,15 +14,19 @@ const Rank = () => {
 
   // 랭크 API
   const rank = async () => {
-    const response = await fetch("http://diligentp.com/rank");
-    const data = await response.json();
-    const mappingName = data.map((item) => item.username);
-    const mappingID = data.map((item) => item.userid);
-    const mappingTotal = data.map((item) => item.focustime);
+    try {
+      const response = await fetch("http://diligentp.com/rank");
+      const data = await response.json();
+      const mappingName = data.map((item) => item.username);
+      const mappingID = data.map((item) => item.userid);
+      const mappingTotal = data.map((item) => item.focustime);
 
-    setMappedName(mappingName);
-    setMappedID(mappingID);
-    setMappedTotal(mappingTotal);
+      setMappedName(mappingName);
+      setMappedID(mappingID);
+      setMappedTotal(mappingTotal);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

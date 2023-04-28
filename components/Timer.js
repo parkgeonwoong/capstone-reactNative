@@ -39,7 +39,7 @@ const useCounter = (initialValue, ms) => {
     }
     setStarting(false);
 
-    fetch("http://192.168.0.17:5000/test", {
+    fetch("http://172.26.21.102:5000/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
