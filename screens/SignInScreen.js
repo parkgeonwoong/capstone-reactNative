@@ -1,85 +1,67 @@
-/* 
-@컴포넌트 이름: 로그인 페이지
-@관련된 컴포넌트: Root, Tabs,SignUpScreen
-*/
+/**
+ * @컴포넌트 : 로그인 페이지
+ * @관련된컴포넌트 : Root, Tabs,SignUpScreen
+ *
+ * @FIXME:
+ * 1. 안쓰는 코드 제거 && 중첩된 코드 리팩토링
+ * 2. fetch 가독성 높이기 (try catch)
+ * 3. useEffect 코드 가독성 높이기
+ * 4. styled-components로 리팩토링
+ */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  Keyboard,
-  Alert,
-} from "react-native";
+import { Keyboard } from "react-native";
+import styled from "styled-components/native";
 import { BLACK, RED } from "../components/Colors";
 
-const SignInScreen = ({ navigation: { navigate }, route }) => {
+const SignInScreen = ({ navigation: { navigate } }) => {
   const [id, setId] = useState("");
   const [pass, setPass] = useState("");
-
   const refPass = useRef();
 
-  const temp = route.params; // 로그아웃시 받아오는 변수
-
-  // 로그인 버튼 기능
-  const handleSubmitBtn = () => {
+  /**
+   * @desc : 로그인 비동기 처리
+   */
+  const handleSubmitBtn = async () => {
     Keyboard.dismiss();
-    navigate("Tabs", { screen: "Home" });
+    // navigate("Tabs", { screen: "Home" }); // 서버가 닫혀서 실험
 
-    /* 수정중 1.09
-    if (!id) {
-      alert("아이디를 입력하세요.");
-      return;
-    }
-    if (!pass) {
-      alert("비밀번호를 입력하세요");
-      return;
+    if (!id || !pass) {
+      alert("아이디 또는 패스워드를 입력하세요.");
+      return null;
     }
 
-    fetch(`http://diligentp.com/login?id=${id}&pass=${pass}`)
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json();
-        } else {
-          alert("없는 계정입니다.");
-          return null;
-        }
-      })
-      .then((data) => {
-        console.log("data 값:", data);
-        if (data === null) {
-          return;
-        } else {
-          AsyncStorage.setItem("id", JSON.stringify(data));
-          navigate("Tabs", { screen: "Home" });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      }); */
+    try {
+      const response = await fetch(
+        `http://diligentp.com/login?id=${id}&pass=${pass}`
+      );
+      if (response.status === 200) {
+        const data = await response.json();
+        AsyncStorage.setItem("id", JSON.stringify(data));
+        navigate("Tabs", { screen: "Home" });
+      } else {
+        alert("없는 계정입니다.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // 스토리지에 로그인 정보 있을 경우 -> 자동 로그인
+  // 스토리지에 로그인정보 O → 자동 로그인
   useEffect(() => {
-    AsyncStorage.getItem("id").then((value) =>
-      navigate(value === null ? "SignIn" : "Tabs", { screen: "Home" })
-    );
+    const checkLogin = async () => {
+      const value = await AsyncStorage.getItem("id");
+      navigate(value ? "Tabs" : "SignIn", { screen: "Home" });
+    };
+    checkLogin();
   }, []);
 
   return (
-    <View style={styles.fullScreen}>
-      <Image
-        source={require("../assets/logo.png")}
-        style={styles.boxImage}
-        resizeMode="contain"
-      />
-      <View style={styles.boxForm}>
-        <TextInput
-          style={styles.formInput}
+    <FullScreen>
+      <BoxImage source={require("../assets/logo.png")} resizeMode="contain" />
+      <FormBox>
+        <FormInput
           onChangeText={(textId) => setId(textId)}
           placeholder="아이디"
           onSubmitEditing={() => {
@@ -87,8 +69,7 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
           }}
           blurOnSubmit={false}
         />
-        <TextInput
-          style={styles.formInput}
+        <FormInput
           onChangeText={(textPass) => setPass(textPass)}
           placeholder="비밀번호"
           secureTextEntry
@@ -96,72 +77,64 @@ const SignInScreen = ({ navigation: { navigate }, route }) => {
           blurOnSubmit={false}
         />
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            handleSubmitBtn();
-          }}
-        >
-          <Text style={styles.text}>로그인</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigate("SignUp");
-          }}
-        >
-          <Text style={styles.text}>회원가입</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        <FormButton onPress={() => handleSubmitBtn()}>
+          <BtnText>로그인</BtnText>
+        </FormButton>
+        <FormButton onPress={() => navigate("SignUp")}>
+          <BtnText>회원가입</BtnText>
+        </FormButton>
+      </FormBox>
+    </FullScreen>
   );
 };
 
-const styles = StyleSheet.create({
-  fullScreen: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-  boxImage: {
-    flex: 1,
-    width: 300,
-    height: 300,
-  },
-  boxForm: {
-    flex: 1.3,
-    width: "100%",
-    alignItems: "center",
-    marginTop: 32,
-  },
-  formInput: {
-    width: "60%",
-    borderColor: BLACK,
-    borderWidth: 1,
-    paddingHorizontal: 16,
-    borderRadius: 5,
-    height: 48,
-    marginBottom: 16,
-  },
-  button: {
-    height: 48,
-    width: "60%",
-    marginTop: 8,
-    paddingHorizontal: 16,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: RED,
-    elevation: 5,
-  },
-  text: {
-    // fontWeight: "bold",
-    fontSize: 18,
-    color: "white",
-    letterSpacing: 1,
-    fontFamily: "BMHANNAPro",
-  },
-});
+const FullScreen = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+`;
+
+const BoxImage = styled.Image`
+  flex: 1;
+  width: 300px;
+  height: 300px;
+`;
+
+const FormBox = styled.View`
+  flex: 1.3;
+  width: 100%;
+  align-items: center;
+  margin-top: 32px;
+`;
+
+const FormInput = styled.TextInput`
+  width: 60%;
+  border-color: ${BLACK};
+  border-width: 1px;
+  padding: 0 16px;
+  border-radius: 5px;
+  height: 48px;
+  margin-bottom: 16px;
+`;
+
+const FormButton = styled.TouchableOpacity`
+  height: 48px;
+  width: 60%;
+  margin-top: 8px;
+  padding: 0 16px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: ${RED};
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+`;
+
+const BtnText = styled.Text`
+  font-size: 18px;
+  color: white;
+  letter-spacing: 1px;
+  font-family: "BMHANNAPro";
+`;
 
 export default SignInScreen;
