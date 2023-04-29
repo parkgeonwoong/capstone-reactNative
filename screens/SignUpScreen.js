@@ -4,21 +4,19 @@
  *
  * @FIXME:
  * 1. 안쓰는 코드 제거 && 중첩된 코드 리팩토링
- *
+ * 2. fetch 가독성 높이기 (try catch)
  */
 
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useRef, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
-import { BLACK, RED } from "../components/Colors";
 import { BASE_URL } from "../api/api";
+import {
+  BoxImage,
+  BtnText,
+  FormBox,
+  FormButton,
+  FormInput,
+  FullScreen,
+} from "../layout/Sign";
 
 const SignUpScreen = ({ navigation }) => {
   const [id, setId] = useState("");
@@ -71,102 +69,39 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.fullScreen}>
-      <Image
-        source={require("../assets/logo.png")}
-        style={styles.boxImage}
-        resizeMode="contain"
-      />
-      <View style={styles.boxForm}>
-        <TextInput
-          style={styles.formInput}
+    <FullScreen>
+      <BoxImage source={require("../assets/logo.png")} resizeMode="contain" />
+      <FormBox>
+        <FormInput
           onChangeText={(textId) => setId(textId)}
           placeholder="아이디"
           returnKeyType="next"
-          onSubmitEditing={() => {
-            refName.current.focus();
-          }}
-          blurOnSubmit={false}
+          onSubmitEditing={() => refName.current.focus()}
         />
-        <TextInput
-          style={styles.formInput}
+        <FormInput
           onChangeText={(textName) => setName(textName)}
           placeholder="이름"
           returnKeyType="next"
           ref={refName}
-          onSubmitEditing={() => {
-            refPass.current.focus();
-          }}
-          blurOnSubmit={false}
+          onSubmitEditing={() => refPass.current.focus()}
         />
-        <TextInput
-          style={styles.formInput}
+        <FormInput
           onChangeText={(textPass) => setPass(textPass)}
           placeholder="비밀번호"
           returnKeyType="next"
           secureTextEntry
           ref={refPass}
-          blurOnSubmit={false}
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmitBtn}>
-          <Text style={styles.text}>회원가입</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("SignIn")}
-        >
-          <Text style={styles.text}>로그인</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        <FormButton onPress={handleSubmitBtn}>
+          <BtnText>회원가입</BtnText>
+        </FormButton>
+        <FormButton onPress={() => navigation.navigate("SignIn")}>
+          <BtnText>로그인</BtnText>
+        </FormButton>
+      </FormBox>
+    </FullScreen>
   );
 };
-
-const styles = StyleSheet.create({
-  fullScreen: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-  boxImage: {
-    flex: 1,
-    width: 300,
-    height: 300,
-  },
-  boxForm: {
-    flex: 1.3,
-    width: "100%",
-    alignItems: "center",
-    marginTop: 32,
-  },
-  formInput: {
-    width: "60%",
-    borderColor: BLACK,
-    borderWidth: 1,
-    paddingHorizontal: 16,
-    borderRadius: 5,
-    height: 48,
-    marginBottom: 16,
-  },
-  button: {
-    height: 48,
-    width: "60%",
-    marginTop: 8,
-    paddingHorizontal: 16,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: RED,
-    elevation: 5,
-  },
-  text: {
-    fontSize: 18,
-    color: "white",
-    letterSpacing: 1,
-    fontFamily: "BMHANNAPro",
-  },
-});
 
 export default SignUpScreen;
