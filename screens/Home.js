@@ -16,7 +16,7 @@ import WorkList from "../components/WorkList";
 
 const Home = () => {
   const { works, setWorks } = useContext(LogContext);
-  console.log(works);
+  console.log("home Works: ", works);
 
   // 새 작업 등록
   const onInsert = (text) => {
@@ -51,7 +51,7 @@ const Home = () => {
         {works.length === 0 ? (
           <Empty />
         ) : (
-          <WorkList works={works} onToggle={onToggle} onRemove={onRemove} />
+          <WorkList onToggle={onToggle} onRemove={onRemove} />
         )}
         <FloatingButton onInsert={onInsert} />
       </Block>

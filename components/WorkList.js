@@ -1,17 +1,21 @@
-/* 
-@컴포넌트 이름: 일감 리스트
-@관련된 컴포넌트: Home, WorkItem
-*/
+/**
+ * @컴포넌트 : 일감 리스트
+ * @관련된컴포넌트 : Home, WorkItem
+ *
+ * @FIXME:
+ * 1. Context를 활용한 리팩토링
+ */
 
-import React from "react";
-import { FlatList, Text, View, StyleSheet, SafeAreaView } from "react-native";
+import React, { useContext } from "react";
 import styled from "styled-components/native";
 import WorkItem from "./WorkItem";
+import { LogContext } from "../contexts/LogContext";
 
-const WorkList = ({ works, onToggle, onRemove }) => {
+const WorkList = ({ onToggle, onRemove }) => {
+  const { works } = useContext(LogContext);
+
   return (
-    <FlatList
-      style={styles.list}
+    <WorkFlatList
       data={works}
       renderItem={({ item }) => (
         <WorkItem
@@ -28,11 +32,9 @@ const WorkList = ({ works, onToggle, onRemove }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    width: "100%",
-  },
-});
+const WorkFlatList = styled.FlatList`
+  flex: 1;
+  width: 100%;
+`;
 
 export default WorkList;
