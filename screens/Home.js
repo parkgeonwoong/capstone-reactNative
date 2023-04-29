@@ -1,51 +1,27 @@
-/* 
-@컴포넌트 이름: 메인 페이지
-@관련된 컴포넌트: Tabs, 다른 Navigation, FloatingButton
-*/
+/**
+ * @컴포넌트 : 메인 페이지
+ * @관련된컴포넌트 : Tabs, 다른 Navigation, FloatingButton
+ *
+ * @FIXME:
+ * 1. 리팩토링 필요 (null처리 고치기, Context 받아온 데이터처리)
+ * 2. 기능적인 부분 수정 필요 (새작업 기능)
+ */
 
-import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import React, { useContext } from "react";
+import { LogContext } from "../contexts/LogContext";
 import styled from "styled-components/native";
-import { BG_COLOR } from "../components/Colors";
 import Empty from "../components/Empty";
 import FloatingButton from "../components/FloatingButton";
 import WorkList from "../components/WorkList";
-import LogContext from "../contexts/LogContext";
-
-const FullScreen = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: ${BG_COLOR};
-`;
-
-const Block = styled.View`
-  width: 90%;
-  height: 90%;
-  margin-top: 10px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  background-color: white;
-`;
 
 const Home = () => {
-  // 전역 작업 상태 useContext
   const { works, setWorks } = useContext(LogContext);
-  // 작업 상태
-  // const [works, setWorks] = useState([
-  //   { id: 1, text: "ReactNative Test", done: true },
-  //   { id: 2, text: "ReactNative Test2", done: false },
-  // ]);
+  console.log(works);
 
   // 새 작업 등록
   const onInsert = (text) => {
     const nextId =
-      works == null
-        ? 1
-        : works.length > 0
-        ? Math.max(...works.map((work) => work.id)) + 1
-        : 1;
+      works.length > 0 ? Math.max(...works.map((work) => work.id)) + 1 : 1;
     const work = {
       id: nextId,
       text,
@@ -71,8 +47,8 @@ const Home = () => {
 
   return (
     <FullScreen>
-      <Block style={styles.shadow}>
-        {works === null || works.length === 0 ? (
+      <Block>
+        {works.length === 0 ? (
           <Empty />
         ) : (
           <WorkList works={works} onToggle={onToggle} onRemove={onRemove} />
@@ -83,10 +59,21 @@ const Home = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  shadow: {
-    elevation: 0.5,
-  },
-});
+const FullScreen = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.BG_COLOR};
+`;
+
+const Block = styled.View`
+  width: 90%;
+  height: 90%;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background-color: white;
+`;
 
 export default Home;

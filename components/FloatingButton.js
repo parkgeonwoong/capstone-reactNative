@@ -41,7 +41,7 @@ const FloatingButton = ({ onInsert }) => {
       </Wrapper>
       <UploadModal
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        // onClose={() => setModalVisible((prev) => !prev)}
         onInsert={onInsert}
       />
     </Block>

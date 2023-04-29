@@ -21,7 +21,7 @@ const UploadModal = ({ visible, onClose, onInsert }) => {
     onInsert(text);
     setText("");
     Keyboard.dismiss();
-    onClose();
+    // onClose();
   };
   // console.log(text);
 
@@ -40,9 +40,7 @@ const UploadModal = ({ visible, onClose, onInsert }) => {
             style={styles.input}
             value={text}
             onChangeText={setText}
-            onSubmitEditing={() => {
-              onPress();
-            }}
+            onSubmitEditing={() => onPress()}
             returnKeyType="done"
           />
         </View>
