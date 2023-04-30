@@ -3,12 +3,13 @@
 @관련된 컴포넌트: Home, UploadModal
 */
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import { BLUE, RED } from "./Colors";
 import UploadModal from "./UploadModal";
+import { LogContext } from "../contexts/LogContext";
 
 const Wrapper = styled.TouchableOpacity`
   position: absolute;
@@ -31,8 +32,9 @@ const Block = styled.View`
   /* background-color: tomato; */
 `;
 
-const FloatingButton = ({ onInsert }) => {
+const FloatingButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const { addWork } = useContext(LogContext);
 
   return (
     <Block>
@@ -42,7 +44,7 @@ const FloatingButton = ({ onInsert }) => {
       <UploadModal
         visible={modalVisible}
         // onClose={() => setModalVisible((prev) => !prev)}
-        onInsert={onInsert}
+        onInsert={addWork}
       />
     </Block>
   );

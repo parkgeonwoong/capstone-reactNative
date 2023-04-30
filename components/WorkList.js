@@ -8,6 +8,7 @@
  * ❓ 의구심?
  * - Context에서 데이터를 받아오면 되긴하는데, FlatList 경우 맵핑해야 하니까 props로 전달하는게 맞지 않나?
  * - 혹시 context에서 하는 방법이 있을까??
+ * ✅ 해결 : Context에서 데이터를 변경하는 방식.
  */
 
 import React, { useContext } from "react";
@@ -15,8 +16,8 @@ import styled from "styled-components/native";
 import WorkItem from "./WorkItem";
 import { LogContext } from "../contexts/LogContext";
 
-const WorkList = ({ onToggle, onRemove }) => {
-  const { works } = useContext(LogContext);
+const WorkList = () => {
+  const { works, removeWork, toggleWork } = useContext(LogContext);
 
   return (
     <WorkFlatList
@@ -27,8 +28,8 @@ const WorkList = ({ onToggle, onRemove }) => {
           text={item.text}
           count={item.count}
           done={item.done}
-          onToggle={onToggle}
-          onRemove={onRemove}
+          onToggle={toggleWork}
+          onRemove={removeWork}
         />
       )}
       keyExtractor={(item) => item.id.toString()}

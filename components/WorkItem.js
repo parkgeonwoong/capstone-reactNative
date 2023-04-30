@@ -85,7 +85,6 @@ const PressItem = styled.Pressable`
   align-items: center;
   justify-content: center;
   margin-right: 16px;
-  background-color: red;
 `;
 
 const ItemText = styled.Text`

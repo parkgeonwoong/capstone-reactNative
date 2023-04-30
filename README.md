@@ -97,4 +97,11 @@ expo start
 
 ❓ styled-components가 ReactNative에서는 Nested가 안됨 → 이유는 아직 모르겠다.
 
+6. Home 컴포넌트 분할
+
+- Home 컴포넌트가 많은 일(생성, 삭제, 토글)을 수행하고 있으며, 이로 인해 코드가 복잡해지고 유지 보수 어려움
+- 기능들이 재사용되기 때문에 Context에 분리할 필요성을 느낌
+- Home의 기능은 제거하고 일감에 필요한 부분으로 분리
+  (`LogContext.js` 파일참고)
+
 <br>
