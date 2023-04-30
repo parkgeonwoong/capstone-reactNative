@@ -1,52 +1,19 @@
-/* 
-@컴포넌트 이름: 일감 매핑
-@관련된 컴포넌트: WorkList
-*/
+/**
+ * @컴포넌트 : 일감 매핑
+ * @관련된컴포넌트 : WorkList
+ *
+ * @FIXME:
+ * 1. 안쓰는 코드 제거 및 리팩토링 필요
+ */
 
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  Pressable,
-} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, Alert } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { BLACK, RED } from "./Colors";
-
-const WrapperItem = styled.View`
-  flex-direction: row;
-  padding: 16px;
-  align-items: center;
-`;
-
-const TimerBtn = styled.Pressable`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-right: 16px;
-  /* background-color: skyblue; */
-`;
-
-const ItemText = styled.Text`
-  flex: 3;
-  font-size: 16px;
-  letter-spacing: 1px;
-  font-family: "BMHANNAPro";
-  padding-bottom: 10px;
-`;
-const TextBtn = styled.TouchableOpacity`
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-`;
 
 const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
-  const navigation = useNavigation(); // Hook: Screen으로 사용되지 않는 컴포넌트에 navigation 객체 사용
+  const navigation = useNavigation();
   const remove = () => {
     Alert.alert(
       "삭제",
@@ -69,7 +36,8 @@ const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
 
   return (
     <WrapperItem>
-      <TimerBtn
+      {/* 누르기 상호 작용을 감지 */}
+      <PressItem
         onPress={() => {
           done
             ? null
@@ -77,21 +45,24 @@ const WorkItem = ({ id, text, count, done, onToggle, onRemove }) => {
         }}
         onLongPress={remove}
       >
-        <Ionicons
+        {/* 비디오 */}
+        <Icons
           name="videocam"
-          size={28}
-          color={BLACK}
           style={[{ flex: 0.8 }, done ? { color: "#9e9e9e" } : null]}
         />
+
+        {/* 타이틀 */}
         <ItemText style={done ? styles.lineThrough : null}>{text}</ItemText>
+
+        {/* 체크박스 */}
         <TextBtn onPress={() => onToggle(id)}>
           {done ? (
-            <Ionicons name="checkbox-outline" size={28} color={BLACK} />
+            <Icons name="checkbox-outline" />
           ) : (
-            <Ionicons name="square-outline" size={28} color={BLACK} />
+            <Icons name="square-outline" />
           )}
         </TextBtn>
-      </TimerBtn>
+      </PressItem>
     </WrapperItem>
   );
 };
@@ -102,5 +73,40 @@ const styles = StyleSheet.create({
     textDecorationLine: "line-through",
   },
 });
+
+const WrapperItem = styled.View`
+  flex-direction: row;
+  padding: 16px;
+  align-items: center;
+`;
+
+const PressItem = styled.Pressable`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  background-color: red;
+`;
+
+const ItemText = styled.Text`
+  flex: 3;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-family: "BMHANNAPro";
+  padding-bottom: 10px;
+`;
+
+const TextBtn = styled.TouchableOpacity`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const Icons = styled(Ionicons)`
+  flex: 1;
+  font-size: 28px;
+  color: ${(props) => props.theme.BLACK};
+`;
 
 export default WorkItem;

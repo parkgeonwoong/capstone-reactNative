@@ -4,6 +4,10 @@
  *
  * @FIXME:
  * 1. Context를 활용한 리팩토링
+ *
+ * ❓ 의구심?
+ * - Context에서 데이터를 받아오면 되긴하는데, FlatList 경우 맵핑해야 하니까 props로 전달하는게 맞지 않나?
+ * - 혹시 context에서 하는 방법이 있을까??
  */
 
 import React, { useContext } from "react";

@@ -70,7 +70,7 @@ expo start
 
 <br>
 
-[ 23.04.28 ]
+[ 23.04.28 ~ ]
 
 1. Expo-SDK 버전 업데이트 45 → 46 (Expo go 46버전부터 작동)
 
@@ -90,7 +90,10 @@ expo start
 |    React     | 17.0.2 → 18.0.0 |
 | React-Native | 0.68.2 → 0.69.6 |
 
-5. 전체적인 리팩토링 필요
+5. 파일별로 구별해서 분할 진행
+
+- API, Style, Layout으로 재사용 되는 코드 분류
+- 자주 반복되는 모듈이 보기 안좋아서 `styled-components Provider`로 분리
 
 ❓ styled-components가 ReactNative에서는 Nested가 안됨 → 이유는 아직 모르겠다.
 
