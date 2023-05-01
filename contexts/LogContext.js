@@ -13,7 +13,12 @@ import React, { useEffect } from "react";
 import { createContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const LogContext = createContext(null);
+export const LogContext = createContext({
+  works: [],
+  addWork: () => {},
+  removeWork: () => {},
+  toggleWork: () => {},
+});
 
 export const LogContextProvider = ({ children }) => {
   const [works, setWorks] = useState([]);
@@ -52,7 +57,7 @@ export const LogContextProvider = ({ children }) => {
       done: false,
       count: 0,
     };
-    setWorks((prevWorks) => [...prevWorks, newWork]);
+    setWorks((prevWorks) => [newWork, ...prevWorks]);
   };
 
   const removeWork = (id) => {

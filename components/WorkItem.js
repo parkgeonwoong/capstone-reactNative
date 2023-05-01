@@ -75,16 +75,17 @@ const styles = StyleSheet.create({
 });
 
 const WrapperItem = styled.View`
+  flex: 1;
   flex-direction: row;
   padding: 16px;
   align-items: center;
 `;
 
 const PressItem = styled.Pressable`
+  flex: 1;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-right: 16px;
 `;
 
 const ItemText = styled.Text`
@@ -93,6 +94,7 @@ const ItemText = styled.Text`
   letter-spacing: 1px;
   font-family: "BMHANNAPro";
   padding-bottom: 10px;
+  margin-left: 10px;
 `;
 
 const TextBtn = styled.TouchableOpacity`
@@ -104,6 +106,7 @@ const TextBtn = styled.TouchableOpacity`
 
 const Icons = styled(Ionicons)`
   flex: 1;
+  text-align: center;
   font-size: 28px;
   color: ${(props) => props.theme.BLACK};
 `;
