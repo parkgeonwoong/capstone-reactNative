@@ -1,35 +1,34 @@
-/* 
-@컴포넌트 이름: 랭크 페이지
-@관련된 컴포넌트: Tabs
-*/
+/**
+ * @컴포넌트 : 랭크 페이지
+ * @관련된 컴포넌트 : Tabs
+ */
 
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { BG_COLOR } from "../components/Colors";
+import { BASE_URL } from "../api/api";
 
 const Rank = () => {
   const [mappedName, setMappedName] = useState([]);
   const [mappedID, setMappedID] = useState([]);
   const [mappedTotal, setMappedTotal] = useState([]);
 
-  // 랭크 API
-  const rank = async () => {
-    try {
-      const response = await fetch("http://diligentp.com/rank");
-      const data = await response.json();
-      const mappingName = data.map((item) => item.username);
-      const mappingID = data.map((item) => item.userid);
-      const mappingTotal = data.map((item) => item.focustime);
-
-      setMappedName(mappingName);
-      setMappedID(mappingID);
-      setMappedTotal(mappingTotal);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const rank = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}rank`);
+        const data = await response.json();
+        const mappingName = data.map((item) => item.username);
+        const mappingID = data.map((item) => item.userid);
+        const mappingTotal = data.map((item) => item.focustime);
+
+        setMappedName(mappingName);
+        setMappedID(mappingID);
+        setMappedTotal(mappingTotal);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     rank();
   }, []);
 
