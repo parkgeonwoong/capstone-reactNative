@@ -8,7 +8,7 @@
  */
 
 import React, { useRef, useState } from "react";
-import { BASE_URL } from "../api/api";
+import { REGISTER_URL } from "../api/api";
 import {
   BoxImage,
   BtnText,
@@ -50,7 +50,7 @@ const SignUpScreen = ({ navigation }) => {
     formBody = formBody.join("&");
 
     try {
-      const response = await fetch(`${BASE_URL}register`, {
+      const response = await fetch(`${REGISTER_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",

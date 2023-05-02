@@ -11,7 +11,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BASE_URL } from "../api/api";
+import { DELETE_URL } from "../api/api";
 import { Block, Btn, IconArrow, Title, Wrapper } from "../layout/Screen";
 
 const Mypage = () => {
@@ -33,7 +33,7 @@ const Mypage = () => {
 
   const handleDeleteBtn = async () => {
     try {
-      const response = await fetch(`${BASE_URL}deregister?userno=${userNo}`, {
+      const response = await fetch(`${DELETE_URL(userNo)}`, {
         method: "DELETE",
       });
       if (response.status === 200) {

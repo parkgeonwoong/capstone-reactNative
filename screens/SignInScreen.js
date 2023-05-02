@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useRef, useState } from "react";
 import { Keyboard } from "react-native";
 
-import { BASE_URL } from "../api/api";
+import { SIGNIN_URL } from "../api/api";
 import {
   BoxImage,
   BtnText,
@@ -42,7 +42,7 @@ const SignInScreen = ({ navigation: { navigate } }) => {
     }
 
     try {
-      const response = await fetch(`${BASE_URL}login?id=${id}&pass=${pass}`);
+      const response = await fetch(`${SIGNIN_URL(id, pass)}`);
       if (response.status === 200) {
         const data = await response.json();
         AsyncStorage.setItem("id", JSON.stringify(data));
