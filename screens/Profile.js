@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { BASE_URL } from "../api/api";
+import { PROFILE_URL } from "../api/api";
 import { Block, Btn, Title, Wrapper } from "../layout/Screen";
 
 const Profile = ({ route }) => {
@@ -19,7 +19,7 @@ const Profile = ({ route }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}get?userno=${userNo}`);
+        const response = await fetch(`${PROFILE_URL(userNo)}}`);
         const data = await response.json();
         setUserData(data);
         setReg(data.regidate.substring(0, 10));
