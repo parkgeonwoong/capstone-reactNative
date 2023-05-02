@@ -51,7 +51,7 @@ const Mypage = () => {
   return (
     <Wrapper>
       <Block>
-        <Btn onPress={() => navigation.push("Profile")}>
+        <Btn onPress={() => navigation.push("Profile", { userNo: userNo })}>
           <Title>🔸 내 정보 확인하기</Title>
           <IconArrow />
         </Btn>
