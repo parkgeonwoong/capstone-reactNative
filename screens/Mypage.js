@@ -1,107 +1,67 @@
-/* 
-@컴포넌트 이름: 내 정보 페이지
-@관련된 컴포넌트: Tabs, Profile
-@구현: 회원 정보 확인, 회원 정보 삭제
-*/
+/**
+ * @컴포넌트 : 내 정보 페이지
+ * @관련된 컴포넌트: Tabs, Profile
+ * @구현: 회원 정보 확인, 회원 정보 삭제
+ *
+ * @FIXME:
+ * 1. 안쓰는 코드 정리
+ * 2. styled-components 적용하기
+ */
 
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { BG_COLOR } from "../components/Colors";
-import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../api/api";
+import { Block, Btn, IconArrow, Title, Wrapper } from "../layout/Screen";
 
-const Mypage = ({ navigation }) => {
+const Mypage = () => {
   const [userNo, setUserNo] = useState("");
-
-  // AsyncStorage 가져오기
-  const load = async () => {
-    try {
-      await AsyncStorage.getItem("id", (err, result) => {
-        const userInfo = JSON.parse(result);
-        console.log("userInfo:", userInfo.userno);
-        setUserNo(userInfo.userno);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // 작업 삭제 기능
-  const workOut = async () => {
-    try {
-      await AsyncStorage.removeItem("works");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const navigation = useNavigation();
 
   useEffect(() => {
+    const load = async () => {
+      try {
+        const result = await AsyncStorage.getItem("id");
+        const userInfo = JSON.parse(result);
+        setUserNo(userInfo.userno);
+      } catch (err) {
+        console.log(`${err} 마이페이지 AsyncStorage 가져오기 실패`);
+      }
+    };
     load();
-  }, [userNo]);
+  }, []);
 
-  const handleDeleteBtn = () => {
-    fetch(`http://diligentp.com/deregister?userno=${userNo}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          alert("정상적으로 탈퇴했습니다.");
-          AsyncStorage.removeItem("id");
-          AsyncStorage.removeItem("works");
-          navigation.replace("SignIn");
-        } else {
-          alert("데이터가 없습니다.");
-        }
-      })
-      .catch((err) => console.log(err));
+  const handleDeleteBtn = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}deregister?userno=${userNo}`, {
+        method: "DELETE",
+      });
+      if (response.status === 200) {
+        alert("정상적으로 탈퇴했습니다.");
+        AsyncStorage.multiRemove(["id", "works"]);
+        navigation.replace("SignIn");
+      } else {
+        alert("데이터가 없습니다.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <View style={styles.fullScreen}>
-      <View style={styles.block}>
-        <TouchableOpacity
-          style={styles.logoutBtn}
-          onPress={() => navigation.push("Profile")}
-        >
-          <Text style={styles.text}>🔸 내 정보 확인하기</Text>
-          <Ionicons name="arrow-forward" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.logoutBtn} onPress={handleDeleteBtn}>
-          <Text style={styles.text}>🔸 탈퇴하기</Text>
-          <Ionicons name="arrow-forward" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
-    </View>
+    <Wrapper>
+      <Block>
+        <Btn onPress={() => navigation.push("Profile")}>
+          <Title>🔸 내 정보 확인하기</Title>
+          <IconArrow />
+        </Btn>
+        <Btn onPress={handleDeleteBtn}>
+          <Title>🔸 탈퇴하기</Title>
+          <IconArrow />
+        </Btn>
+      </Block>
+    </Wrapper>
   );
 };
-
-const styles = StyleSheet.create({
-  fullScreen: {
-    flex: 1,
-    backgroundColor: BG_COLOR,
-  },
-  block: {
-    flex: 1,
-    marginTop: 10,
-  },
-  logoutBtn: {
-    margin: 10,
-    padding: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "white",
-    elevation: 0.5,
-    borderRadius: 10,
-  },
-  text: {
-    fontSize: 15,
-    letterSpacing: 1,
-    fontFamily: "BMHANNAPro",
-    opacity: 0.8,
-  },
-});
 
 export default Mypage;

@@ -1,7 +1,7 @@
-/*
-  @컴포넌트 이름: 스탑워치
-  @관련된 컴포넌트: CameraFocus
-*/
+/**
+ * @컴포넌트 : 스탑워치
+ * @관련된 컴포넌트: CameraFocus
+ */
 
 import React, {
   useCallback,
@@ -10,14 +10,17 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BLUE } from "./Colors";
 import LogContext from "../contexts/LogContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { DEEP_URL } from "../api/api";
 
 let user = 0;
 
-// 사용자 정의 hook
+/**
+ * @desc : 사용자정의 hook 스탑워치
+ */
 const useCounter = (initialValue, ms) => {
   const [count, setCount] = useState(initialValue);
   const [starting, setStarting] = useState(false);
@@ -32,14 +35,14 @@ const useCounter = (initialValue, ms) => {
       setCount((c) => c + 1);
     }, ms);
   }, []);
+
   const stop = useCallback(() => {
-    // console.log("a:", user);
     if (intervalRef.current === null) {
       return;
     }
     setStarting(false);
 
-    fetch("http://172.26.21.102:5000/test", {
+    fetch(`${DEEP_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,12 +51,11 @@ const useCounter = (initialValue, ms) => {
         Ready: 0,
         getuserNo: user,
       }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log("STOP 시 응답값", JSON.stringify(data)));
+    }).then((response) => response.json());
     clearInterval(intervalRef.current);
     intervalRef.current = null;
   }, []);
+
   const reset = useCallback(() => {
     setCount(0);
     stop();
@@ -63,7 +65,6 @@ const useCounter = (initialValue, ms) => {
 };
 
 const SetTimer = ({ getTimer, data, getReady }) => {
-  // 시, 분, 초를 state로 저장
   const [currentHours, setCurrentHours] = useState(0);
   const [currentMinutes, setCurrentMinutes] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(0);
@@ -71,18 +72,13 @@ const SetTimer = ({ getTimer, data, getReady }) => {
   const { works, setWorks } = useContext(LogContext);
   const [userNo, setUserNo] = useState("");
 
-  // console.log(data.id);
-
   useEffect(() => {
     AsyncStorage.getItem("id").then((value) => {
       const userInfo = JSON.parse(value);
-      // console.log(userInfo);
       setUserNo(userInfo.userno);
       user = userInfo.userno;
     });
   });
-
-  // console.log("userNo", userNo);
 
   const timeSave = (id) => {
     const nextTime = works.map((work) =>
@@ -93,7 +89,6 @@ const SetTimer = ({ getTimer, data, getReady }) => {
 
   // 타이머 기능
   const timer = () => {
-    // console.log("자식 시간 측정: ", count);
     timeSave(data.id);
     data.count = count;
     console.log("시간:", count);
@@ -106,8 +101,6 @@ const SetTimer = ({ getTimer, data, getReady }) => {
     setCurrentHours(hours);
     setCurrentMinutes(minutes);
     setCurrentSeconds(seconds);
-
-    // console.log(checkMinutes);
   };
 
   useEffect(timer, [count, starting]);
@@ -143,7 +136,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "tomato",
   },
   timerText: {
     fontSize: 30,
