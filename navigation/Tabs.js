@@ -1,31 +1,25 @@
-/* 
-@컴포넌트 이름: 하단 탭 내비게이션
-@관련된 컴포넌트: Roots, Analysis, Rank, Home, Profile, Setting
-*/
+/**
+ * @컴포넌트 : 하단 탭 내비게이션
+ * @관련된 컴포넌트: Roots, Analysis, Rank, Home, Profile, Setting
+ *
+ * @FIXME:
+ * 1. 지저분한 코드 정리
+ * 2. 코드 재사용성 높이기
+ */
 
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Stats from "../screens/Stats";
-import Home from "../screens/Home";
-import { BAR_ACTIVE, BG_COLOR, BAR_INACTIVE } from "../components/Colors";
+import { Text, View } from "react-native";
+
+import styled, { withTheme } from "styled-components/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import Home from "../screens/Home";
+import Stats from "../screens/Stats";
 import Setting from "../screens/Setting";
 import Mypage from "../screens/Mypage";
 import Rank from "../screens/Rank";
 
 const Tab = createBottomTabNavigator();
-
-// 왼쪽 상단 로고
-const LogoTitle = () => (
-  <TouchableOpacity>
-    <Image
-      style={{ width: 85, height: 50 }}
-      source={require("../assets/logo2.png")}
-      resizeMode="contain"
-    />
-  </TouchableOpacity>
-);
 
 const MainTitle = () => (
   <View style={{ marginLeft: 15 }}>
@@ -35,38 +29,14 @@ const MainTitle = () => (
 
 // Bottom-Tab 내비게이션
 const Tabs = () => {
-  // 오늘의 날짜
   const today = new Date();
   const month = today.getMonth() + 1;
   const day = today.getDate();
 
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        headerShadowVisible: true,
-        // headerStyle: {
-        //   backgroundColor: BG_COLOR,
-        // },
-        headerTitleStyle: {
-          fontFamily: "BMHANNAPro",
-        },
-
-        // tabBarStyle: {
-        //   backgroundColor: BG_COLOR,
-        // },
-        tabBarLabelStyle: {
-          marginTop: -5,
-          marginBottom: 3,
-          fontSize: 10,
-          fontWeight: "600",
-          letterSpacing: 1,
-        },
-        tabBarActiveTintColor: BAR_ACTIVE,
-        tabBarInactiveTintColor: BAR_INACTIVE,
-      }}
-    >
+    <Navigator initialRouteName="Home">
       {/* 통계 페이지 */}
+
       <Tab.Screen
         name="Stats"
         component={Stats}
@@ -79,6 +49,7 @@ const Tabs = () => {
           title: "통계",
         }}
       />
+
       {/* 랭킹 페이지 */}
       <Tab.Screen
         name="Rank"
@@ -92,6 +63,7 @@ const Tabs = () => {
           title: "랭킹",
         }}
       />
+
       {/* 메인 홈 페이지 */}
       <Tab.Screen
         name="Home"
@@ -103,10 +75,10 @@ const Tabs = () => {
           },
           tabBarLabel: "홈",
           title: `${month}월 ${day}일`,
-
           headerTitleAlign: "center",
         }}
       />
+
       {/* 내 정보 페이지 */}
       <Tab.Screen
         name="Mypage"
@@ -119,6 +91,7 @@ const Tabs = () => {
           title: "내 정보",
         }}
       />
+
       {/* 설정 페이지 */}
       <Tab.Screen
         name="Setting"
@@ -131,8 +104,28 @@ const Tabs = () => {
           title: "설정",
         }}
       />
-    </Tab.Navigator>
+    </Navigator>
   );
 };
+
+const Navigator = withTheme(
+  styled(Tab.Navigator).attrs((props) => ({
+    screenOptions: {
+      headerShadowVisible: true,
+      headerTitleStyle: {
+        fontFamily: "BMHANNAPro",
+      },
+      tabBarLabelStyle: {
+        marginTop: -5,
+        marginBottom: 3,
+        fontSize: 10,
+        fontWeight: "600",
+        letterSpacing: 1,
+      },
+      tabBarActiveTintColor: props.theme.BAR_ACTIVE,
+      tabBarInactiveTintColor: props.theme.BAR_INACTIVE,
+    },
+  }))``
+);
 
 export default Tabs;
