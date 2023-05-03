@@ -5,6 +5,8 @@
  * @FIXME:
  * 1. 로컬스토리지 호출하지말고 마이페이지에서 받아오는 방법으로 수정
  * 2. 안쓰는 코드 정리
+ *
+ * Route Params: https://reactnavigation.org/docs/params/
  */
 
 import React, { useEffect, useState } from "react";

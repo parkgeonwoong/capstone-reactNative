@@ -1,23 +1,24 @@
-/* 
-@컴포넌트 이름: 통계 페이지
-@관련된 컴포넌트: Tabs, ChartDay, ChartMonth
-@구현: 캘린더, 일자별 로그, 월별 로그
-*/
+/**
+ * @컴포넌트 : 통계 페이지
+ * @관련된컴포넌트 : Tabs, ChartDay, ChartMonth
+ * @구현 : 캘린더, 일자별 로그, 월별 로그
+ *
+ * @FIXME:
+ * 1. 안쓰는 코드 정리
+ * 2. 리팩토링 필요
+ * 3. 파일 분리 필요
+ */
 
-import React, { useContext, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
-import { Agenda } from "react-native-calendars";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+
 import { BG_COLOR, RED } from "../components/Colors";
 import LogContext from "../contexts/LogContext";
 import Empty from "../components/Empty";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
+import { DAY_URL, MONTH_URL } from "../api/api";
+import Calendar from "../components/Canlendar";
 
 const Stats = ({ navigation }) => {
   // 오늘 날짜
@@ -26,48 +27,25 @@ const Stats = ({ navigation }) => {
 
   const [userNo, setUserNo] = useState("");
   const [monthDate, setMonthDate] = useState(today.substring(0, 7));
-  // 매핑한 상태값 저장
+
   const [mapConper, setMapConper] = useState([]);
   const [mapFocus, setMapFocus] = useState([]);
   const [mapUnFocus, setMapUnFocus] = useState([]);
   const [mapFocusdate, setMapFocusdate] = useState([]);
 
-  // 월별 통계를 위한 문자열 자르기
-  // setMonthDate(today.substring(0, 7));
-  // console.log(monthDate);
-
-  // 각 날짜별 상태값
-  const [items, setItems] = useState({});
-
   // Storage에서 유저 정보 가져오기
   useEffect(() => {
     const load = async () => {
       try {
-        await AsyncStorage.getItem("id", (err, result) => {
-          const userInfo = JSON.parse(result);
-          // console.log(userInfo.userno);
-          setUserNo(userInfo.userno);
-        });
+        const result = await AsyncStorage.getItem("id");
+        const userInfo = JSON.parse(result);
+        setUserNo(userInfo.userno);
       } catch (err) {
         console.log(err);
       }
     };
     load();
   }, []);
-
-  // 특정 날짜만 가져오기
-  const getTodayData = async (date) => {
-    try {
-      const response = await fetch(
-        `http://diligentp.com/stats/day?userno=${userNo}&date=${date}`
-      );
-      const data = await response.json();
-      setItems(data);
-    } catch (err) {
-      console.log("특정날짜", err);
-      alert("데이터가 없습니다.");
-    }
-  };
 
   // 평균
   const average = (arr) => {
@@ -77,9 +55,7 @@ const Stats = ({ navigation }) => {
   // 월별 날짜 가져오기
   const getMonthData = async (date) => {
     try {
-      const response = await fetch(
-        `http://diligentp.com/stats/month?userno=${userNo}&date=${date}`
-      );
+      const response = await fetch(`${MONTH_URL(userNo, date)})}`);
       const data = await response.json();
 
       // api mapping
@@ -96,106 +72,11 @@ const Stats = ({ navigation }) => {
     }
   };
 
-  // console.log("매핑된 상태값: ", mapConper);
-  // console.log(monthDate);
-
-  // API 로딩 다 되고 나서 시작할 함수
-  // const getData = async () => {
-  //   setMonthDate(today.substring(0, 7));
-  //   await Promise.all([getTodayData(today), getMonthData(monthDate)]);
-  //   setLoading(false);
-  // };
-
   // 렌더링 전에 가져올 API
   useEffect(() => {
     setMonthDate(today.substring(0, 7));
-    getTodayData(today);
     getMonthData(monthDate);
   }, [userNo]);
-
-  // 클릭 시 API 가져오기
-  const handleDayPress = (day) => {
-    const untilMonth = day.substring(0, 7);
-    setMonthDate(untilMonth);
-    getTodayData(day);
-    getMonthData(untilMonth);
-  };
-
-  // console.log("가져온 API 저장: ", items);
-  // "2022-07-07": [{ name: "1", count: "총 시간" }],
-  // "2022-07-08": [{ name: "2", count: 10 }],
-  // "2022-07-07": { name: "카테고리1", count: "총 시간" },
-  // console.log(items["2022-07-07"].count);
-
-  // 직접 mapping 테스트
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const response = await fetch(
-  //       "https://jsonplaceholder.typicode.com/posts"
-  //     );
-  //     const data = await response.json();
-
-  //     const mappedData = data.map((post, index) => {
-  //       const dateFns = addDays(new Date(), index);
-
-  //       return {
-  //         ...post,
-  //         date: format(dateFns, "yyyy-MM-dd"),
-  //         // id: [{ date: format(dateFns, "yyyy-MM-dd") }],
-  //       };
-  //     });
-
-  //     const reduced = mappedData.reduce((acc, currentItem) => {
-  //       const { date, ...restItem } = currentItem;
-
-  //       acc[date] = [restItem];
-  //       return acc;
-  //     }, {});
-
-  //     // console.log(mappedData[0]);
-  //     // console.log(reduced);
-
-  //     setItems(reduced);
-  //   };
-  //   getData();
-  // }, []);
-
-  // 로그 O 랜더링
-  const renderItem = (item) => {
-    // console.log("[Stats]🔸렌더링 item:", item);
-    return (
-      <TouchableOpacity
-        style={styles.selectBtn}
-        onPress={() =>
-          navigation.push("ChartDay", {
-            focusdate: item.focusdate,
-            focustime: item.focustime,
-            unfocustime: item.unfocustime,
-          })
-        }
-      >
-        <View style={styles.box}>
-          <View style={styles.selectItem}>
-            <View style={styles.apiBox}>
-              <Text style={styles.textTitle}>🔸집중도:</Text>
-              <Text style={styles.textContext}>{item.con_per.toFixed(1)}%</Text>
-            </View>
-            <View style={styles.apiBox}>
-              <Text style={styles.textTitle}>🔸집중 시간:</Text>
-              <Text style={styles.textContext}>{item.focustime}초</Text>
-            </View>
-            <View style={styles.apiBox}>
-              <Text style={styles.textTitle}>🔸집중 안한 시간:</Text>
-              <Text style={styles.textContext}>{item.unfocustime}초</Text>
-            </View>
-          </View>
-          <View>
-            <Ionicons name="arrow-forward" size={24} color="black" />
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
 
   // 로그 X 랜더링
   const renderEmpty = () => {
@@ -208,22 +89,8 @@ const Stats = ({ navigation }) => {
 
   return (
     <View style={styles.fullScreen}>
-      <View style={styles.calendar}>
-        <Agenda
-          items={items}
-          renderItem={renderItem}
-          // renderEmptyData={null}
-          selected={today}
-          onDayPress={(day) => {
-            // console.log("DayPress:", day.dateString);
-            handleDayPress(day.dateString);
-          }}
-          minDate={"2022-01-01"}
-          maxDate={"2023-08-01"}
-          pastScrollRange={12}
-          futureScrollRange={12}
-        />
-      </View>
+      <Calendar userNo={userNo} today={today} navigation={navigation} />
+
       <View style={styles.monthBox}>
         <View style={styles.leftMonth}>
           <Text style={styles.leftText}>{monthDate.substring(5, 7)}월</Text>
