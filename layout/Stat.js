@@ -4,6 +4,11 @@
 
 import styled from "styled-components/native";
 
+export const StatScreen = styled.View`
+  flex: 1;
+  background-color: ${(props) => props.theme.BG_COLOR};
+`;
+
 export const CalendarBox = styled.View`
   flex: 1.8;
 `;
@@ -51,38 +56,38 @@ export const TextContext = styled.Text`
   font-family: "BMHANNAPro";
 `;
 
-// const styles = StyleSheet.create({
-//   fullScreen: {
-//     flex: 1,
-//     backgroundColor: BG_COLOR,
-//   },
-//   monthBox: {
-//     flex: 1,
-//     flexDirection: "row",
-//   },
-//   leftMonth: {
-//     flex: 1,
-//     justifyContent: "flex-start",
-//     alignItems: "center",
-//     marginTop: 20,
-//   },
-//   leftText: {
-//     fontSize: 20,
-//     fontFamily: "BMHANNAPro",
-//     color: "#00BBF2",
-//     letterSpacing: 1,
-//   },
-//   rightMonth: {
-//     flex: 4,
-//     marginRight: 10,
-//     marginBottom: 40,
-//     padding: 20,
-//     borderRadius: 15,
-//     backgroundColor: "white",
-//   },
-//   leftWrapper: {
-//     flex: 1,
-//     marginLeft: 15,
-//     marginBottom: 5,
-//   },
-// });
+export const MonthBox = styled.View`
+  flex: 1;
+  flex-direction: row;
+`;
+
+export const LeftMonth = styled.View`
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+export const LeftText = styled.Text`
+  font-size: 20px;
+  font-family: "BMHANNAPro";
+  color: #00bbf2;
+  letter-spacing: 1px;
+`;
+
+export const RightMonth = styled.TouchableOpacity`
+  flex: 4;
+  margin-right: 10px;
+  margin-bottom: 40px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: white;
+`;
+
+export const LeftWrapper = styled.View`
+  flex: 1;
+  margin-left: 15px;
+  margin-bottom: 5px;
+`;
+
+export const IconView = styled.View``;

@@ -5,9 +5,9 @@
 import { useState } from "react";
 import { Agenda } from "react-native-calendars";
 import { DAY_URL } from "../api/api";
-import { CalendarBox } from "../layout/Stat";
-import { Ionicons } from "@expo/vector-icons";
 import {
+  CalendarBox,
+  IconView,
   ApiBox,
   Box,
   SelectBtn,
@@ -15,7 +15,7 @@ import {
   TextContext,
   TextTitle,
 } from "../layout/Stat";
-import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const Calendar = ({ userNo, today, navigation }) => {
   const dummy = {
@@ -33,7 +33,6 @@ const Calendar = ({ userNo, today, navigation }) => {
       const data = await response.json();
       setItems(data);
     } catch (err) {
-      console.log("특정날짜", err);
       alert("데이터가 없습니다.");
     }
   };
@@ -68,9 +67,9 @@ const Calendar = ({ userNo, today, navigation }) => {
               <TextContext>{item.unfocustime}초</TextContext>
             </ApiBox>
           </SelectItem>
-          <View>
+          <IconView>
             <Ionicons name="arrow-forward" size={24} color="black" />
-          </View>
+          </IconView>
         </Box>
       </SelectBtn>
     );
@@ -81,10 +80,9 @@ const Calendar = ({ userNo, today, navigation }) => {
       <Agenda
         items={items}
         renderItem={AgendaItem}
-        // renderEmptyData={null}
         selected={today}
         onDayPress={(day) => handleDayPress(day.dateString)}
-        minDate={"2022-01-01"}
+        minDate={"2022-03-01"}
         maxDate={"2023-08-01"}
         pastScrollRange={12}
         futureScrollRange={12}
