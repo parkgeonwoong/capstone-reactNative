@@ -5,14 +5,18 @@
  */
 
 import React from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
-import { BLACK, RED } from "../components/Colors";
+import {
+  ChartContext,
+  ChartScreen,
+  ChartText,
+  LineBox,
+  LineTitle,
+  ScrollBox,
+} from "../layout/Chart";
 
 const ChartMonth = ({ route }) => {
-  console.log("🚨", route.params.focusdate);
-  // console.log(route.params.con_per);
-  // console.log(route.params.focusdate);
   const conData = route.params.con_per;
 
   const lineCharData = {
@@ -26,29 +30,28 @@ const ChartMonth = ({ route }) => {
 
   if (route.params.focusdate.length == 0) {
     return (
-      <View style={styles.fullScreen}>
-        <Text style={styles.text}>데이터가 없습니다.</Text>
-      </View>
+      <ChartScreen>
+        <ChartText>데이터가 없습니다.</ChartText>
+      </ChartScreen>
     );
   }
 
   return (
-    <View style={styles.fullScreen}>
-      <View style={styles.chartBox}>
-        <View style={styles.title}>
-          <Text style={styles.text}>
+    <ChartScreen>
+      <LineBox>
+        <LineTitle>
+          <ChartText>
             "{route.params.focusdate[0].substring(6, 7)}월 어땠나요?"
-          </Text>
-          <Text style={[styles.text, { fontSize: 20, color: BLACK }]}>
+          </ChartText>
+          <ChartContext>
             이번달 가장 높은 집중도: {Math.max(...conData)}%
-          </Text>
-        </View>
+          </ChartContext>
+        </LineTitle>
         <View style={{ height: Dimensions.get("window").height / 2 }}>
-          <ScrollView
+          <ScrollBox
             horizontal={true}
             contentOffset={{ x: 10000, y: 0 }} // 스크롤이 시작이 아닌 끝에서 시작 되어야 했습니다.
             showHorizontalScrollIndicator={false} // 스크롤 막대를 숨기려면
-            contentContainer={styles.scrollBox}
           >
             <LineChart
               data={lineCharData}
@@ -82,40 +85,11 @@ const ChartMonth = ({ route }) => {
                 borderRadius: 16,
               }}
             />
-          </ScrollView>
+          </ScrollBox>
         </View>
-      </View>
-    </View>
+      </LineBox>
+    </ChartScreen>
   );
 };
-
-const styles = StyleSheet.create({
-  fullScreen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  chartBox: {
-    flex: 1,
-    padding: 10,
-    // backgroundColor: "tomato",
-  },
-  title: {
-    flex: 0.8,
-    justifyContent: "center",
-    alignItems: "center",
-    // backgroundColor: "tomato",
-  },
-  text: {
-    fontSize: 25,
-    fontFamily: "BMHANNAPro",
-    letterSpacing: 1,
-  },
-  scrollBox: {
-    flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default ChartMonth;
